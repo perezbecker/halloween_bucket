@@ -1,0 +1,182 @@
+[
+  {
+    "image": "01_front_three_quarter.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      310,
+      -470,
+      290
+    ],
+    "target": [
+      0,
+      0,
+      102
+    ]
+  },
+  {
+    "image": "02_front.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      0,
+      -540,
+      139
+    ],
+    "target": [
+      0,
+      0,
+      102
+    ]
+  },
+  {
+    "image": "03_rear.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      -300,
+      420,
+      280
+    ],
+    "target": [
+      0,
+      0,
+      100
+    ]
+  },
+  {
+    "image": "04_top_interior.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      200,
+      -330,
+      490
+    ],
+    "target": [
+      0,
+      0,
+      100
+    ]
+  },
+  {
+    "image": "05_cutaway.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      310,
+      -270,
+      260
+    ],
+    "target": [
+      0,
+      -14,
+      106
+    ]
+  },
+  {
+    "image": "06_mounting_test.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      185,
+      -330,
+      225
+    ],
+    "target": [
+      0,
+      -72,
+      111
+    ]
+  },
+  {
+    "image": "07_exploded_mount.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      340,
+      -390,
+      310
+    ],
+    "target": [
+      0,
+      -5,
+      118
+    ]
+  },
+  {
+    "image": "08_glow_preview.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      230,
+      -450,
+      270
+    ],
+    "target": [
+      0,
+      0,
+      102
+    ]
+  },
+  {
+    "image": "09_printed_parts.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      270,
+      -430,
+      285
+    ],
+    "target": [
+      0,
+      0,
+      102
+    ]
+  },
+  {
+    "image": "10_rope_balance.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      0,
+      0,
+      620
+    ],
+    "target": [
+      0,
+      0,
+      95
+    ]
+  }
+]

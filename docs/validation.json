@@ -1,0 +1,427 @@
+{
+  "design": "Cyclops cauldron, revision 4, CORE One+ single nozzle",
+  "units": "mm",
+  "parameters": {
+    "height": 200.0,
+    "belly_radius": 112.0,
+    "neck_radius": 93.0,
+    "base_radius": 73.0,
+    "wall": 3.0,
+    "floor": 3.6,
+    "rim_radius": 4.0,
+    "front": -89.0,
+    "eye_z": 125.0,
+    "eye_bore": 44.4,
+    "rope_bore": 13.0,
+    "rope_drop": 22.0,
+    "faceplate_thickness": 3.0,
+    "carrier_thickness": 3.0,
+    "pcb_thickness": 1.6,
+    "rear_clearance": 12.0,
+    "guard_thickness": 2.0,
+    "lens_holder_thickness": 2.8,
+    "lens_standoff": 6.0,
+    "rear_pcb_screw_length": 20.0,
+    "rear_pcb_washer": 1.0,
+    "m2_clearance": 2.4,
+    "m25_clearance": 2.9,
+    "vertical_adjustment": 2.0,
+    "battery_width": 29.0,
+    "battery_height": 36.0,
+    "battery_thickness": 4.75,
+    "battery_pocket_width": 33.0,
+    "battery_pocket_height": 42.0,
+    "battery_pocket_depth": 8.5
+  },
+  "board_holes_relative_to_eye_mm": [
+    [
+      -8.89,
+      -21.243925
+    ],
+    [
+      8.89,
+      -21.243925
+    ],
+    [
+      -8.89,
+      24.476075
+    ],
+    [
+      8.89,
+      24.476075
+    ]
+  ],
+  "checks": {
+    "no_material_or_assembly_collisions": true,
+    "coupon_matches_bucket": true,
+    "eye_and_fastener_passages_clear": true,
+    "battery_clearance_verified": true,
+    "separate_screw_mounted_faceplate_verified": true,
+    "balanced_rope_passages_and_bearing_rings_verified": true
+  },
+  "parts": {
+    "bucket_black": {
+      "material": "black",
+      "cad_volume_cm3": 486.7142,
+      "solid_mass_upper_g": 632.73,
+      "bounds_mm": [
+        [
+          -111.9992,
+          -96.9993,
+          0.0
+        ],
+        [
+          111.9992,
+          112.0,
+          200.0
+        ]
+      ],
+      "cad_center_of_mass_mm": [
+        2.6171126855645244e-08,
+        3.424763180470199,
+        94.08644360647766
+      ],
+      "triangles": 773864,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_components": 1
+    },
+    "bucket_glow": {
+      "material": "glow",
+      "cad_volume_cm3": 27.8535,
+      "solid_mass_upper_g": 55.71,
+      "bounds_mm": [
+        [
+          -63.9035,
+          -87.6478,
+          -0.0
+        ],
+        [
+          63.9035,
+          50.6113,
+          3.0
+        ]
+      ],
+      "cad_center_of_mass_mm": [
+        0.029735329909038724,
+        -13.76332029465721,
+        1.5000000000002105
+      ],
+      "triangles": 20764,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_components": 1
+    },
+    "carrier_black": {
+      "material": "black",
+      "cad_volume_cm3": 21.526,
+      "solid_mass_upper_g": 27.98,
+      "bounds_mm": [
+        [
+          -48.0,
+          -45.0,
+          0.0
+        ],
+        [
+          48.0,
+          45.0,
+          28.9
+        ]
+      ],
+      "cad_center_of_mass_mm": [
+        -6.06225100205506e-17,
+        0.24819414129683318,
+        7.430701423296668
+      ],
+      "triangles": 35564,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_components": 1
+    },
+    "guard_black": {
+      "material": "black",
+      "cad_volume_cm3": 64.9462,
+      "solid_mass_upper_g": 84.43,
+      "bounds_mm": [
+        [
+          -53.0,
+          -75.0,
+          0.0
+        ],
+        [
+          53.0,
+          49.0,
+          41.5
+        ]
+      ],
+      "cad_center_of_mass_mm": [
+        -3.0862846355488706e-14,
+        -14.693813378671885,
+        12.234690660932959
+      ],
+      "triangles": 17024,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_components": 1
+    },
+    "test_black": {
+      "material": "black",
+      "cad_volume_cm3": 28.8068,
+      "solid_mass_upper_g": 37.45,
+      "bounds_mm": [
+        [
+          -58.0,
+          0.0,
+          0.0
+        ],
+        [
+          58.0,
+          28.0,
+          103.0
+        ]
+      ],
+      "cad_center_of_mass_mm": [
+        -1.1888508192212946e-10,
+        1.8082298535967158,
+        49.94031709214134
+      ],
+      "triangles": 15404,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_components": 1
+    }
+  },
+  "plates": {
+    "01_mount_test_black.3mf": null,
+    "02_skull_faceplate_glow.3mf": null,
+    "03_carrier_black.3mf": null,
+    "04_guard_black.3mf": null,
+    "05_cauldron_black.3mf": null
+  },
+  "material_budgets": {
+    "black": {
+      "density_upper_g_cm3": 1.3,
+      "solid_parts_including_test_g": 782.59,
+      "reserved_for_support_brim_priming_g": 125,
+      "total_budget_g": 907.59,
+      "limit_g": 1000,
+      "within_limit": true
+    },
+    "glow": {
+      "density_upper_g_cm3": 2.0,
+      "solid_parts_including_test_g": 55.71,
+      "reserved_for_support_brim_priming_g": 50,
+      "total_budget_g": 105.71,
+      "limit_g": 1000,
+      "within_limit": true
+    }
+  },
+  "balance": {
+    "target": "Assembled cauldron including all electronics; excludes the test coupon and removed print supports",
+    "design_payload_g": 0.0,
+    "payload_center_assumption_mm": [
+      0.0,
+      0.0,
+      65.0
+    ],
+    "rope_axis_y_mm": -16.66,
+    "rope_axis_z_mm": 178.0,
+    "anchor_centers_mm": [
+      [
+        -99.32741131483625,
+        -16.66,
+        178.0
+      ],
+      [
+        99.32741131483625,
+        -16.66,
+        178.0
+      ]
+    ],
+    "assembled_mass_g": 834.5314338934936,
+    "assembled_center_mm": [
+      0.0014887002549073306,
+      -16.661870758745483,
+      99.72734535759915
+    ],
+    "residual_fore_aft_offset_mm": -0.0018707587454827035,
+    "predicted_pitch_if_holes_were_at_y_zero_degrees": -12.017160820021276,
+    "left_right_load_share": [
+      0.49999250609557216,
+      0.5000074939044278
+    ],
+    "components": [
+      {
+        "name": "Cauldron body and rope lugs",
+        "mass_g": 603.5255651247983,
+        "center_mm": [
+          2.6171126855645244e-08,
+          3.424763180470199,
+          94.08644360647766
+        ],
+        "basis": "CAD solid volume x nominal density"
+      },
+      {
+        "name": "One-eyed glow skull",
+        "mass_g": 41.78031208069315,
+        "center_mm": [
+          0.029735329909035813,
+          -90.5000000000002,
+          111.2366797053428
+        ],
+        "basis": "CAD solid volume x nominal density"
+      },
+      {
+        "name": "HalloWing carrier",
+        "mass_g": 26.692276719983372,
+        "center_mm": [
+          9.058485159582918e-16,
+          -64.53070142329663,
+          125.24819414129698
+        ],
+        "basis": "CAD solid volume x nominal density"
+      },
+      {
+        "name": "Battery cradle and candy guard",
+        "mass_g": 80.53327996801879,
+        "center_mm": [
+          -7.58522670820524e-15,
+          -55.73469066093275,
+          110.30618662132804
+        ],
+        "basis": "CAD solid volume x nominal density"
+      },
+      {
+        "name": "HalloWing M0",
+        "mass_g": 17.5,
+        "center_mm": [
+          0,
+          -69.1,
+          121.917075
+        ],
+        "basis": "Adafruit listed mass; estimated component center"
+      },
+      {
+        "name": "500 mAh LiPo",
+        "mass_g": 10.5,
+        "center_mm": [
+          0,
+          -48.9,
+          78
+        ],
+        "basis": "Adafruit listed mass; battery bay center"
+      },
+      {
+        "name": "40 mm glass lens",
+        "mass_g": 31.0,
+        "center_mm": [
+          0,
+          -85.49999999999999,
+          125.0
+        ],
+        "basis": "Estimated glass spherical-cap mass and center; weigh actual lens"
+      },
+      {
+        "name": "Acrylic and stock lens hardware",
+        "mass_g": 5.0,
+        "center_mm": [
+          0,
+          -80.99999999999999,
+          126.6
+        ],
+        "basis": "Estimated kit mass; weigh actual kit"
+      },
+      {
+        "name": "M2 and M2.5 fasteners and washers",
+        "mass_g": 12.0,
+        "center_mm": [
+          0,
+          -66.0,
+          125.0
+        ],
+        "basis": "Estimated hardware mass and aggregate center"
+      },
+      {
+        "name": "Four M2 x 10 faceplate screws, nuts and washers",
+        "mass_g": 3.0,
+        "center_mm": [
+          0,
+          -88.0,
+          122.5
+        ],
+        "basis": "Estimated hardware mass"
+      },
+      {
+        "name": "Soft battery strap and insulating pad",
+        "mass_g": 3.0,
+        "center_mm": [
+          0,
+          -48.5,
+          80
+        ],
+        "basis": "Estimated mass"
+      }
+    ],
+    "centered_candy_scenarios": [
+      {
+        "payload_g": 0,
+        "total_mass_g": 834.5314338934936,
+        "center_mm": [
+          0.0014887002549073306,
+          -16.661870758745483,
+          99.72734535759915
+        ],
+        "predicted_pitch_degrees": -0.0013694000934634729
+      },
+      {
+        "payload_g": 500,
+        "total_mass_g": 1334.5314338934936,
+        "center_mm": [
+          0.0009309388500058179,
+          -10.419278664030074,
+          86.71628226997964
+        ],
+        "predicted_pitch_degrees": 3.9110092974834827
+      },
+      {
+        "payload_g": 1000,
+        "total_mass_g": 1834.5314338934936,
+        "center_mm": [
+          0.0006772122490856984,
+          -7.579513023733343,
+          80.79752779437754
+        ],
+        "predicted_pitch_degrees": 5.336983436617074
+      }
+    ],
+    "density_and_lens_mass_sensitivity_pitch_degrees": [
+      -1.6756324886297602,
+      1.194037447606171
+    ],
+    "limitations": [
+      "This is a static estimate, not a measured hanging test or certified rope-load rating.",
+      "The black and glow density estimates are independent of the conservative filament budget densities.",
+      "Printed infill, actual lens/fastener masses, unequal rope ends, and uneven candy can change balance.",
+      "No fixed pair of holes can stay exactly level for every possible candy distribution."
+    ]
+  },
+  "limitations": [
+    "No physical fit or rope-load test has been performed.",
+    "Mass bounds assume black density <=1.30 and glow <=2.00 g/cm3.",
+    "Printing overhead must remain within the stated reserves; verify slicer totals.",
+    "Each geometry 3MF is one material. USB G-code is only for the explicitly documented nozzle and PLA setup.",
+    "PCB coordinates come from Adafruit's published older Eagle revision; test your hardware."
+  ],
+  "files_sha256": {
+    "01_mount_test_black.3mf": "d974cc0ebe1bb45b5e0ab0a6b6e7a3608d41a863947bb296826a2a502b634d09",
+    "02_skull_faceplate_glow.3mf": "f956d0d644f7250ed8b7d6a840160caf1d6d6f9f817a8f4d659a1b7c2d0592bd",
+    "03_carrier_black.3mf": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
+    "04_guard_black.3mf": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
+    "05_cauldron_black.3mf": "a02c18e4bfa0b647cec843b9b2e4c688808b675c826cc4d0a7374769408de403",
+    "bucket_black.stl": "90d3184f31a17c858a05f295437297364b7e085dfaa29974b6be2fdc33621941",
+    "bucket_glow.stl": "4f46bf48e56eca5ee5a30b08997c56fc62c27c73c7b29116c0c65d183e45b11f",
+    "carrier_black.stl": "7b625b9465af65236c9df8f35b75bca026c3a768c30582637ca282a3cbe66f57",
+    "guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877",
+    "test_black.stl": "60fc1f601a264f4c4892c0364fc38b3df2d3aa82c44a194fe069fa10b773512f"
+  }
+}

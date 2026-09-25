@@ -1,0 +1,27 @@
+{
+  "source_url": "https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/65c5c8f1e1c3836f306119c49d717759cbc368db/PrusaResearch/2.5.10.ini",
+  "bundle_version": "2.5.10",
+  "source_commit": "65c5c8f1e1c3836f306119c49d717759cbc368db",
+  "source_sha256": "a4964886f467f2bc20c117de425fbbdc65434ca291f1cf231f6dc31362e11d97",
+  "printer_profile": "Prusa CORE One HF0.4 nozzle",
+  "print_profile": "0.20mm STRUCTURAL @COREONE 0.4",
+  "filament_profile": "Generic PLA @COREONE HF0.4",
+  "startup_shutdown_unchanged": true,
+  "nozzle_mm": 0.4,
+  "nozzle_type": "wear-resistant high-flow",
+  "firmware_notice": "6.8.1+16182",
+  "temperatures_c": {
+    "first_layer": 220,
+    "other_layers": 215,
+    "bed": 60,
+    "chamber_target": 20
+  },
+  "material_requirement": "1.75 mm PLA rated for these temperatures; glow PLA suitable for a 0.4 mm hardened nozzle",
+  "machine_details_confirmed_by_user": false,
+  "sheet_assumption": "clean smooth PEI suitable for PLA",
+  "slicer_required": "2.9.6",
+  "profiles_sha256": {
+    "core_one_plus_0.4HF_black_PLA.ini": "875fa55748883fb65214954f0899f3d388dab29f95e0ecc0ae6d86ba8001df35",
+    "core_one_plus_0.4HF_glow_PLA.ini": "b3108bbe828e3dab6b1207a0bf3885ee5b95e1f6a93fc6a5e132b75cbd1a4747"
+  }
+}

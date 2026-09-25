@@ -1,0 +1,239 @@
+{
+  "slicer_version": "PrusaSlicer-2.9.6 based on Slic3r (with GUI support)",
+  "design": "Cyclops cauldron, revision 4, CORE One+ single nozzle",
+  "scope": "CORE One+ 0.4 high-flow PLA USB jobs; hardware/material assumptions require confirmation before use",
+  "profile_provenance": {
+    "source_url": "https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/65c5c8f1e1c3836f306119c49d717759cbc368db/PrusaResearch/2.5.10.ini",
+    "bundle_version": "2.5.10",
+    "source_commit": "65c5c8f1e1c3836f306119c49d717759cbc368db",
+    "source_sha256": "a4964886f467f2bc20c117de425fbbdc65434ca291f1cf231f6dc31362e11d97",
+    "printer_profile": "Prusa CORE One HF0.4 nozzle",
+    "print_profile": "0.20mm STRUCTURAL @COREONE 0.4",
+    "filament_profile": "Generic PLA @COREONE HF0.4",
+    "startup_shutdown_unchanged": true,
+    "nozzle_mm": 0.4,
+    "nozzle_type": "wear-resistant high-flow",
+    "firmware_notice": "6.8.1+16182",
+    "temperatures_c": {
+      "first_layer": 220,
+      "other_layers": 215,
+      "bed": 60,
+      "chamber_target": 20
+    },
+    "material_requirement": "1.75 mm PLA rated for these temperatures; glow PLA suitable for a 0.4 mm hardened nozzle",
+    "machine_details_confirmed_by_user": false,
+    "sheet_assumption": "clean smooth PEI suitable for PLA",
+    "slicer_required": "2.9.6",
+    "profiles_sha256": {
+      "core_one_plus_0.4HF_black_PLA.ini": "875fa55748883fb65214954f0899f3d388dab29f95e0ecc0ae6d86ba8001df35",
+      "core_one_plus_0.4HF_glow_PLA.ini": "b3108bbe828e3dab6b1207a0bf3885ee5b95e1f6a93fc6a5e132b75cbd1a4747"
+    }
+  },
+  "plates": {
+    "01_mount_test_black.3mf": {
+      "sha256": "d974cc0ebe1bb45b5e0ab0a6b6e7a3608d41a863947bb296826a2a502b634d09",
+      "material": "black",
+      "native_info": "[01_mount_test_black.3mf]\nsize_x = 116.000000\nsize_y = 28.000000\nsize_z = 103.000000\nmin_x = -58.000000\nmin_y = -14.000000\nmin_z = -51.500000\nmax_x = 58.000000\nmax_y = 14.000000\nmax_z = 51.500000\nnumber_of_facets = 15404\nmanifold = yes\nnumber_of_parts =  1\nvolume = 28807.070312",
+      "native_volume_extruders": [
+        "1"
+      ],
+      "dimensions_and_material_alignment_verified": true,
+      "offline_slice_succeeded": true,
+      "gcode_audit": {
+        "layer_count": 515,
+        "extrusion_segments": 14913,
+        "deposition_bounds_mm": [
+          [
+            62.758,
+            91.958,
+            0.2
+          ],
+          [
+            187.242,
+            128.242,
+            103.0
+          ]
+        ],
+        "all_model_moves_within_build_volume": true,
+        "single_nozzle_verified": true,
+        "startup_checks_and_shutdown_verified": true,
+        "maximum_observed_flow_mm3_s": 6.0015,
+        "filament_g": 37.27,
+        "filament_cm3": 28.67,
+        "estimated_time": "1h 47m 1s",
+        "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+        "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+      },
+      "gcode_file": "usb/COREONE_04HF_PLA/01_test_BLACK_04HF_PLA.gcode",
+      "gcode_sha256": "97b6fef4829d52a6218748a9c270db8a0b2c25c8f9df5eada1b3324b70575cdb",
+      "supports": true,
+      "brim_mm": 5,
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+    },
+    "02_skull_faceplate_glow.3mf": {
+      "sha256": "f956d0d644f7250ed8b7d6a840160caf1d6d6f9f817a8f4d659a1b7c2d0592bd",
+      "material": "glow",
+      "native_info": "[02_skull_faceplate_glow.3mf]\nsize_x = 127.806973\nsize_y = 138.259125\nsize_z = 3.000000\nmin_x = -63.903484\nmin_y = -69.129562\nmin_z = -1.500000\nmax_x = 63.903488\nmax_y = 69.129562\nmax_z = 1.500000\nnumber_of_facets = 20764\nmanifold = yes\nnumber_of_parts =  1\nvolume = 27853.060547",
+      "native_volume_extruders": [
+        "1"
+      ],
+      "dimensions_and_material_alignment_verified": true,
+      "offline_slice_succeeded": true,
+      "gcode_audit": {
+        "layer_count": 15,
+        "extrusion_segments": 170818,
+        "deposition_bounds_mm": [
+          [
+            61.326,
+            41.095,
+            0.2
+          ],
+          [
+            188.678,
+            178.905,
+            3.0
+          ]
+        ],
+        "all_model_moves_within_build_volume": true,
+        "single_nozzle_verified": true,
+        "startup_checks_and_shutdown_verified": true,
+        "maximum_observed_flow_mm3_s": 3.0016,
+        "filament_g": 55.89,
+        "filament_cm3": 27.95,
+        "estimated_time": "2h 45m 48s",
+        "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+        "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+      },
+      "gcode_file": "usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode",
+      "gcode_sha256": "6d48451d9a6d3410040aef102208704cebebf765f6efb1b77f48b4247768b8f4",
+      "supports": false,
+      "brim_mm": 0,
+      "profile": "profiles/core_one_plus_0.4HF_glow_PLA.ini"
+    },
+    "03_carrier_black.3mf": {
+      "sha256": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
+      "material": "black",
+      "native_info": "[03_carrier_black.3mf]\nsize_x = 96.000000\nsize_y = 90.000000\nsize_z = 28.900000\nmin_x = -48.000000\nmin_y = -45.000000\nmin_z = -14.450000\nmax_x = 48.000000\nmax_y = 45.000000\nmax_z = 14.450000\nnumber_of_facets = 35564\nmanifold = yes\nnumber_of_parts =  1\nvolume = 21528.085938",
+      "native_volume_extruders": [
+        "1"
+      ],
+      "dimensions_and_material_alignment_verified": true,
+      "offline_slice_succeeded": true,
+      "gcode_audit": {
+        "layer_count": 144,
+        "extrusion_segments": 234154,
+        "deposition_bounds_mm": [
+          [
+            77.225,
+            65.225,
+            0.2
+          ],
+          [
+            172.774,
+            154.775,
+            28.8
+          ]
+        ],
+        "all_model_moves_within_build_volume": true,
+        "single_nozzle_verified": true,
+        "startup_checks_and_shutdown_verified": true,
+        "maximum_observed_flow_mm3_s": 6.0022,
+        "filament_g": 27.85,
+        "filament_cm3": 21.42,
+        "estimated_time": "1h 36m 46s",
+        "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+        "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+      },
+      "gcode_file": "usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode",
+      "gcode_sha256": "57ee9060f5cfb030904f3a788d28951876dda055c654c250dcb1009e24468c5c",
+      "supports": false,
+      "brim_mm": 0,
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+    },
+    "04_guard_black.3mf": {
+      "sha256": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
+      "material": "black",
+      "native_info": "[04_guard_black.3mf]\nsize_x = 106.000000\nsize_y = 124.000000\nsize_z = 41.500000\nmin_x = -53.000000\nmin_y = -62.000000\nmin_z = -20.750000\nmax_x = 53.000000\nmax_y = 62.000000\nmax_z = 20.750000\nnumber_of_facets = 17024\nmanifold = yes\nnumber_of_parts =  1\nvolume = 64940.484375",
+      "native_volume_extruders": [
+        "1"
+      ],
+      "dimensions_and_material_alignment_verified": true,
+      "offline_slice_succeeded": true,
+      "gcode_audit": {
+        "layer_count": 207,
+        "extrusion_segments": 152520,
+        "deposition_bounds_mm": [
+          [
+            72.225,
+            48.225,
+            0.2
+          ],
+          [
+            177.775,
+            171.775,
+            41.4
+          ]
+        ],
+        "all_model_moves_within_build_volume": true,
+        "single_nozzle_verified": true,
+        "startup_checks_and_shutdown_verified": true,
+        "maximum_observed_flow_mm3_s": 6.0022,
+        "filament_g": 83.38,
+        "filament_cm3": 64.14,
+        "estimated_time": "3h 44m 20s",
+        "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+        "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+      },
+      "gcode_file": "usb/COREONE_04HF_PLA/04_guard_BLACK_04HF_PLA.gcode",
+      "gcode_sha256": "af2ec94cf0e74c94f4c35d1c824bbbea20dc0d847cf6205e1bec3f169855acdb",
+      "supports": false,
+      "brim_mm": 0,
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+    },
+    "05_cauldron_black.3mf": {
+      "sha256": "a02c18e4bfa0b647cec843b9b2e4c688808b675c826cc4d0a7374769408de403",
+      "material": "black",
+      "native_info": "[05_cauldron_black.3mf]\nsize_x = 223.998466\nsize_y = 208.999321\nsize_z = 200.000000\nmin_x = -111.999229\nmin_y = -104.499657\nmin_z = -100.000000\nmax_x = 111.999237\nmax_y = 104.499664\nmax_z = 100.000000\nnumber_of_facets = 773864\nmanifold = yes\nnumber_of_parts =  1\nvolume = 486030.656250",
+      "native_volume_extruders": [
+        "1"
+      ],
+      "dimensions_and_material_alignment_verified": true,
+      "offline_slice_succeeded": true,
+      "gcode_audit": {
+        "layer_count": 1000,
+        "extrusion_segments": 2522869,
+        "deposition_bounds_mm": [
+          [
+            13.226,
+            5.73,
+            0.2
+          ],
+          [
+            236.774,
+            214.275,
+            200.0
+          ]
+        ],
+        "all_model_moves_within_build_volume": true,
+        "single_nozzle_verified": true,
+        "startup_checks_and_shutdown_verified": true,
+        "maximum_observed_flow_mm3_s": 6.0025,
+        "filament_g": 622.99,
+        "filament_cm3": 479.22,
+        "estimated_time": "1d 2h 21m 55s",
+        "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+        "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+      },
+      "gcode_file": "usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode",
+      "gcode_sha256": "7e44dcf8f73d7d67913078041ee6508b745be8cf309c926075e85991fbae4d29",
+      "supports": true,
+      "brim_mm": 5,
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+    }
+  },
+  "unsafe_mutations_rejected": 4,
+  "all_plates_estimated_g": {
+    "black": 771.49,
+    "glow": 55.89
+  }
+}

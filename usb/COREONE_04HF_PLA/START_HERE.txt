@@ -1,0 +1,68 @@
+CYCLOPS CAULDRON - CORE ONE+ - REVISION 4
+READ BEFORE PRINTING
+
+These are actual single-nozzle G-code jobs generated with PrusaSlicer 2.9.6
+and official Prusa COREONE machine settings. They have passed a static
+G-code audit, NOT a physical print test. Your hardware/materials were not
+confirmed. Run them ONLY when all conditions below match.
+
+REQUIRED SETUP
+  Printer: stock Prusa CORE One+, single tool, no MMU or INDX.
+  Firmware: current stable firmware compatible with the official profile.
+            The files carry the 6.8.1+16182 update notice.
+  Nozzle: 0.4 mm HIGH-FLOW. Wear-resistant/hardened is REQUIRED for glow PLA.
+          Set the printer's nozzle diameter, high-flow, and hardened flags
+          correctly. Do not bypass a nozzle/model mismatch warning.
+  Filament: 1.75 mm black PLA / glow-in-the-dark PLA.
+            Both must support 220 C first layer, 215 C thereafter.
+            Glow filament must be rated for a 0.4 mm hardened nozzle.
+  Sheet: clean smooth PEI, suitable for PLA, at 60 C.
+  Chamber: official automatic control, target 20 C, vents unobstructed.
+
+NOT FOR a 0.6 mm nozzle, standard-flow nozzle, PETG, TPU, ASA, or other printer.
+Prusament PETG Ultraglow is PETG: DO NOT use the glow PLA G-code for it.
+If your setup differs, reslice the supplied 3MF with the matching official
+printer and filament profiles. Never fix a mismatch by ignoring the warning.
+
+USB WORKFLOW
+1. Use a readable FAT32 USB drive; do not format a drive containing needed data.
+2. Copy the five .gcode files from this folder onto the drive, then safely eject.
+   The printer runs .gcode, not .stl, .step, .3mf, or a zip archive.
+3. Insert the drive in the CORE One+. Clear the sheet completely and load the
+   filament stated in the filename through the printer's Filament menu.
+4. Select the job in the printer's Print menu. Check the model/nozzle notices,
+   expected material, and available filament before starting. Observe the
+   cleaning, levelling, and first layer. Stop if it lifts or extrudes poorly.
+5. Let the sheet cool and remove each finished part before starting the next job.
+   Change colors only BETWEEN jobs through the printer menu.
+
+JOBS (times are estimates)
+  01_test_BLACK_04HF_PLA.gcode       black PLA   37.27 g    1 h 47 m
+  02_skull_GLOW_04HF_PLA.gcode       glow PLA    55.89 g    2 h 46 m
+  03_carrier_BLACK_04HF_PLA.gcode    black PLA   27.85 g    1 h 37 m
+  04_guard_BLACK_04HF_PLA.gcode      black PLA   83.38 g    3 h 44 m
+  05_cauldron_BLACK_04HF_PLA.gcode   black PLA  622.99 g   26 h 22 m
+
+Print 01-04 and perform the mechanical fit test BEFORE committing to 05.
+You can print 01, 03, and 04 in black before swapping to glow for 02.
+Reuse the SAME skull, carrier, and guard in the final cauldron.
+Totals: 771.49 g black, 55.89 g glow at budget densities of 1.30/2.00 g/cm3.
+There is no purge tower, tool change, or mid-print filament change.
+
+ASSEMBLY SUMMARY
+  Skull to wall: four M2 x 10 screws, four M2 washers, four M2 nuts.
+  Carrier to wall: four M2 x 35 screws, washers and nuts (separate holes).
+  Stock lens hardware remains M2.5; do not substitute M2 in M2.5 threads.
+  The lens is retained by Adafruit's acrylic kit, not by the skull plate.
+  Use the complete hardware list and fit-test steps in docs/ASSEMBLY.md
+  in the repository before assembling powered electronics.
+
+The full skull and battery guard extend below the coupon's foot. Hold the
+coupon above a padded surface/bench edge during the assembled fit test.
+Never install electronics or the LiPo during printing. Never crush the pouch.
+Use wrapped candy/a liner. Check hanging balance and rope lugs over a soft
+surface before use. The calculated balance is for the empty assembled bucket;
+uneven candy, actual hardware weights, and rope knots will change it.
+
+Full instructions: docs/PRINTING.md and docs/ASSEMBLY.md in the repository.
+Verification: docs/slicer_validation.json and profiles/provenance.json.
