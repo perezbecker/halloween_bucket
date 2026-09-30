@@ -84,8 +84,9 @@ curl --fail --location --create-dirs 'https://raw.githubusercontent.com/adafruit
 - Battery space is **33 W x 42 H x 8.5 D**. The cell requires a soft pad,
   noncompressive strap, lead slack, and inspection before each use.
 - Rope anchors are modeled 10 thick around 13 bores, tied into the black wall
-  below the rolled rim. Their common Y = -16.66 axis comes from the complete
-  installed assembly's nominal center of mass, not the geometric centerline.
+  below the rolled rim. Their common Y = -16.66 axis was chosen for the original
+  assembly and is now fixed because the cauldron has already been printed.
+  The heavier sculpted faceplate changes the reported tilt, not the holes.
   **No FEA, drop test, creep test, or physical carrying-load test** has
   been performed. Printed layer adhesion and rope abrasion must be evaluated.
 - Density limits of **1.30 g/cm3 black / 2.00 g/cm3 glow** are conservative
@@ -98,9 +99,13 @@ The CORE One+ version has a 224 mm belly, 200 mm height, 186 mm neck diameter,
 8 mm rolled lip, and 146 mm flat base. The flat electronics face is at Y = -89
 and the eye at Z = 125. The original skull silhouette is scaled to 90%, but
 the eye bore and electronics interfaces retain their full-size dimensions.
-The 3 mm skull now prints separately and attaches with four M2 x 10 screws;
-the former 0.9 mm inlay has been removed, leaving a full-thickness black wall.
-There are no moon or hat ornaments.
+The default skull now has raised forehead, brow, cheek, jaw and tooth contours,
+up to **10.5 mm total thickness**. Its original 3 mm mounting layer, flat rear
+surface and hole pattern remain intact. Recessed 8.4 mm diameter screw-seat
+lands retain the **M2 x 10** grip length. The original eye bezel remains flat
+inside a 52.4 mm diameter keep-clear zone; the 44.4 mm bore and carrier access
+holes are not narrowed. The retired flat faceplate has no separate print job.
+The black wall remains full thickness. There are no moon or hat ornaments.
 
 Nominal balancing uses black/glow densities of 1.24/1.50 g/cm3. PCB and battery
 masses come from Adafruit; the glass is **estimated at 31 g** from its approximate
@@ -110,10 +115,12 @@ component mass centers are estimates.
 See [assembly and balance](ASSEMBLY.md#rope-balance) for the complete assumptions,
 centered-candy scenarios, density/lens sensitivity, and required hanging test.
 
-The computed nominal center is approximately (0, -16.66, 99.73). The two bore
-centers at (+/-99.33, -16.66, 178) balance the empty assembly, not every possible
-load. Both lug material and material removed by the offset holes are included
-in the iterated balance solution. The coupon and discarded printing supports
+The computed nominal center is approximately (0, -19.53, 100.64). The two bore
+centers stay at (+/-99.33, -16.66, 178), giving about **2.1 degrees of empty
+forward tilt**. The approximately 21.35 cm3 of added relief contributes about 32 g
+at the nominal 1.50 g/cm3 glow density. Both lug material and removed hole
+material are included, but the old iterative hole-placement calculation is no
+longer used. The coupon and discarded printing supports
 are excluded. A symmetrically installed rope is assumed; unequal knots or
 an off-center grip are not modeled.
 
@@ -123,20 +130,26 @@ an off-center grip are not modeled.
 consistently wound meshes, volumes, bed envelopes, nonintersecting material
 volumes, mounting/candy-guard clearances, fastener passages, and the coupon's
 identity to the corresponding cauldron geometry. The black body and separate
-flat glow faceplate are individually connected, nonintersecting solids. Four
+sculpted glow faceplate are individually connected, nonintersecting solids. Four
 additional screw bores, washer-bearing lands, and clearance for internal M2
 hardware are checked. The actual faceplate is reused for the black coupon test.
+The saved cauldron, carrier and guard STEP files are checked directly for
+faceplate intersections. The complete original 3 mm base layer is retained;
+all relief is added outward. [printed_parts.json](printed_parts.json) pins
+sixteen existing black CAD, STL, 3MF and G-code files to revision-4 hashes.
+The default build verifies and reuses these files rather than rewriting them.
 
 Mass calculations use adaptive, spline-span CAD integration and are checked
 against fine triangle meshes for both volume and centroid agreement. The
 cauldron profile uses local cubic segments to avoid unstable section Booleans
 on a single long interpolated surface. Checks require the coupon to retain a
-complete wall, clear rope bores on the computed axis, uninterrupted lug bearing
+complete wall, clear rope bores on the fixed printed axis, uninterrupted lug bearing
 rings, and support-critical bowl/neck slopes above 55 degrees.
 
 [slicer_validation.json](slicer_validation.json) records native **PrusaSlicer
-2.9.6** imports, per-object bounds, extruder **1 only**, five successful slices,
-and the G-code audit. The audit examines executable commands, not the commented
+2.9.6** imports, per-object bounds, extruder **1 only**, the new sculpted-faceplate
+slice and the re-audited four original black jobs. The black G-code is retained
+byte-for-byte. The audit examines executable commands, not the commented
 settings footer, and checks model/nozzle/firmware notices, cleaning and levelling,
 single-nozzle use, PLA temperatures, flow limits, all model-phase moves, and
 heater shutdown. Four negative tests inject an extra tool, out-of-bed move,
@@ -160,8 +173,12 @@ and parking. The glow profile sets `filament_abrasive=1`, activating the
 firmware's abrasive/nozzle check. The original startup purge intentionally uses
 Y = -2.5; model-phase motion is separately checked against the 250 x 220 bed.
 
-Derived settings use seven walls, 0.20 mm layers, conservative 6/3 mm3/s black/glow
-flow limits, and **220/215 C nozzle, 60 C bed** PLA temperatures. These are chosen
+Derived base settings use seven walls, 0.20 mm layers, conservative 6/3 mm3/s
+black/glow flow limits, and **220/215 C nozzle, 60 C bed** PLA temperatures.
+The sculpted faceplate overrides layer height to **0.10 mm** (0.20 mm first),
+uses **100% rectilinear** infill and ten top/bottom solid layers, without supports
+or a brim. These overrides are in the slicer script and validation report;
+the machine and filament profiles remain unchanged. These are chosen
 assumptions, not verified settings for an unspecified filament brand. Full
 configuration files and input/output hashes are in
 [profiles/provenance.json](../profiles/provenance.json). Prusa profile authors

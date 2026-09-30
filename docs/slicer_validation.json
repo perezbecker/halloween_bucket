@@ -1,6 +1,6 @@
 {
   "slicer_version": "PrusaSlicer-2.9.6 based on Slic3r (with GUI support)",
-  "design": "Cyclops cauldron, revision 4, CORE One+ single nozzle",
+  "design": "Cyclops cauldron, revision 6, prominent sculpted faceplate",
   "scope": "CORE One+ 0.4 high-flow PLA USB jobs; hardware/material assumptions require confirmation before use",
   "profile_provenance": {
     "source_url": "https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/65c5c8f1e1c3836f306119c49d717759cbc368db/PrusaResearch/2.5.10.ini",
@@ -68,47 +68,58 @@
       "gcode_sha256": "97b6fef4829d52a6218748a9c270db8a0b2c25c8f9df5eada1b3324b70575cdb",
       "supports": true,
       "brim_mm": 5,
-      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+      "existing_job_preserved_byte_for_byte": true
     },
     "02_skull_faceplate_glow.3mf": {
-      "sha256": "f956d0d644f7250ed8b7d6a840160caf1d6d6f9f817a8f4d659a1b7c2d0592bd",
+      "sha256": "71619e3bc5438c6dd9603a8199c65d170a9806950e20aeeac11a81458e18b2b5",
       "material": "glow",
-      "native_info": "[02_skull_faceplate_glow.3mf]\nsize_x = 127.806973\nsize_y = 138.259125\nsize_z = 3.000000\nmin_x = -63.903484\nmin_y = -69.129562\nmin_z = -1.500000\nmax_x = 63.903488\nmax_y = 69.129562\nmax_z = 1.500000\nnumber_of_facets = 20764\nmanifold = yes\nnumber_of_parts =  1\nvolume = 27853.060547",
+      "native_info": "[02_skull_faceplate_glow.3mf]\nsize_x = 127.807312\nsize_y = 138.259125\nsize_z = 10.465464\nmin_x = -63.903656\nmin_y = -69.129562\nmin_z = -5.232732\nmax_x = 63.903656\nmax_y = 69.129562\nmax_z = 5.232732\nnumber_of_facets = 238502\nmanifold = yes\nnumber_of_parts =  1\nvolume = 49178.953125",
       "native_volume_extruders": [
         "1"
       ],
       "dimensions_and_material_alignment_verified": true,
       "offline_slice_succeeded": true,
       "gcode_audit": {
-        "layer_count": 15,
-        "extrusion_segments": 170818,
+        "layer_count": 104,
+        "extrusion_segments": 680878,
         "deposition_bounds_mm": [
           [
-            61.326,
-            41.095,
+            61.323,
+            41.096,
             0.2
           ],
           [
-            188.678,
-            178.905,
-            3.0
+            188.674,
+            178.901,
+            10.5
           ]
         ],
         "all_model_moves_within_build_volume": true,
         "single_nozzle_verified": true,
         "startup_checks_and_shutdown_verified": true,
-        "maximum_observed_flow_mm3_s": 3.0016,
-        "filament_g": 55.89,
-        "filament_cm3": 27.95,
-        "estimated_time": "2h 45m 48s",
+        "maximum_observed_flow_mm3_s": 3.0026,
+        "filament_g": 98.72,
+        "filament_cm3": 49.36,
+        "estimated_time": "5h 39m 49s",
         "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
         "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
       },
       "gcode_file": "usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode",
-      "gcode_sha256": "6d48451d9a6d3410040aef102208704cebebf765f6efb1b77f48b4247768b8f4",
+      "gcode_sha256": "55e6c11f9759321a6ece63526c82c88410ff7dea5643d133d3661858a0d43d0f",
       "supports": false,
       "brim_mm": 0,
-      "profile": "profiles/core_one_plus_0.4HF_glow_PLA.ini"
+      "profile": "profiles/core_one_plus_0.4HF_glow_PLA.ini",
+      "overrides": {
+        "layer_height_mm": 0.1,
+        "first_layer_mm": 0.2,
+        "infill_percent": 100,
+        "fill_pattern": "rectilinear",
+        "top_bottom_layers": 10,
+        "supports": false,
+        "brim_mm": 0
+      },
+      "postprocessing": "Trailing whitespace removed; executable commands unchanged"
     },
     "03_carrier_black.3mf": {
       "sha256": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
@@ -148,7 +159,8 @@
       "gcode_sha256": "57ee9060f5cfb030904f3a788d28951876dda055c654c250dcb1009e24468c5c",
       "supports": false,
       "brim_mm": 0,
-      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+      "existing_job_preserved_byte_for_byte": true
     },
     "04_guard_black.3mf": {
       "sha256": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
@@ -188,7 +200,8 @@
       "gcode_sha256": "af2ec94cf0e74c94f4c35d1c824bbbea20dc0d847cf6205e1bec3f169855acdb",
       "supports": false,
       "brim_mm": 0,
-      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+      "existing_job_preserved_byte_for_byte": true
     },
     "05_cauldron_black.3mf": {
       "sha256": "a02c18e4bfa0b647cec843b9b2e4c688808b675c826cc4d0a7374769408de403",
@@ -228,12 +241,13 @@
       "gcode_sha256": "7e44dcf8f73d7d67913078041ee6508b745be8cf309c926075e85991fbae4d29",
       "supports": true,
       "brim_mm": 5,
-      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini"
+      "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+      "existing_job_preserved_byte_for_byte": true
     }
   },
   "unsafe_mutations_rejected": 4,
   "all_plates_estimated_g": {
     "black": 771.49,
-    "glow": 55.89
+    "glow": 98.72
   }
 }

@@ -174,16 +174,19 @@ def setup_plot(night=False):
 
 
 VIEWS = {
-    "01_front_three_quarter": ((310, -470, 290), (0, 0, 102), 146, "CORE ONE+ / CYCLOPS CAULDRON", "Single-nozzle black cauldron with a separately printed, M2-mounted glow skull."),
-    "02_front": ((0, -540, 139), (0, 0, 102), 139, "FRONT / SCREW-ON SKULL", "44.4 mm lens opening / 128 mm glow faceplate / 224 mm belly / 200 mm tall."),
+    "01_front_three_quarter": ((310, -470, 290), (0, 0, 102), 146, "CORE ONE+ / SCULPTED CYCLOPS", "More prominent glow relief on the existing cauldron; the original M2 interfaces are unchanged."),
+    "02_front": ((0, -540, 139), (0, 0, 102), 139, "FRONT / SCULPTED SKULL", "Up to 10.5 mm relief thickness / original 3 mm screw seats / unchanged 44.4 mm eye opening."),
     "03_rear": ((-300, 420, 280), (0, 0, 100), 151, "REAR / ROUNDED CAULDRON", "Narrowed neck, rolled lip, and reinforced rope lugs shifted toward the electronics."),
     "04_top_interior": ((200, -330, 490), (0, 0, 100), 155, "TOP / CANDY SPACE", "Removable guard separates the HalloWing, wiring, and battery from candy."),
     "05_cutaway": ((310, -270, 260), (0, -14, 106), 145, "SECTION / SKULL EYE", "Right half removed for inspection. Battery and optics are reference envelopes."),
     "06_mounting_test": ((185, -330, 225), (0, -72, 111), 95, "REUSABLE FACEPLATE / FIT TEST", "Black wall coupon with the full glow skull and carrier. Reuse both in the cauldron."),
     "07_exploded_mount": ((340, -390, 310), (0, -5, 118), 166, "EXPLODED / SEPARATE FACEPLATE", "Glow skull > black wall > stock lens + PCB > carrier > battery guard."),
     "08_glow_preview": ((230, -450, 270), (0, 0, 102), 151, "CYCLOPS CAULDRON / GLOW STUDY", "Illustrative charged-phosphor appearance, not a calibrated brightness prediction."),
-    "09_printed_parts": ((270, -430, 285), (0, 0, 102), 146, "PRINTED PARTS / NO ELECTRONICS", "The eye remains open. Four M2 x 10 screws attach the flat glow skull to the black wall."),
-    "10_rope_balance": ((0, 0, 620), (0, 0, 95), 154, "BALANCE / TOP PROJECTION", "Amber: rope axis and assembled center of mass. Grey: uncorrected geometric axis."),
+    "09_printed_parts": ((270, -430, 285), (0, 0, 102), 146, "PRINTED PARTS / NO ELECTRONICS", "Four existing M2 x 10 screws attach the sculpted skull; its back and screw seats stay flat."),
+    "10_rope_balance": ((0, 0, 620), (0, 0, 95), 154, "BALANCE / FIXED ROPE HOLES", "Amber: existing rope axis and updated mass-center marker. The printed rope holes do not move."),
+    "11_sculpted_closeup": ((150, -240, 290), (0, -16, 2), 90, "SCULPTED FACEPLATE / CLOSE-UP", "Raised forehead, brow, cheekbones, jaw and teeth; 10.5 mm maximum thickness, flat back down."),
+    "12_sculpted_front": ((0, -16, 350), (0, -16, 2), 90, "SCULPTED FACEPLATE / FRONT", "Original outline, eye opening and four M2 positions retained. Recessed seats keep M2 x 10 screws."),
+    "13_sculpted_raking": ((80, -260, 100), (0, -16, 2), 76, "LOW ANGLE / STRONGER CONTOURS", "Up to 7.5 mm added outward depth above the original 3 mm mounting layer; no black-part reprint."),
 }
 
 
@@ -197,7 +200,7 @@ def compose_caption(path, title, subtitle, night=False):
     body_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 18)
     ink = "#D5E9A5" if night else "#252D32"
     secondary = "#AEBABD" if night else "#526068"
-    draw.text((64, 45), "CYCLOPS CAULDRON / CORE ONE+ / REVISION 04", font=body_font, fill=secondary)
+    draw.text((64, 45), "CYCLOPS CAULDRON / CORE ONE+ / REVISION 06", font=body_font, fill=secondary)
     draw.text((64, 80), title, font=title_font, fill=ink)
     draw.line((64, 1180, 1496, 1180), fill=secondary, width=1)
     draw.text((64, 1205), subtitle, font=body_font, fill=secondary)
@@ -208,7 +211,7 @@ def compose_caption(path, title, subtitle, night=False):
         draw.line((64, 204, 108, 204), fill="#B57A2C", width=4)
         draw.text((124, 191), "Rope / assembled COM", font=body_font, fill=secondary)
         draw.text((64, 248), f"{abs(balance['rope_axis_y_mm']):.2f} mm toward the eye", font=body_font, fill=ink)
-        draw.text((64, 280), "Empty assembled target", font=body_font, fill=secondary)
+        draw.text((64, 280), "Printed rope holes unchanged", font=body_font, fill=secondary)
     image.save(path)
 
 
@@ -216,7 +219,18 @@ def render_view(name):
     camera, target, scale, title, subtitle = VIEWS[name]
     night = "glow_preview" in name
     plot = setup_plot(night)
-    if name == "07_exploded_mount":
+    detail_view = name in ("11_sculpted_closeup", "12_sculpted_front", "13_sculpted_raking")
+    if detail_view:
+        actor = add_solid(plot, load_part("bucket_glow", assembly=False), GLOW)
+        actor.prop.ambient = 0.20
+        actor.prop.diffuse = 0.85
+        actor.prop.specular = 0.10
+        for light, position, intensity in zip(plot.renderer.lights,
+                ((-180, -50, 105), (150, 80, 230), (0, 200, 80)), (0.95, 0.35, 0.20), strict=True):
+            light.position = position
+            light.focal_point = (0, -15, 2)
+            light.intensity = intensity
+    elif name == "07_exploded_mount":
         add_solid(plot, load_part("test_black"), BLACK)
         add_solid(plot, load_part("bucket_glow"), GLOW, (0, -45, 0))
         electronics(plot, (0, 45, 0))
@@ -267,9 +281,9 @@ def render_view(name):
             cross = pv.Disc(center=(center_x, center_y, overlay_z + 1), inner=3, outer=4.2,
                             normal=(0, 0, 1), r_res=1, c_res=60)
             plot.add_mesh(cross, color="#B57A2C", lighting=False)
-    if name not in ("06_mounting_test", "07_exploded_mount"):
+    if name not in ("06_mounting_test", "07_exploded_mount") and not detail_view:
         add_ground(plot, night)
-    plot.camera_position = [camera, target, (0, 1, 0) if name == "10_rope_balance" else (0, 0, 1)]
+    plot.camera_position = [camera, target, (0, 1, 0) if name in ("10_rope_balance", "12_sculpted_front") else (0, 0, 1)]
     plot.camera.parallel_scale = scale
     path = OUTPUT / f"{name}.png"
     plot.show(screenshot=str(path), auto_close=True)
@@ -291,11 +305,18 @@ def contact_sheet():
         thumb = Image.open(path).convert("RGB").resize((520, 426), Image.Resampling.LANCZOS)
         sheet.paste(thumb, ((index % 3) * 520, (index // 3) * 426))
     sheet.save(OUTPUT / "overview.png")
+    details = ("11_sculpted_closeup", "12_sculpted_front", "13_sculpted_raking", "01_front_three_quarter")
+    if all((OUTPUT / f"{name}.png").exists() for name in details):
+        sheet = Image.new("RGB", (1560, 1280), BACKGROUND)
+        for index, name in enumerate(details):
+            thumb = Image.open(OUTPUT / f"{name}.png").convert("RGB").resize((780, 640), Image.Resampling.LANCZOS)
+            sheet.paste(thumb, ((index % 2) * 780, (index // 2) * 640))
+        sheet.save(OUTPUT / "faceplate_overview.png")
 
 
 PRINT_BED_TITLES = {
     "01_mount_test_black.3mf": "01 / MOUNTING TEST / BLACK PLA",
-    "02_skull_faceplate_glow.3mf": "02 / FLAT SKULL FACEPLATE / GLOW PLA",
+    "02_skull_faceplate_glow.3mf": "02 / SCULPTED SKULL / GLOW PLA",
     "03_carrier_black.3mf": "03 / HALLOWING CARRIER / BLACK PLA",
     "04_guard_black.3mf": "04 / BATTERY GUARD / BLACK PLA",
     "05_cauldron_black.3mf": "05 / CAULDRON / BLACK PLA",

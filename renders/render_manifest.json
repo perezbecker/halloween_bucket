@@ -178,5 +178,59 @@
       0,
       95
     ]
+  },
+  {
+    "image": "11_sculpted_closeup.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      150,
+      -240,
+      290
+    ],
+    "target": [
+      0,
+      -16,
+      2
+    ]
+  },
+  {
+    "image": "12_sculpted_front.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      0,
+      -16,
+      350
+    ],
+    "target": [
+      0,
+      -16,
+      2
+    ]
+  },
+  {
+    "image": "13_sculpted_raking.png",
+    "size": [
+      1560,
+      1280
+    ],
+    "nonblank": true,
+    "camera": [
+      80,
+      -260,
+      100
+    ],
+    "target": [
+      0,
+      -16,
+      2
+    ]
   }
 ]

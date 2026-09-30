@@ -47,19 +47,19 @@
   {
     "image": "02_skull_faceplate_glow.png",
     "source_3mf": "print/02_skull_faceplate_glow.3mf",
-    "source_3mf_sha256": "f956d0d644f7250ed8b7d6a840160caf1d6d6f9f817a8f4d659a1b7c2d0592bd",
+    "source_3mf_sha256": "71619e3bc5438c6dd9603a8199c65d170a9806950e20aeeac11a81458e18b2b5",
     "gcode": "usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode",
-    "gcode_sha256": "6d48451d9a6d3410040aef102208704cebebf765f6efb1b77f48b4247768b8f4",
+    "gcode_sha256": "55e6c11f9759321a6ece63526c82c88410ff7dea5643d133d3661858a0d43d0f",
     "placed_model_bounds_mm": [
       [
-        61.096517,
+        61.096343,
         40.870439,
-        -0.0
+        0.0
       ],
       [
-        188.903483,
+        188.903657,
         179.129561,
-        3.0
+        10.465464
       ]
     ],
     "printable_bed_mm": [

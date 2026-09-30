@@ -29,6 +29,11 @@ warning. No MMU, INDX, second nozzle, or mid-print filament swap is needed.
 
 ## Print From USB
 
+For the already-printed cauldron and carrier, use only the updated
+[02_skull_GLOW_04HF_PLA.gcode](../usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode).
+The flat faceplate is retired. Job 02 now prints the stronger sculpted design;
+do not use an older copy of that filename left on your USB drive.
+
 1. Check the prerequisites above and read the
   [USB checklist](../usb/COREONE_04HF_PLA/START_HERE.txt).
 2. Put the five supplied `.gcode` files onto a FAT32 USB drive and safely eject
@@ -42,7 +47,7 @@ warning. No MMU, INDX, second nozzle, or mid-print filament swap is needed.
   job. Change filament between jobs using the printer menu. Do not leave a
   finished part on the sheet for the next job.
 
-Complete the first four parts and the physical fit test **before printing the
+For a completely new build, complete the first four parts and the physical fit test **before printing the
 full cauldron**. You can do black jobs 01, 03, and 04 first to avoid extra swaps,
 then glow job 02, test the assembly, and finally black job 05. No electronics,
 glass, battery, or rope are installed in the printer during any job.
@@ -52,12 +57,13 @@ glass, battery, or rope are installed in the printer during any job.
 | Setting | Starting point |
 | --- | --- |
 | Nozzle | One 0.4 mm high-flow nozzle; hardened/wear-resistant for glow |
-| Layer / first layer | 0.20 / 0.20 mm |
+| Layer / first layer, black jobs | 0.20 / 0.20 mm, unchanged |
+| Layer / first layer, sculpted skull | 0.10 / 0.20 mm |
 | Extrusion width | 0.45 mm walls, 0.50 mm first layer |
 | Perimeters | 7 |
-| Top / bottom solid layers | 8 / 10 |
-| Infill | 15% gyroid; not vase mode |
-| Brim | 5 mm on cauldron and test wall; none on the flat skull, carrier, or guard |
+| Top / bottom solid layers | Black: 8 / 10; skull: 10 / 10 |
+| Infill | Black: 15% gyroid; skull: 100% rectilinear; not vase mode |
+| Brim | 5 mm on cauldron and test wall; none on the sculpted skull, carrier, or guard |
 | Supports, bucket/test | Organic, approximately 55 degree overhang threshold; all in black |
 | Supports, carrier/guard | Normally off in the supplied flat-back-down orientations |
 | Supports, skull | Off; flat back on the bed, face up |
@@ -71,8 +77,10 @@ Do not scale them down or use spiral vase mode. Most thin walls print effectivel
 solid regardless of the nominal infill percentage.
 
 The reusable [black profile](../profiles/core_one_plus_0.4HF_black_PLA.ini) and
-[glow profile](../profiles/core_one_plus_0.4HF_glow_PLA.ini) contain the full
-resolved settings. For another setup, load the geometry into current PrusaSlicer,
+[glow profile](../profiles/core_one_plus_0.4HF_glow_PLA.ini) contain the resolved
+base machine/material settings. The skull-only overrides in the table above
+are applied by the slicer script and recorded in [slicer_validation.json](slicer_validation.json).
+For another setup, load the geometry into current PrusaSlicer,
 select the correct official printer/nozzle/material presets, retain adequate
 wall thickness, and inspect the preview. Do not reuse this G-code after a nozzle
 change without matching its 0.4 HF assumptions or reslicing.
@@ -84,7 +92,8 @@ change without matching its 0.4 HF assumptions or reslicing.
   reusable full skull and guard. Tests horizontal holes in the same print
   orientation as the cauldron.
 2. [02_skull_faceplate_glow.3mf](../print/02_skull_faceplate_glow.3mf): the complete
-  128 x 138 x 3 mm skull, printed flat. Use it for the test and the final bucket.
+  128 x 138 mm sculpted skull, up to 10.5 mm thick, with a flat back and unchanged
+  3 mm screw seats. Print back-down, sculpture-up. Use it for the test and final bucket.
 3. [03_carrier_black.3mf](../print/03_carrier_black.3mf): the HalloWing carrier,
   flat back down, support posts upward.
 4. [04_guard_black.3mf](../print/04_guard_black.3mf): the battery cradle and candy
@@ -102,7 +111,8 @@ Do not move the models closer to the bed edges or scale them to a larger size.
 ## Support And Preview Checks
 
 The black eye bore, rope bosses, and portions of the rolled lip may need
-localized supports. The separately printed flat skull does not. The lower bowl and
+localized supports. The separately printed, flat-backed sculpted skull does not:
+the raised caps narrow above the original 3 mm layer. The lower bowl and
 inward shoulder are shaped to stay above 55 degrees to the bed, avoiding broad
 support structures under the belly or inside the neck. The reference audit uses automatic organic supports for
 the bucket and coupon. Do not assume either is globally support-free.
@@ -112,8 +122,9 @@ or eye opening. Never leave support remnants under a PCB post or against glass.
 
 Before printing, inspect the sliced layers around:
 
-- The entire glow faceplate must lie flat at Z = 0 and finish at Z = 3 mm.
-  Its high location on the assembled cauldron is not its print orientation.
+- The glow faceplate back must lie flat at Z = 0. Relief peaks at approximately
+  Z = 10.5 mm, while the screw seats and eye bezel remain at Z = 3 mm. Its high
+  location on the assembled cauldron is not its print orientation.
 - The eye roof and ring: no unhandled bridging or support welded into the bore.
 - All four M2 holes and the M2.5 carrier passages: they must remain open.
 - The rope anchors and rim: continuous black perimeters, not disconnected shells.
@@ -122,16 +133,21 @@ Before printing, inspect the sliced layers around:
 
 The black wall is now continuous and full thickness behind the skull, except
 for the eye opening and screw holes. There is **no inlay cutout or material
-bonding requirement**. The 3 mm skull contacts the outside wall and is retained
-by four separate M2 x 10 screws, washers, and nuts.
+bonding requirement**. The original 3 mm base layer contacts the outside wall;
+relief rises only outward. Four M2 x 10 screws, washers and nuts still fit
+because their seats have not thickened. Do not substitute longer screws.
 
 ## The 1 kg Limits
 
-[CAD validation](validation.json) budgets **907.59 g black** and **105.71 g glow**:
+[CAD validation](validation.json) budgets **907.59 g black** and **148.41 g glow**:
 all parts including the coupon, solid-volume density bounds, plus 125 g black
 and 50 g glow allowances. The separate
 [native slicing audit](slicer_validation.json) estimates **771.49 g black** and
-**55.89 g glow** for all five supplied jobs, including supports, brims, and startup purge.
+**98.72 g glow** for all five supplied jobs, including supports, brims, and startup purge.
+
+The new faceplate-only job takes approximately **5 h 40 m**. All four black
+G-code files are retained byte-for-byte from the printed design and re-audited,
+not resliced. Their pinned hashes are in [printed_parts.json](printed_parts.json).
 
 The black allowance is intentionally the controlling limit. Add the per-tool
 usage from **all five plates**, including supports, priming, and any
