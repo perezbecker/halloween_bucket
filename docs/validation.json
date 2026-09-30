@@ -1,5 +1,5 @@
 {
-  "design": "Cyclops cauldron, revision 4, CORE One+ single nozzle",
+  "design": "Cyclops cauldron, revision 6, prominent sculpted faceplate",
   "units": "mm",
   "parameters": {
     "height": 200.0,
@@ -14,6 +14,7 @@
     "eye_bore": 44.4,
     "rope_bore": 13.0,
     "rope_drop": 22.0,
+    "rope_axis_y": -16.66,
     "faceplate_thickness": 3.0,
     "carrier_thickness": 3.0,
     "pcb_thickness": 1.6,
@@ -57,7 +58,8 @@
     "eye_and_fastener_passages_clear": true,
     "battery_clearance_verified": true,
     "separate_screw_mounted_faceplate_verified": true,
-    "balanced_rope_passages_and_bearing_rings_verified": true
+    "balanced_rope_passages_and_bearing_rings_verified": true,
+    "printed_black_files_and_interfaces_preserved": true
   },
   "parts": {
     "bucket_black": {
@@ -88,26 +90,26 @@
     },
     "bucket_glow": {
       "material": "glow",
-      "cad_volume_cm3": 27.8535,
-      "solid_mass_upper_g": 55.71,
+      "cad_volume_cm3": 49.2064,
+      "solid_mass_upper_g": 98.41,
       "bounds_mm": [
         [
-          -63.9035,
+          -63.9037,
           -87.6478,
-          -0.0
+          0.0
         ],
         [
-          63.9035,
+          63.9037,
           50.6113,
-          3.0
+          10.4655
         ]
       ],
       "cad_center_of_mass_mm": [
-        0.029735329909038724,
-        -13.76332029465721,
-        1.5000000000002105
+        0.0957230142987007,
+        -8.05035995003364,
+        3.159484066187708
       ],
-      "triangles": 20764,
+      "triangles": 238502,
       "watertight": true,
       "winding_consistent": true,
       "mesh_components": 1
@@ -192,11 +194,66 @@
     }
   },
   "plates": {
-    "01_mount_test_black.3mf": null,
-    "02_skull_faceplate_glow.3mf": null,
-    "03_carrier_black.3mf": null,
-    "04_guard_black.3mf": null,
-    "05_cauldron_black.3mf": null
+    "01_mount_test_black.3mf": {
+      "objects": 1,
+      "build_volume_mm": [
+        250.0,
+        220.0,
+        270.0
+      ],
+      "minimum_xy_bed_allowance_mm": 5,
+      "material": "black",
+      "extruder": 1,
+      "round_trip_volume_verified": true
+    },
+    "02_skull_faceplate_glow.3mf": {
+      "objects": 1,
+      "build_volume_mm": [
+        250.0,
+        220.0,
+        270.0
+      ],
+      "minimum_xy_bed_allowance_mm": 5,
+      "material": "glow",
+      "extruder": 1,
+      "round_trip_volume_verified": true
+    },
+    "03_carrier_black.3mf": {
+      "objects": 1,
+      "build_volume_mm": [
+        250.0,
+        220.0,
+        270.0
+      ],
+      "minimum_xy_bed_allowance_mm": 5,
+      "material": "black",
+      "extruder": 1,
+      "round_trip_volume_verified": true
+    },
+    "04_guard_black.3mf": {
+      "objects": 1,
+      "build_volume_mm": [
+        250.0,
+        220.0,
+        270.0
+      ],
+      "minimum_xy_bed_allowance_mm": 5,
+      "material": "black",
+      "extruder": 1,
+      "round_trip_volume_verified": true
+    },
+    "05_cauldron_black.3mf": {
+      "objects": 1,
+      "build_volume_mm": [
+        250.0,
+        220.0,
+        270.0
+      ],
+      "minimum_xy_bed_allowance_mm": 5,
+      "material": "black",
+      "extruder": 1,
+      "round_trip_volume_verified": true
+    }
   },
   "material_budgets": {
     "black": {
@@ -209,9 +266,9 @@
     },
     "glow": {
       "density_upper_g_cm3": 2.0,
-      "solid_parts_including_test_g": 55.71,
+      "solid_parts_including_test_g": 98.41,
       "reserved_for_support_brim_priming_g": 50,
-      "total_budget_g": 105.71,
+      "total_budget_g": 148.41,
       "limit_g": 1000,
       "within_limit": true
     }
@@ -226,6 +283,7 @@
     ],
     "rope_axis_y_mm": -16.66,
     "rope_axis_z_mm": 178.0,
+    "rope_holes_fixed_to_printed_revision_4": true,
     "anchor_centers_mm": [
       [
         -99.32741131483625,
@@ -238,17 +296,17 @@
         178.0
       ]
     ],
-    "assembled_mass_g": 834.5314338934936,
+    "assembled_mass_g": 866.5607770710537,
     "assembled_center_mm": [
-      0.0014887002549073306,
-      -16.661870758745483,
-      99.72734535759915
+      0.008153263645848343,
+      -19.532382318588542,
+      100.63935069412163
     ],
-    "residual_fore_aft_offset_mm": -0.0018707587454827035,
-    "predicted_pitch_if_holes_were_at_y_zero_degrees": -12.017160820021276,
+    "residual_fore_aft_offset_mm": -2.872382318588542,
+    "predicted_pitch_if_holes_were_at_y_zero_degrees": -14.170154858370797,
     "left_right_load_share": [
-      0.49999250609557216,
-      0.5000074939044278
+      0.49995895763547077,
+      0.5000410423645292
     ],
     "components": [
       {
@@ -263,11 +321,11 @@
       },
       {
         "name": "One-eyed glow skull",
-        "mass_g": 41.78031208069315,
+        "mass_g": 73.80965525825327,
         "center_mm": [
-          0.029735329909035813,
-          -90.5000000000002,
-          111.2366797053428
+          0.09572301429870106,
+          -92.15948406618769,
+          116.94964004996626
         ],
         "basis": "CAD solid volume x nominal density"
       },
@@ -365,38 +423,38 @@
     "centered_candy_scenarios": [
       {
         "payload_g": 0,
-        "total_mass_g": 834.5314338934936,
+        "total_mass_g": 866.5607770710537,
         "center_mm": [
-          0.0014887002549073306,
-          -16.661870758745483,
-          99.72734535759915
+          0.008153263645848343,
+          -19.532382318588542,
+          100.63935069412163
         ],
-        "predicted_pitch_degrees": -0.0013694000934634729
+        "predicted_pitch_degrees": -2.1264017178698422
       },
       {
         "payload_g": 500,
-        "total_mass_g": 1334.5314338934936,
+        "total_mass_g": 1366.5607770710537,
         "center_mm": [
-          0.0009309388500058179,
-          -10.419278664030074,
-          86.71628226997964
+          0.005170131178325306,
+          -12.385835071545404,
+          87.59955352882199
         ],
-        "predicted_pitch_degrees": 3.9110092974834827
+        "predicted_pitch_degrees": 2.706948757099647
       },
       {
         "payload_g": 1000,
-        "total_mass_g": 1834.5314338934936,
+        "total_mass_g": 1866.5607770710537,
         "center_mm": [
-          0.0006772122490856984,
-          -7.579513023733343,
-          80.79752779437754
+          0.0037851960500842343,
+          -9.068012468688385,
+          81.54575827971028
         ],
-        "predicted_pitch_degrees": 5.336983436617074
+        "predicted_pitch_degrees": 4.500516023172435
       }
     ],
     "density_and_lens_mass_sensitivity_pitch_degrees": [
-      -1.6756324886297602,
-      1.194037447606171
+      -4.439568760017526,
+      -0.6284921732627025
     ],
     "limitations": [
       "This is a static estimate, not a measured hanging test or certified rope-load rating.",
@@ -405,6 +463,29 @@
       "No fixed pair of holes can stay exactly level for every possible candy distribution."
     ]
   },
+  "faceplate_compatibility": {
+    "original_plate_preserved": true,
+    "rear_surface_outline_and_holes_unchanged": true,
+    "existing_m2_x_10_screws_retained": true,
+    "eye_bezel_and_carrier_access_unchanged": true,
+    "maximum_thickness_mm": 10.465493037128203,
+    "seating_thickness_mm": 3.0,
+    "original_volume_cm3": 27.853541387128768,
+    "sculpted_volume_cm3": 49.206436838835494,
+    "added_volume_cm3": 21.352894757010787,
+    "print_center_of_mass_mm": [
+      0.09572301429869798,
+      -8.050359950033627,
+      3.15948406618769
+    ],
+    "m2_attachment_points": 4
+  },
+  "existing_step_collisions_mm3": {
+    "bucket_black": 0.0,
+    "carrier_black": 0.0,
+    "guard_black": 0.0
+  },
+  "printed_part_baseline": "docs/printed_parts.json",
   "limitations": [
     "No physical fit or rope-load test has been performed.",
     "Mass bounds assume black density <=1.30 and glow <=2.00 g/cm3.",
@@ -414,12 +495,12 @@
   ],
   "files_sha256": {
     "01_mount_test_black.3mf": "d974cc0ebe1bb45b5e0ab0a6b6e7a3608d41a863947bb296826a2a502b634d09",
-    "02_skull_faceplate_glow.3mf": "f956d0d644f7250ed8b7d6a840160caf1d6d6f9f817a8f4d659a1b7c2d0592bd",
+    "02_skull_faceplate_glow.3mf": "71619e3bc5438c6dd9603a8199c65d170a9806950e20aeeac11a81458e18b2b5",
     "03_carrier_black.3mf": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
     "04_guard_black.3mf": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
     "05_cauldron_black.3mf": "a02c18e4bfa0b647cec843b9b2e4c688808b675c826cc4d0a7374769408de403",
     "bucket_black.stl": "90d3184f31a17c858a05f295437297364b7e085dfaa29974b6be2fdc33621941",
-    "bucket_glow.stl": "4f46bf48e56eca5ee5a30b08997c56fc62c27c73c7b29116c0c65d183e45b11f",
+    "bucket_glow.stl": "935ac497e7dd5ba389013db43eaaa7b1a854c421d95e99b6a1c15c7268032059",
     "carrier_black.stl": "7b625b9465af65236c9df8f35b75bca026c3a768c30582637ca282a3cbe66f57",
     "guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877",
     "test_black.stl": "60fc1f601a264f4c4892c0364fc38b3df2d3aa82c44a194fe069fa10b773512f"

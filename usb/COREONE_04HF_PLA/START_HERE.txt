@@ -1,5 +1,10 @@
-CYCLOPS CAULDRON - CORE ONE+ - REVISION 4
+CYCLOPS CAULDRON - CORE ONE+ - REVISION 6
 READ BEFORE PRINTING
+
+ALREADY PRINTED THE CAULDRON AND CARRIER?
+  Print ONLY 02_skull_GLOW_04HF_PLA.gcode. It now contains the stronger sculpted
+  skull. Replace any older USB copy with this updated file. The flat faceplate
+  is retired. All four black jobs remain unchanged; no black-part reprint is needed.
 
 These are actual single-nozzle G-code jobs generated with PrusaSlicer 2.9.6
 and official Prusa COREONE machine settings. They have passed a static
@@ -38,16 +43,22 @@ USB WORKFLOW
 
 JOBS (times are estimates)
   01_test_BLACK_04HF_PLA.gcode       black PLA   37.27 g    1 h 47 m
-  02_skull_GLOW_04HF_PLA.gcode       glow PLA    55.89 g    2 h 46 m
+  02_skull_GLOW_04HF_PLA.gcode       glow PLA    98.72 g    5 h 40 m
   03_carrier_BLACK_04HF_PLA.gcode    black PLA   27.85 g    1 h 37 m
   04_guard_BLACK_04HF_PLA.gcode      black PLA   83.38 g    3 h 44 m
   05_cauldron_BLACK_04HF_PLA.gcode   black PLA  622.99 g   26 h 22 m
 
-Print 01-04 and perform the mechanical fit test BEFORE committing to 05.
+For a new build, print 01-04 and fit-test BEFORE committing to 05.
 You can print 01, 03, and 04 in black before swapping to glow for 02.
 Reuse the SAME skull, carrier, and guard in the final cauldron.
-Totals: 771.49 g black, 55.89 g glow at budget densities of 1.30/2.00 g/cm3.
+Totals: 771.49 g black, 98.72 g glow at budget densities of 1.30/2.00 g/cm3.
 There is no purge tower, tool change, or mid-print filament change.
+
+SCULPTED SKULL
+  Up to 10.5 mm total thickness, with the original flat back and 3 mm screw seats.
+  Forehead, brow, cheeks, jaw and teeth grow outward only. Eye clearance unchanged.
+  Print flat back down, sculpture up; 0.10 mm layers (0.20 first), 100% infill.
+  No supports or brim. Reuse the same M2 x 10 screws, washers and nuts.
 
 ASSEMBLY SUMMARY
   Skull to wall: four M2 x 10 screws, four M2 washers, four M2 nuts.
@@ -61,8 +72,9 @@ The full skull and battery guard extend below the coupon's foot. Hold the
 coupon above a padded surface/bench edge during the assembled fit test.
 Never install electronics or the LiPo during printing. Never crush the pouch.
 Use wrapped candy/a liner. Check hanging balance and rope lugs over a soft
-surface before use. The calculated balance is for the empty assembled bucket;
-uneven candy, actual hardware weights, and rope knots will change it.
+surface before use. The rope holes stay fixed at their existing coordinates;
+the heavier sculpted plate predicts about 2.1 degrees of empty forward tilt.
+Uneven candy, actual hardware weights, and rope knots will change it.
 
 Full instructions: docs/PRINTING.md and docs/ASSEMBLY.md in the repository.
 Verification: docs/slicer_validation.json and profiles/provenance.json.

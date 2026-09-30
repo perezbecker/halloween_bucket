@@ -225,7 +225,7 @@ def validate_gcode(contents, material):
     }
 
 
-def verify_gcode_rejections(contents):
+def verify_gcode_rejections(contents, material="black"):
     mutations = (
         contents.replace(";LAYER_CHANGE", ";LAYER_CHANGE\nT1", 1),
         contents.replace(";LAYER_CHANGE", ";LAYER_CHANGE\nG1 X251 Y100 E1", 1),
@@ -235,7 +235,7 @@ def verify_gcode_rejections(contents):
     for mutation in mutations:
         assert mutation != contents, "Audit mutation was not applied"
         try:
-            validate_gcode(mutation, "black")
+            validate_gcode(mutation, material)
         except ValueError:
             continue
         raise AssertionError("Unsafe G-code mutation passed the audit")
@@ -263,6 +263,11 @@ def main():
                         default=ROOT / ".cache/prusaslicer-2.9.6/PrusaSlicer-2.9.6/prusa-slicer-console.exe")
     parser.add_argument("--imports-only", action="store_true")
     arguments = parser.parse_args()
+    printed_baseline = json.loads((ROOT / "docs/printed_parts.json").read_text())
+    for filename, digest in printed_baseline["files_sha256"].items():
+        if hashlib.sha256((ROOT / filename).read_bytes()).hexdigest() != digest:
+            raise ValueError(f"Already-printed part changed: {filename}")
+    previous_report = json.loads((ROOT / "docs/slicer_validation.json").read_text())
     environment = dict(os.environ)
     profiles = create_core_one_profiles()
     cache = ROOT / ".cache/core-one-slice"
@@ -309,9 +314,16 @@ def main():
             raise ValueError(f"Material misalignment in {path.name}: {actual} vs {expected}")
         assert all(values["manifold"] == "yes" for values in object_values)
         native_file = cache / path.name
-        common = ["--config-compatibility", "disable", "--load", profiles[material],
-              "--dont-arrange", "--threads", "4", "--brim-width", str(brim)]
-        common.append("--support-material" if supports else "--no-support-material")
+        common = [
+            "--config-compatibility", "disable", "--load", profiles[material],
+            "--dont-arrange", "--threads", "4", "--brim-width", str(brim),
+            "--support-material" if supports else "--no-support-material",
+        ]
+        common.extend([
+            "--layer-height", "0.10", "--first-layer-height", "0.20",
+            "--fill-density", "100%", "--fill-pattern", "rectilinear",
+            "--top-solid-layers", "10", "--bottom-solid-layers", "10",
+        ] if material == "glow" else [])
         invoke(arguments.slicer, [*common, "--export-3mf", "--output", native_file, path], environment)
         with ZipFile(native_file) as archive:
             config = ET.fromstring(archive.read("Metadata/Slic3r_PE_model.config"))
@@ -321,19 +333,41 @@ def main():
         result = {"sha256": digest, "material": material,
                   "native_info": output.strip(), "native_volume_extruders": assignments,
                   "dimensions_and_material_alignment_verified": True}
-        if not arguments.imports_only:
+        if not arguments.imports_only and material == "black":
+            previous = previous_report["plates"][filename]
+            existing = ROOT / previous["gcode_file"]
+            assert digest == previous["sha256"]
+            assert hashlib.sha256(existing.read_bytes()).hexdigest() == previous["gcode_sha256"]
+            audit = validate_gcode(existing.read_text(), material)
+            assert audit == previous["gcode_audit"]
+            result.update({key: previous[key] for key in ("offline_slice_succeeded", "gcode_audit", "gcode_file",
+                                                         "gcode_sha256", "supports", "brim_mm", "profile")})
+            result["existing_job_preserved_byte_for_byte"] = True
+            print(f"  Preserved existing black job: {audit['filament_g']:.2f} g; audit passed", flush=True)
+        elif not arguments.imports_only:
             gcode = cache / gcode_name
             output = invoke(arguments.slicer, [*common, "--export-gcode", "--output", gcode, path], environment)
             (cache / (path.stem + ".log")).write_text(output)
-            contents = gcode.read_text()
+            generated = gcode.read_text()
+            contents = "\n".join(line.rstrip(" \t") for line in generated.splitlines()) + "\n"
+            assert [line.split(";", 1)[0].strip() for line in generated.splitlines()] == [
+                line.split(";", 1)[0].strip() for line in contents.splitlines()
+            ], "Formatting changed executable G-code"
+            gcode.write_text(contents)
             audit = validate_gcode(contents, material)
-            if filename.startswith("01_"):
-                report["unsafe_mutations_rejected"] = verify_gcode_rejections(contents)
+            assert audit["layer_count"] >= 60
+            assert abs(audit["deposition_bounds_mm"][1][2] - geometry["parts"]["bucket_glow"]["bounds_mm"][1][2]) <= 0.11
+            assert not re.search(r"^;TYPE:Support", contents, flags=re.MULTILINE)
+            report["unsafe_mutations_rejected"] = verify_gcode_rejections(contents, material)
             result.update({"offline_slice_succeeded": True, "gcode_audit": audit,
                            "gcode_file": "usb/COREONE_04HF_PLA/" + gcode_name,
                            "gcode_sha256": hashlib.sha256(gcode.read_bytes()).hexdigest(),
                            "supports": supports, "brim_mm": brim,
-                           "profile": str(profiles[material].relative_to(ROOT))})
+                           "profile": str(profiles[material].relative_to(ROOT)),
+                           "overrides": {"layer_height_mm": 0.10, "first_layer_mm": 0.20,
+                                         "infill_percent": 100, "fill_pattern": "rectilinear",
+                                         "top_bottom_layers": 10, "supports": False, "brim_mm": 0},
+                           "postprocessing": "Trailing whitespace removed; executable commands unchanged"})
             print(f"  {audit['filament_g']:.2f} g {material}, {audit['estimated_time']}; G-code audit passed", flush=True)
         report["plates"][path.name] = result
     if not arguments.imports_only:
@@ -343,8 +377,11 @@ def main():
         report["all_plates_estimated_g"] = totals
         target = ROOT / "usb/COREONE_04HF_PLA"
         target.mkdir(parents=True, exist_ok=True)
-        for _, gcode_name, _, _, _ in jobs:
-            shutil.copyfile(cache / gcode_name, target / gcode_name)
+        for _, gcode_name, material, _, _ in jobs:
+            if material == "glow":
+                shutil.copyfile(cache / gcode_name, target / gcode_name)
+    for filename, digest in printed_baseline["files_sha256"].items():
+        assert hashlib.sha256((ROOT / filename).read_bytes()).hexdigest() == digest, filename
     destination = ROOT / "docs" / ("slicer_import_validation.json" if arguments.imports_only else "slicer_validation.json")
     destination.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({"verified_plates": len(report["plates"]),

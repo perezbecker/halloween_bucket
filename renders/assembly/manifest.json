@@ -1,0 +1,151 @@
+{
+  "design": "Cyclops cauldron, revision 6, prominent sculpted faceplate",
+  "source_meshes_sha256": {
+    "print/bucket_black.stl": "90d3184f31a17c858a05f295437297364b7e085dfaa29974b6be2fdc33621941",
+    "print/bucket_glow.stl": "935ac497e7dd5ba389013db43eaaa7b1a854c421d95e99b6a1c15c7268032059",
+    "print/test_black.stl": "60fc1f601a264f4c4892c0364fc38b3df2d3aa82c44a194fe069fa10b773512f",
+    "print/carrier_black.stl": "7b625b9465af65236c9df8f35b75bca026c3a768c30582637ca282a3cbe66f57",
+    "print/guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877"
+  },
+  "generator_sha256": "c95299589d08c0133393cd75b0b9782f8da068b5e5f0597e2073561465defc04",
+  "render_helpers_sha256": "107beaed42bbcd9bbd6f0b52c0a830edc079f38010511bbfa3864a3915fb0eab",
+  "dimensions_source_sha256": "bb8398983ecfc264cc9808240bc845b7d5265ad7b94bdc1950928caf9789b592",
+  "images": [
+    {
+      "image": "01_skull_to_wall.png",
+      "sha256": "5f2d5ae232164133316e8eac892af7da3e2e76a46033683cdd0900427a034e2a",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 3,
+      "camera": [
+        205,
+        -370,
+        265
+      ],
+      "target": [
+        0,
+        -94,
+        118
+      ],
+      "parallel_scale": 108
+    },
+    {
+      "image": "02_lens_and_carrier.png",
+      "sha256": "64723df12eff482c71ed70e818500e3319c3a7d11169b8545dc9559c772c4eac",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 4,
+      "camera": [
+        235,
+        -260,
+        230
+      ],
+      "target": [
+        0,
+        -35,
+        125
+      ],
+      "parallel_scale": 92
+    },
+    {
+      "image": "03_carrier_to_wall.png",
+      "sha256": "baa01827970abfa77a8792d2f96f72f6b7ed81af374baa64a53e3a241a4f612e",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 3,
+      "camera": [
+        310,
+        170,
+        240
+      ],
+      "target": [
+        0,
+        -64,
+        123
+      ],
+      "parallel_scale": 113
+    },
+    {
+      "image": "04_battery_and_strap.png",
+      "sha256": "5eb961b9caf6e4ab7127eb5d48468b5b3f2db993cb83eca5d08239a797a90686",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 4,
+      "camera": [
+        180,
+        -310,
+        230
+      ],
+      "target": [
+        0,
+        -63,
+        110
+      ],
+      "parallel_scale": 84
+    },
+    {
+      "image": "05_close_guard.png",
+      "sha256": "74132ce68c1426079cc542f8b40dca92d4211918affdc0f0eb45dcbb4268dda5",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 4,
+      "camera": [
+        360,
+        320,
+        250
+      ],
+      "target": [
+        0,
+        -5,
+        119
+      ],
+      "parallel_scale": 116
+    },
+    {
+      "image": "06_rope_and_final_checks.png",
+      "sha256": "7f69b6ba3da61eced0975e0e6c57f10279eea1be5dafbb35a3c3e16c21851f1e",
+      "size": [
+        1800,
+        1320
+      ],
+      "nonblank": true,
+      "callouts": 4,
+      "camera": [
+        330,
+        -480,
+        390
+      ],
+      "target": [
+        0,
+        0,
+        150
+      ],
+      "parallel_scale": 193
+    }
+  ],
+  "overview": {
+    "image": "overview.png",
+    "sha256": "28f4297ecd11bd243c7a4470bb11661bbbebbd75e4e5038a3cce69eb15b43743"
+  },
+  "limitations": [
+    "Electronics, fasteners, battery, strap and rope are illustrative, not manufacturing geometry.",
+    "Exploded spacing, alignment arrows and schematic knots are not dimensional instructions.",
+    "Hardware colours distinguish fastener groups, not additional print materials.",
+    "Physical hardware fit, optical performance and carrying strength have not been verified."
+  ]
+}

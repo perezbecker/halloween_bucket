@@ -4,6 +4,74 @@
 native slicing have been checked; real parts, printer tolerances, and carrying
 strength have not. Use only the HalloWing **M0**, not a different board model.
 
+**Already printed the cauldron and carrier?** Print only the updated sculpted
+faceplate, job 02. Remove the old faceplate's four M2 x 10 screws and reuse
+them, their washers and nuts. Do not move the carrier or lens assembly.
+The mounting back, all holes, 3 mm screw seats and eye bezel are retained;
+the new forehead and cheeks grow only outward. No black-part reprint is needed.
+
+## Illustrated Assembly Sequence
+
+These six cards follow the [fit-test sequence](#fit-test-first) below. Open an
+image for its full-resolution numbered callouts. Printed parts come from the
+validated STL meshes; electronics, fasteners, battery, strap and rope are
+illustrative reference geometry. **Exploded gaps and arrows are not to scale.**
+Hardware colours distinguish fastener groups, not extra filament colours.
+The rope path and knot markers are schematic, not knot-tying instructions.
+
+![Six assembly cards](../renders/assembly/overview.png)
+
+### 1. Skull To Test Wall
+
+Use **four M2 x 10 screws**, glow-side washers, and loose nuts inside the wall.
+Do not confuse their recessed seats with the four carrier access openings.
+
+![Attach the skull to the test wall](../renders/assembly/01_skull_to_wall.png)
+
+### 2. Lens, PCB And Carrier
+
+Keep the stock lens kit together and the USB connector upward. The **four rear
+M2.5 x 20 screws and 1 mm insulating washers** pass through the carrier, its
+printed posts, and PCB into the stock 6 mm standoffs. Check the real screw-tip
+engagement before tightening; M2 hardware does not fit the kit threads.
+
+![Build the lens and PCB module](../renders/assembly/02_lens_and_carrier.png)
+
+### 3. Carrier To Wall
+
+Use **four M2 x 35 screws** from outside and four nuts in the carrier's **rear
+rectangular sliding recesses**. Start loosely, center the eye within the
++/-2 mm vertical adjustment, and check glass clearance before tightening.
+Power-test the display, then remove power before continuing assembly.
+
+![Mount and align the carrier](../renders/assembly/03_carrier_to_wall.png)
+
+### 4. Battery Pad And Strap
+
+Fit the battery in the guard while it lies flat. Use a soft insulating pad and
+an **8-10 mm soft strap** through both slots. The pouch must remain loose,
+without pressure from the strap, screws, or wiring.
+
+![Pad and strap the battery](../renders/assembly/04_battery_and_strap.png)
+
+### 5. Removable Guard
+
+Preload the other four carrier nuts in the **front hex recesses** before
+closing up. Connect the battery with correct polarity and slack, inspect the
+wire routing, then use **four M2 x 20 screws and washers** from the candy side.
+Check USB plug access and guard removal without disturbing the lens.
+
+![Fit the removable guard](../renders/assembly/05_close_guard.png)
+
+### 6. Transfer And Hanging Checks
+
+After the coupon passes, reuse the tested parts on the full cauldron. Install
+rope through the existing bores with substantial inside stopper knots and
+adequate tails. Follow the [rope-balance](#rope-balance) and
+[final-use checks](#final-assembly-and-use); there is no certified load rating.
+
+![Transfer the parts and check the rope](../renders/assembly/06_rope_and_final_checks.png)
+
 ## Hardware List
 
 | Quantity | Item | Purpose |
@@ -51,7 +119,9 @@ adjustment to accommodate the actual lens/PCB revision.
 
 From outside to inside, excluding screw heads:
 
-1. Separate 3 mm skull, front Y = -92, back Y = -89; black wall spans Y = -89 to -86.
+1. Sculpted skull: back Y = -89, 3 mm seating layer and screw seats at Y = -92,
+   raised contours reaching approximately Y = -99.5. The eye bezel remains
+   at Y = -92; black wall spans Y = -89 to -86.
 2. Stock lens/acrylic assembly. Nominal acrylic front Y = -82.5, back Y = -79.7.
 3. Stock **6 mm M2.5 F-F standoffs**, between acrylic and the PCB front.
 4. PCB front Y = -73.7, rear Y = -72.1; nominal thickness 1.6 mm.
@@ -87,7 +157,9 @@ past the printed bezel, depending on the actual kit stack.
    on the glow side, and loose nuts inside the wall. These four 2.4 mm holes
    are at X = +/-30, Z = 80 and 165. The four larger openings in the skull are
    access holes for the separate carrier screws, not the faceplate attachment.
-   Tighten gently so the flat skull sits against the wall without bending it.
+   The sculpted face has recessed, flared screw pockets with unchanged 3 mm
+   seating thickness and 8.4 mm diameter flat lands. Tighten gently so its
+   flat back sits against the wall without bending it.
    Do not overtighten brittle glow filament. With a 0.5 mm washer, the 10 mm
    screw passes through 3 mm skull + 3 mm wall and leaves about 3.5 mm for the
    nut and tip; check real hardware lengths before installing electronics.
@@ -132,8 +204,9 @@ faceplate or electronics set needs to be printed.
 
 The two 13 mm bores have centers at **(-99.33, -16.66, 178)** and
 **(+99.33, -16.66, 178)**. Both are shifted **toward the electronics**, not placed
-on the geometric Y = 0 diameter. The body, rolled rim, and base remain centered;
-the suspension axis is what moves. The lug height is the same on both sides.
+on the geometric Y = 0 diameter. These are the fixed coordinates of the
+already-printed cauldron; neither the lugs nor the holes move when the faceplate
+mass changes. The lug height is the same on both sides.
 
 The [generated balance report](validation.json) uses CAD volume centroids for
 the four installed printed parts, nominal densities of **1.24 g/cm3 black** and
@@ -144,21 +217,24 @@ and 3 g strap/pad**.
 The balance densities are nominal material estimates, distinct from the higher
 1.30/2.00 densities used for the spool budget.
 
-Nominal empty assembled mass is **834.5 g**, with its center at approximately
-**(0, -16.66, 99.73)**. This gives essentially equal left/right loads and puts
-the center about **78.3 mm below** the rope axis. Predicted empty tilt is near
-zero, versus 12.0 degrees with uncompensated holes. A sensitivity check varying
-black/glow density and glass mass gives approximately **-1.7 to +1.2 degrees**
+Nominal empty assembled mass is **866.6 g**, with its center at approximately
+**(0, -19.53, 100.64)**. This gives essentially equal left/right loads and puts
+the center about **77.4 mm below** the rope axis. The stronger sculpted skull
+adds about 32 g versus the old flat plate at the nominal density. Predicted
+empty tilt is **2.1 degrees toward the eye**, versus 14.2 degrees with
+uncompensated holes. A sensitivity check varying black/glow density and glass
+mass gives approximately **-4.4 to -0.6 degrees**
 of empty pitch; other uncertainties, including an asymmetric rope or packing,
 are not bounded by that check.
 
-The default balance target is **empty with all electronics installed**. Centered
+The original rope placement targeted **empty with all electronics installed**.
+The current model reports balance on those fixed holes; it does not relocate them. Centered
 500 g and 1,000 g candy loads, with assumed center at (0, 0, 65), give about
-**3.9 and 5.3 degrees** of pitch. A fixed hole pair cannot stay perfectly level
-for every possible fill. If a particular load is the priority, change
-`BalanceParameters.design_payload_g` and `payload_center_mm` in the
-[parametric model](../design/bucket.py), then rebuild and reslice. Use measured
-glass, kit, fastener, and filament values there when available.
+**2.7 and 4.5 degrees away from the eye**. A fixed hole pair cannot stay perfectly
+level for every possible fill. `BalanceParameters.design_payload_g` and
+`payload_center_mm` in the [parametric model](../design/bucket.py) can be changed
+to study loads, but do not alter the fixed cauldron geometry. Use measured glass,
+kit, fastener and filament values in those calculations when available.
 
 After assembly, use equal-length rope legs with comparable knots and tails.
 Hang the empty cauldron just above a padded surface, check rim level from front

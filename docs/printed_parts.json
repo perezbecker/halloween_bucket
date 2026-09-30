@@ -1,0 +1,23 @@
+{
+  "baseline_commit": "731c8d090d9382937c2cf054e11159906f80cf2b",
+  "purpose": "Immutable existing black-part exports; faceplate updates must not overwrite these files.",
+  "rope_axis_y_mm": -16.66,
+  "files_sha256": {
+    "print/01_mount_test_black.3mf": "d974cc0ebe1bb45b5e0ab0a6b6e7a3608d41a863947bb296826a2a502b634d09",
+    "print/03_carrier_black.3mf": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
+    "print/04_guard_black.3mf": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
+    "print/05_cauldron_black.3mf": "a02c18e4bfa0b647cec843b9b2e4c688808b675c826cc4d0a7374769408de403",
+    "print/bucket_black.stl": "90d3184f31a17c858a05f295437297364b7e085dfaa29974b6be2fdc33621941",
+    "print/carrier_black.stl": "7b625b9465af65236c9df8f35b75bca026c3a768c30582637ca282a3cbe66f57",
+    "print/guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877",
+    "print/test_black.stl": "60fc1f601a264f4c4892c0364fc38b3df2d3aa82c44a194fe069fa10b773512f",
+    "cad/bucket_black.step": "b377455f1056b471eaf6963a990e2c765cac6039ad3ad94ed4414f1fb6672fec",
+    "cad/carrier_black.step": "b86cfa746d82d3ead4dbf431e2e2044961bbb9fb3f4225ca7949c2e636401181",
+    "cad/guard_black.step": "040b6cb7bbc3dd189115e2c7fd4703a6a63a39a98ef25b3b888f80ba737101ab",
+    "cad/test_black.step": "3a0841aa421e2dc87a67a9422d43df26c618d17c23c56cf5b84175b84f66fb8e",
+    "usb/COREONE_04HF_PLA/01_test_BLACK_04HF_PLA.gcode": "97b6fef4829d52a6218748a9c270db8a0b2c25c8f9df5eada1b3324b70575cdb",
+    "usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode": "57ee9060f5cfb030904f3a788d28951876dda055c654c250dcb1009e24468c5c",
+    "usb/COREONE_04HF_PLA/04_guard_BLACK_04HF_PLA.gcode": "af2ec94cf0e74c94f4c35d1c824bbbea20dc0d847cf6205e1bec3f169855acdb",
+    "usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode": "7e44dcf8f73d7d67913078041ee6508b745be8cf309c926075e85991fbae4d29"
+  }
+}

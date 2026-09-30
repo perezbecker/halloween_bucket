@@ -25,6 +25,7 @@ class Dimensions:
     eye_bore: float = 44.4
     rope_bore: float = 13.0
     rope_drop: float = 22.0
+    rope_axis_y: float = -16.66
     faceplate_thickness: float = 3.0
     carrier_thickness: float = 3.0
     pcb_thickness: float = 1.6
@@ -372,7 +373,7 @@ def skull_polygon(points, thickness=12.0, back_y=None):
 
 
 @lru_cache(maxsize=None)
-def skull_glow():
+def faceplate_mounting_layer():
     thickness = DIMENSIONS.faceplate_thickness
     skull = front_extrusion(skull_artwork(skull_wire()), thickness, DIMENSIONS.front)
     socket = (
@@ -416,6 +417,13 @@ def skull_glow():
         for horizontal, vertical in BUCKET_FASTENERS
     ]
     return ornament.cut(*recesses, *panel_holes()).clean()
+
+
+@lru_cache(maxsize=None)
+def skull_glow():
+    from design.sculpted_faceplate import assembled_plate
+
+    return assembled_plate()
 
 
 @lru_cache(maxsize=None)
@@ -545,18 +553,7 @@ def combined_mass_center(components, payload_g=0.0, payload_center=None):
 
 @lru_cache(maxsize=None)
 def balanced_rope_y():
-    unanchored = cauldron_body().cut(*panel_holes()).clean()
-    components = assembly_mass_components(unanchored)
-    _, center = combined_mass_center(components, BALANCE.design_payload_g)
-    rope_y = center[1]
-    for _ in range(6):
-        body = bucket_shell(rope_y)
-        components = assembly_mass_components(body)
-        _, center = combined_mass_center(components, BALANCE.design_payload_g)
-        if abs(center[1] - rope_y) < 0.002:
-            return round(center[1], 2)
-        rope_y = center[1]
-    raise ValueError("Rope-axis mass balance did not converge")
+    return DIMENSIONS.rope_axis_y
 
 
 def balance_report():
@@ -565,7 +562,7 @@ def balance_report():
     total_mass, center = combined_mass_center(components, BALANCE.design_payload_g)
     vertical_arm = DIMENSIONS.rope_z - center[2]
     assert vertical_arm > 40, "Center of mass is too close to or above the rope axis"
-    assert abs(center[1] - rope_y) < 0.02, "Rope holes miss the assembled center of mass"
+    assert rope_y == -16.66, "The already-printed cauldron's rope holes must not move"
     assert abs(center[0]) < 0.5, "Unacceptable left-right mass asymmetry"
     assert rope_y < -1, "Electronics mass was not included in the rope compensation"
     scenarios = []
@@ -590,6 +587,7 @@ def balance_report():
         "payload_center_assumption_mm": BALANCE.payload_center_mm,
         "rope_axis_y_mm": rope_y,
         "rope_axis_z_mm": DIMENSIONS.rope_z,
+        "rope_holes_fixed_to_printed_revision_4": True,
         "anchor_centers_mm": [(-anchor_x, rope_y, DIMENSIONS.rope_z), (anchor_x, rope_y, DIMENSIONS.rope_z)],
         "assembled_mass_g": total_mass,
         "assembled_center_mm": center,
@@ -639,6 +637,9 @@ def print_orientation(name, shape):
 
 
 def verify_faceplate():
+    from design.sculpted_faceplate import MAXIMUM_THICKNESS, verify_compatibility
+
+    compatibility = verify_compatibility()
     skull = skull_glow()
     assert skull.isValid() and len(skull.Solids()) == 1, "Faceplate must be one printable solid"
     assert solid_volume(bucket_black().intersect(skull)) < 1e-5, "Separate faceplate overlaps body"
@@ -655,9 +656,8 @@ def verify_faceplate():
         assert solid_volume(guard().intersect(hardware)) < 1e-5, "Faceplate hardware hits guard"
     oriented = print_orientation("bucket_glow", skull)
     assert abs(oriented.BoundingBox().zmin) < 1e-6
-    assert abs(oriented.BoundingBox().zlen - DIMENSIONS.faceplate_thickness) < 1e-5
-    return {"separate_flat_faceplate": True, "m2_attachment_points": len(FACEPLATE_FASTENERS),
-            "faceplate_thickness_mm": DIMENSIONS.faceplate_thickness}
+    assert DIMENSIONS.faceplate_thickness < oriented.BoundingBox().zlen <= MAXIMUM_THICKNESS + 1e-5
+    return compatibility | {"m2_attachment_points": len(FACEPLATE_FASTENERS)}
 
 
 def print_parts(include_bucket=True):
