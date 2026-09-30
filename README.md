@@ -98,6 +98,11 @@ combine black and glow as a multipart co-print. Old dual-head plates are retired
 
 Assembly details and the screw list are in the
 [fit-test guide](docs/ASSEMBLY.md#fit-test-first).
+The new [illustrated assembly sequence](docs/ASSEMBLY.md#illustrated-assembly-sequence)
+has six numbered cards covering the skull, lens/PCB, carrier, battery, guard,
+and final rope checks. Open the [assembly overview](renders/assembly/overview.png)
+or individual full-resolution cards in the guide. Hardware and rope are
+illustrative; the printed geometry comes from the validated STL meshes.
 
 ## Filament Budget
 
@@ -178,6 +183,7 @@ uv venv .venv --python 3.11
 uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python tools/build.py
 .venv/bin/python tools/render.py
+.venv/bin/python tools/render_assembly.py
 .venv/bin/python tools/check_slicer.py --slicer /path/to/prusa-slicer-2.9.6
 .venv/bin/python tools/render.py --print-beds
 ```
@@ -204,6 +210,11 @@ physical print test or confirmation of the user's unspecified machine setup.
 The `--print-beds` render command checks the 3MF and G-code hashes against that
 audit before drawing the five job previews. It does not regenerate or modify
 the print files. Use `--print-beds --jobs 2 5` to refresh selected views only.
+The assembly renderer checks the assembly dimensions, PCB mounting pattern, and
+all five source STL hashes against the CAD validation report. It produces six
+annotated cards and their overview, and records source/image hashes in
+[its manifest](renders/assembly/manifest.json). It does not modify CAD, print
+plates, or G-code.
 
 Results: [CAD/mesh validation](docs/validation.json),
 [native slicer validation](docs/slicer_validation.json), and

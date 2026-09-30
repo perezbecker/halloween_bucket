@@ -10,6 +10,68 @@ them, their washers and nuts. Do not move the carrier or lens assembly.
 The mounting back, all holes, 3 mm screw seats and eye bezel are retained;
 the new forehead and cheeks grow only outward. No black-part reprint is needed.
 
+## Illustrated Assembly Sequence
+
+These six cards follow the [fit-test sequence](#fit-test-first) below. Open an
+image for its full-resolution numbered callouts. Printed parts come from the
+validated STL meshes; electronics, fasteners, battery, strap and rope are
+illustrative reference geometry. **Exploded gaps and arrows are not to scale.**
+Hardware colours distinguish fastener groups, not extra filament colours.
+The rope path and knot markers are schematic, not knot-tying instructions.
+
+![Six assembly cards](../renders/assembly/overview.png)
+
+### 1. Skull To Test Wall
+
+Use **four M2 x 10 screws**, glow-side washers, and loose nuts inside the wall.
+Do not confuse their recessed seats with the four carrier access openings.
+
+![Attach the skull to the test wall](../renders/assembly/01_skull_to_wall.png)
+
+### 2. Lens, PCB And Carrier
+
+Keep the stock lens kit together and the USB connector upward. The **four rear
+M2.5 x 20 screws and 1 mm insulating washers** pass through the carrier, its
+printed posts, and PCB into the stock 6 mm standoffs. Check the real screw-tip
+engagement before tightening; M2 hardware does not fit the kit threads.
+
+![Build the lens and PCB module](../renders/assembly/02_lens_and_carrier.png)
+
+### 3. Carrier To Wall
+
+Use **four M2 x 35 screws** from outside and four nuts in the carrier's **rear
+rectangular sliding recesses**. Start loosely, center the eye within the
++/-2 mm vertical adjustment, and check glass clearance before tightening.
+Power-test the display, then remove power before continuing assembly.
+
+![Mount and align the carrier](../renders/assembly/03_carrier_to_wall.png)
+
+### 4. Battery Pad And Strap
+
+Fit the battery in the guard while it lies flat. Use a soft insulating pad and
+an **8-10 mm soft strap** through both slots. The pouch must remain loose,
+without pressure from the strap, screws, or wiring.
+
+![Pad and strap the battery](../renders/assembly/04_battery_and_strap.png)
+
+### 5. Removable Guard
+
+Preload the other four carrier nuts in the **front hex recesses** before
+closing up. Connect the battery with correct polarity and slack, inspect the
+wire routing, then use **four M2 x 20 screws and washers** from the candy side.
+Check USB plug access and guard removal without disturbing the lens.
+
+![Fit the removable guard](../renders/assembly/05_close_guard.png)
+
+### 6. Transfer And Hanging Checks
+
+After the coupon passes, reuse the tested parts on the full cauldron. Install
+rope through the existing bores with substantial inside stopper knots and
+adequate tails. Follow the [rope-balance](#rope-balance) and
+[final-use checks](#final-assembly-and-use); there is no certified load rating.
+
+![Transfer the parts and check the rope](../renders/assembly/06_rope_and_final_checks.png)
+
 ## Hardware List
 
 | Quantity | Item | Purpose |
