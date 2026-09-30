@@ -5,6 +5,22 @@ using four M2 screws. The HalloWing M0, glass lens, battery cradle, and removabl
 candy guard remain serviceable. Revision 4 fits the CORE One+ and retains the
 electronics-compensated rope holes. **Physical fit and hanging tests are still required.**
 
+## Optional Sculpted Faceplate
+
+The `feature/sculpted-skull-faceplate` branch adds a
+[shallow 3D replacement skull](variants/sculpted_skull/README.md) for an already
+printed cauldron and HalloWing carrier. It preserves the flat back, hole pattern,
+eye bezel and **3 mm screw seats**, while raising the forehead, cheeks and jaw
+to **6.2 mm maximum thickness**. The existing M2 x 10 hardware still fits.
+
+Review the [before/after comparison](variants/sculpted_skull/renders/comparison.png)
+or [assembled preview](variants/sculpted_skull/renders/05_assembled.png).
+The [replacement-only G-code](variants/sculpted_skull/skull_sculpted_COREONE_04HF_PLA.gcode)
+uses the same conditional **0.4 mm hardened high-flow / glow PLA** setup below,
+with 0.10 mm layers: approximately **71.8 g and 4 h 4 m**.
+**No cauldron or carrier reprint is needed.** The original files and instructions
+below are unchanged; the new design is optional and has not been physically tested.
+
 ## USB Files: Check The Setup First
 
 Five actual, audited G-code jobs are included. **They are not universal printer
