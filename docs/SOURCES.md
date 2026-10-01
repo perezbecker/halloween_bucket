@@ -4,6 +4,21 @@ Checked against manufacturer pages and source files on **2026-09-25**.
 Dimensions are millimeters. Source-derived dimensions are distinguished from
 design clearances and unmeasured assembly assumptions.
 
+This reference supports the [printing](PRINTING.md) and
+[assembly](ASSEMBLY.md) guides. It explains where dimensions come from and
+what the automated checks establish.
+
+## Build Status And Validation Scope
+
+The project owner has reported that the parts printed, assembled and worked
+well. This is practical build feedback, not instrumented measurement of
+material strength, optical performance or hardware tolerances.
+
+The JSON validation reports record automated CAD, mesh, slicer and G-code
+checks. Their limitations describe the scope of those runs; physical build
+feedback is recorded here separately. No certified carrying-load rating,
+impact rating or food-contact suitability is provided.
+
 ## Manufacturer References
 
 | Part | Source facts used | Reference |
@@ -52,8 +67,8 @@ are recorded in [hardware_reference.json](hardware_reference.json). The original
 board and acrylic design are by **Limor Fried/Ladyada for Adafruit Industries**;
 their source repository publishes them under Creative Commons Attribution/Share-Alike.
 See its [license](https://github.com/adafruit/Adafruit-Hallowing-M0-PCB/blob/master/license.txt).
-The bucket and large cyclops skull artwork here are newly drawn, not a copied
-third-party printable model. Original source files remain in an ignored cache,
+The bucket and cyclops skull artwork are drawn for this project, not copied
+from a third-party printable model. Manufacturer source files remain in an ignored cache,
 not in the distributed manufacturing files.
 
 To reproduce the source measurements from the repository root:
@@ -64,7 +79,7 @@ curl --fail --location --create-dirs 'https://raw.githubusercontent.com/adafruit
 .venv/bin/python tools/inspect_hardware.py .cache/hallowing.brd --lens .cache/lens-holder.ai --output docs/hardware_reference.json
 ```
 
-## Chosen Clearances And Unverified Items
+## Design Clearances And Checks
 
 - PCB thickness **1.6**, rear support height **12**, and a **1 mm insulating
   washer** are stack-up assumptions/design choices. Confirm actual thicknesses,
@@ -78,9 +93,9 @@ curl --fail --location --create-dirs 'https://raw.githubusercontent.com/adafruit
   display-to-lens spacing. Do not interpret the textured render dome as an
   optical simulation.
 - Printed M2 and M2.5 clearances are **2.4** and **2.9** respectively. Guard M2
-  nut recesses allow approximately **4.3 across flats / 1.8 deep**. Revision 7
-  changes the four bucket-side sliding wells to **4.3 wide x 8.8 high x 15.9
-  deep**, open from the carrier rear. They place the nut bearing faces at
+  nut recesses allow approximately **4.3 across flats / 1.8 deep**. The four
+  bucket-side sliding wells are **4.3 wide x 8.8 high x 15.9 deep**, open from
+  the carrier rear. They place the nut bearing faces at
   Y = **-73**, leaving **13 mm** of post toward the wall. A **20 mm M2** screw,
   0.5 mm washer, 3 mm wall and 1.6 mm nut leave **1.9 mm** of tip beyond the
   nut, inside the well. These are FDM fit allowances and nominal hardware
@@ -88,46 +103,40 @@ curl --fail --location --create-dirs 'https://raw.githubusercontent.com/adafruit
 - Battery space is **33 W x 42 H x 8.5 D**. The cell requires a soft pad,
   noncompressive strap, lead slack, and inspection before each use.
 - Rope anchors are modeled 10 thick around 13 bores, tied into the black wall
-  below the rolled rim. Their common Y = -16.66 axis was chosen for the original
-  assembly and is now fixed because the cauldron has already been printed.
-  The heavier sculpted faceplate changes the reported tilt, not the holes.
-  **No FEA, drop test, creep test, or physical carrying-load test** has
-  been performed. Printed layer adhesion and rope abrasion must be evaluated.
+  below the rolled rim. Their common Y = -16.66 axis offsets the handle toward
+  the electronics. The balance calculation reports tilt about that modeled
+  axis. **No FEA, instrumented drop/creep results, or certified carrying-load
+  rating** is provided. Evaluate printed layer adhesion and rope abrasion.
 - Density limits of **1.30 g/cm3 black / 2.00 g/cm3 glow** are conservative
   budgeting assumptions, not specifications for an unspecified filament brand.
   Actual slicing and manufacturing still control spool use.
 
 ## Cauldron Balance Assumptions
 
-The CORE One+ version has a 224 mm belly, 200 mm height, 186 mm neck diameter,
+The cauldron has a 224 mm belly, 200 mm height, 186 mm neck diameter,
 8 mm rolled lip, and 146 mm flat base. The flat electronics face is at Y = -89
-and the eye at Z = 125. The original skull silhouette is scaled to 90%, but
-the eye bore and electronics interfaces retain their full-size dimensions.
-The default skull now has raised forehead, brow, cheek, jaw and tooth contours,
-up to **10.5 mm total thickness**. Its original 3 mm mounting layer, flat rear
-surface and hole pattern remain intact. Recessed 8.4 mm diameter screw-seat
-lands retain the **M2 x 10** grip length. The original eye bezel remains flat
-inside a 52.4 mm diameter keep-clear zone; the 44.4 mm bore and carrier access
-holes are not narrowed. The retired flat faceplate has no separate print job.
-The black wall remains full thickness. There are no moon or hat ornaments.
+and the eye at Z = 125. The skull has raised forehead, brow, cheek, jaw and tooth
+contours, up to **10.5 mm total thickness**, over a flat **3 mm mounting layer**.
+Recessed 8.4 mm diameter screw-seat lands accept **M2 x 10** fasteners.
+The eye bezel is flat inside a 52.4 mm diameter keep-clear zone, with a
+44.4 mm bore and separate carrier-screw access holes. The body wall has full
+thickness behind the skull except for the eye and fastener openings.
 
 Nominal balancing uses black/glow densities of 1.24/1.50 g/cm3. PCB and battery
 masses come from Adafruit; the glass is **estimated at 31 g** from its approximate
 glass-cap envelope, not a measured product weight. The acrylic/kit (5 g), extra
 carrier/guard fasteners (12 g), skull fasteners (3 g), strap/pad (3 g), and
-component mass centers are estimates. The 12 g aggregate fastener allowance is
-retained for revision 7, not a measured mass of the shorter screw set.
+component mass centers are estimates, not measured assembly weights.
 See [assembly and balance](ASSEMBLY.md#rope-balance) for the complete assumptions,
 centered-candy scenarios, density/lens sensitivity, and required hanging test.
 
-The computed nominal center is approximately (0, -19.44, 100.59). The two bore
-centers stay at (+/-99.33, -16.66, 178), giving about **2.1 degrees of empty
-forward tilt**. The approximately 21.35 cm3 of added relief contributes about 32 g
-at the nominal 1.50 g/cm3 glow density. Both lug material and removed hole
-material are included, but the old iterative hole-placement calculation is no
-longer used. The coupon and discarded printing supports
-are excluded. A symmetrically installed rope is assumed; unequal knots or
-an off-center grip are not modeled.
+For a glow skull, the computed nominal assembly mass is **864.9 g**, with a
+center near (0, -19.44, 100.59). The bore centers are
+(+/-99.33, -16.66, 178), giving about **2.1 degrees of empty forward tilt**.
+Both lug material and removed hole material are included; the coupon and
+discarded supports are excluded. A symmetric rope is assumed. Unequal knots,
+an off-center grip and uneven candy are not modeled. A conventional white
+skull has a different mass, so its balance must be checked on the actual build.
 
 ## Digital Verification
 
@@ -139,16 +148,13 @@ sculpted glow faceplate are individually connected, nonintersecting solids. Four
 additional screw bores, washer-bearing lands, and clearance for internal M2
 hardware are checked. The actual faceplate is reused for the black coupon test.
 The saved cauldron, carrier and guard STEP files are checked directly for
-faceplate intersections. The complete original 3 mm base layer is retained;
-all relief is added outward. [printed_parts.json](printed_parts.json) pins
-sixteen unchanged cauldron, skull, guard and coupon CAD, STL, 3MF and G-code
-files to the merged revision-6 baseline. Only the carrier is regenerated;
-the default build verifies and reuses the remaining parts. The only supplied
-carrier has the deep rear-access nut wells, with the same geometry in both
-the individual and combined plates. Its external envelope and interfaces to
-the preserved parts are checked.
-Tests check nominal M2 x 20 engagement, nut bearing area and insertion paths
-at the center and both ends of the +/-2 mm adjustment.
+faceplate intersections. The skull has a complete 3 mm mounting layer with
+outward relief. [printed_parts.json](printed_parts.json) pins sixteen
+compatibility-critical cauldron, skull, guard and coupon CAD, STL, 3MF and
+G-code files. The default build regenerates the carrier and verifies and reuses
+those supplied exports. The individual and combined plates contain the same
+carrier. Checks cover its interfaces, nominal M2 x 20 engagement, nut bearing
+area and insertion paths at the center and both ends of the +/-2 mm adjustment.
 
 Mass calculations use adaptive, spline-span CAD integration and are checked
 against fine triangle meshes for both volume and centroid agreement. The
@@ -157,14 +163,19 @@ on a single long interpolated surface. Checks require the coupon to retain a
 complete wall, clear rope bores on the fixed printed axis, uninterrupted lug bearing
 rings, and support-critical bowl/neck slopes above 55 degrees.
 
-[slicer_validation.json](slicer_validation.json) records native **PrusaSlicer
-2.9.6** imports, per-object bounds, extruder **1 only**, the new carrier slice
-and the re-audited four unchanged jobs. All non-carrier G-code is retained
-byte-for-byte. The audit examines executable commands, not the commented
-settings footer, and checks model/nozzle/firmware notices, cleaning and levelling,
-single-nozzle use, PLA temperatures, flow limits, all model-phase moves, and
-heater shutdown. Four negative tests inject an extra tool, out-of-bed move,
-overtemperature, and missing mesh activation; all must be rejected.
+The [individual-job report](slicer_validation.json) covers native
+**PrusaSlicer 2.9.6** imports, per-object bounds and extruder **1 only** for the
+five single-part plates. The [white-skull report](white_skull_validation.json)
+and [combined-plate report](carrier_guard_validation.json) track their own
+inputs and outputs. The combined job also verifies both parts' extrusion on
+every shared layer, resolving the slicer's object IDs by their names.
+
+The G-code audit examines executable commands as well as settings, checking
+model/nozzle/firmware notices, cleaning, levelling, single-nozzle use, PLA
+temperatures, flow, model-phase moves and heater shutdown. Four negative tests
+inject an extra tool, an out-of-bed move, overtemperature and missing mesh
+activation; all must be rejected. Regression tests cover object-order changes,
+invalid layer sequences and ownership of the separate validation manifests.
 
 ## Official Machine Profile
 
@@ -173,7 +184,8 @@ commit `65c5c8f1e1c3836f306119c49d717759cbc368db`, bundle **PrusaResearch 2.5.10
 The [pinned bundle](https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/65c5c8f1e1c3836f306119c49d717759cbc368db/PrusaResearch/2.5.10.ini)
 and [PrusaSlicer 2.9.6 release](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.9.6)
 are the reproducible inputs. The executable used here is the official portable
-Windows 2.9.6 build through WSL interop, not the earlier Linux 2.7.2 audit binary.
+Windows 2.9.6 build through WSL interop. The scripts also accept a native 2.9.6
+executable through `--slicer`.
 
 Profiles are resolved from **Prusa CORE One HF0.4 nozzle**, **0.20mm STRUCTURAL
 @COREONE 0.4**, and **Generic PLA @COREONE HF0.4**. The official `start_gcode`
@@ -185,19 +197,18 @@ firmware's abrasive/nozzle check. The original startup purge intentionally uses
 Y = -2.5; model-phase motion is separately checked against the 250 x 220 bed.
 
 Derived base settings use seven walls, 0.20 mm layers, conservative 6/3 mm3/s
-black/glow flow limits, and **220/215 C nozzle, 60 C bed** PLA temperatures.
+conventional/glow flow limits, and **220/215 C nozzle, 60 C bed** PLA temperatures.
 The sculpted faceplate overrides layer height to **0.10 mm** (0.20 mm first),
 uses **100% rectilinear** infill and ten top/bottom solid layers, without supports
-or a brim. These overrides are in the slicer script and validation report;
-the machine and filament profiles remain unchanged. These are chosen
-assumptions, not verified settings for an unspecified filament brand. Full
+or a brim. The white skull uses conventional PLA with a 6 mm3/s limit and no
+abrasive-material flag; glow uses 3 mm3/s and the abrasive check. These are
+documented operating requirements, not approval for every filament brand. Full
 configuration files and input/output hashes are in
 [profiles/provenance.json](../profiles/provenance.json). Prusa profile authors
 and licensing remain with their source repositories.
 
-The G-code is ready only for the explicitly documented **CORE One+ / 0.4 mm
-wear-resistant high-flow / PLA / smooth PEI** setup. The user could not confirm
-machine, nozzle, filament, or firmware details. It is **not a universal drop-in
-file for all CORE One+ configurations**. Verify the setup and do not bypass
-mismatch warnings. No printer connection was made, no firmware was changed, and
-no physical manufacturing or carrying-load test was performed.
+The G-code targets the documented **CORE One+ / 0.4 mm high-flow / PLA /
+smooth PEI** setup, with a wear-resistant nozzle additionally required for
+glow. It is **not universal across CORE One+ configurations**. Each builder
+must verify the setup and observe the print rather than bypassing warnings.
+The export and audit tools do not connect to a printer or change its firmware.

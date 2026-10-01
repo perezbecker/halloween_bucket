@@ -174,19 +174,19 @@ def setup_plot(night=False):
 
 
 VIEWS = {
-    "01_front_three_quarter": ((310, -470, 290), (0, 0, 102), 146, "CORE ONE+ / SCULPTED CYCLOPS", "Same sculpted skull and cauldron; the replacement carrier accepts M2 x 20 wall screws."),
-    "02_front": ((0, -540, 139), (0, 0, 102), 139, "FRONT / SCULPTED SKULL", "Up to 10.5 mm relief thickness / original 3 mm screw seats / unchanged 44.4 mm eye opening."),
+    "01_front_three_quarter": ((310, -470, 290), (0, 0, 102), 146, "CORE ONE+ / SCULPTED CYCLOPS", "Sculpted skull, HalloWing M0 eye, rope handle mounts and a removable electronics guard."),
+    "02_front": ((0, -540, 139), (0, 0, 102), 139, "FRONT / SCULPTED SKULL", "Up to 10.5 mm relief thickness / 3 mm screw seats / 44.4 mm eye opening."),
     "03_rear": ((-300, 420, 280), (0, 0, 100), 151, "REAR / ROUNDED CAULDRON", "Narrowed neck, rolled lip, and reinforced rope lugs shifted toward the electronics."),
     "04_top_interior": ((200, -330, 490), (0, 0, 100), 155, "TOP / CANDY SPACE", "Removable guard separates the HalloWing, wiring, and battery from candy."),
     "05_cutaway": ((310, -270, 260), (0, -14, 106), 145, "SECTION / SKULL EYE", "Right half removed for inspection. Battery and optics are reference envelopes."),
-    "06_mounting_test": ((185, -330, 225), (0, -72, 111), 95, "M2 x 20 CARRIER / FIT TEST", "Same black wall coupon and glow skull; test the new deep-nut carrier before transferring it to the cauldron."),
+    "06_mounting_test": ((185, -330, 225), (0, -72, 111), 95, "M2 x 20 CARRIER / FIT TEST", "Test the full skull, lens and carrier on the wall coupon before printing the cauldron."),
     "07_exploded_mount": ((340, -390, 310), (0, -5, 118), 166, "EXPLODED / SEPARATE FACEPLATE", "Glow skull > black wall > stock lens + PCB > carrier > battery guard."),
     "08_glow_preview": ((230, -450, 270), (0, 0, 102), 151, "CYCLOPS CAULDRON / GLOW STUDY", "Illustrative charged-phosphor appearance, not a calibrated brightness prediction."),
-    "09_printed_parts": ((270, -430, 285), (0, 0, 102), 146, "PRINTED PARTS / NO ELECTRONICS", "Four existing M2 x 10 screws attach the sculpted skull; its back and screw seats stay flat."),
-    "10_rope_balance": ((0, 0, 620), (0, 0, 95), 154, "BALANCE / FIXED ROPE HOLES", "Amber: existing rope axis and updated mass-center marker. The printed rope holes do not move."),
+    "09_printed_parts": ((270, -430, 285), (0, 0, 102), 146, "PRINTED PARTS / NO ELECTRONICS", "Four M2 x 10 screws attach the flat-backed sculpted skull to the bucket wall."),
+    "10_rope_balance": ((0, 0, 620), (0, 0, 95), 154, "BALANCE / ROPE MOUNTS", "Amber: rope axis and nominal glow-skull assembly mass center. Check balance on the actual build."),
     "11_sculpted_closeup": ((150, -240, 290), (0, -16, 2), 90, "SCULPTED FACEPLATE / CLOSE-UP", "Raised forehead, brow, cheekbones, jaw and teeth; 10.5 mm maximum thickness, flat back down."),
-    "12_sculpted_front": ((0, -16, 350), (0, -16, 2), 90, "SCULPTED FACEPLATE / FRONT", "Original outline, eye opening and four M2 positions retained. Recessed seats keep M2 x 10 screws."),
-    "13_sculpted_raking": ((80, -260, 100), (0, -16, 2), 76, "LOW ANGLE / STRONGER CONTOURS", "The sculpted skull stays unchanged; reprint only the small carrier to use M2 x 20 wall screws."),
+    "12_sculpted_front": ((0, -16, 350), (0, -16, 2), 90, "SCULPTED FACEPLATE / FRONT", "Sculpted skull with an open eye bezel, four recessed M2 screw seats and separate carrier-access holes."),
+    "13_sculpted_raking": ((80, -260, 100), (0, -16, 2), 76, "LOW ANGLE / SCULPTED CONTOURS", "Outward relief above a flat 3 mm mounting layer; print with the back down and sculpture up."),
 }
 
 
@@ -200,7 +200,7 @@ def compose_caption(path, title, subtitle, night=False):
     body_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 18)
     ink = "#D5E9A5" if night else "#252D32"
     secondary = "#AEBABD" if night else "#526068"
-    draw.text((64, 45), "CYCLOPS CAULDRON / CORE ONE+ / REVISION 07", font=body_font, fill=secondary)
+    draw.text((64, 45), "CYCLOPS CAULDRON / CORE ONE+", font=body_font, fill=secondary)
     draw.text((64, 80), title, font=title_font, fill=ink)
     draw.line((64, 1180, 1496, 1180), fill=secondary, width=1)
     draw.text((64, 1205), subtitle, font=body_font, fill=secondary)
@@ -211,7 +211,7 @@ def compose_caption(path, title, subtitle, night=False):
         draw.line((64, 204, 108, 204), fill="#B57A2C", width=4)
         draw.text((124, 191), "Rope / assembled COM", font=body_font, fill=secondary)
         draw.text((64, 248), f"{abs(balance['rope_axis_y_mm']):.2f} mm toward the eye", font=body_font, fill=ink)
-        draw.text((64, 280), "Printed rope holes unchanged", font=body_font, fill=secondary)
+        draw.text((64, 280), "Nominal glow-skull balance", font=body_font, fill=secondary)
     image.save(path)
 
 

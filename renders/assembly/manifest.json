@@ -7,13 +7,13 @@
     "print/carrier_black.stl": "bac0aeb9832dc5a0c4ba0b0be811aa58a20e64325a2d133b5b7f3df90bcb4188",
     "print/guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877"
   },
-  "generator_sha256": "9490dd3e3727d921cca9e3fd22cf76df241f03ea40c0244f30f82156d95009de",
-  "render_helpers_sha256": "9bcb4723d3bf9c7257610e1ca75f440548e3327a4e855a2334c32bb344229492",
+  "generator_sha256": "60a45b8517af7d160e84e916239fada8cfeb75f8fe773dd828767c64eb8bef4e",
+  "render_helpers_sha256": "0a2eb5da4f72ce4df57b72f0bd4ea74f8284dcb745f6fa09bb8f0b35a9228b7c",
   "dimensions_source_sha256": "5d88bdd924c7a1de45236446b9885c1b9ef70eff04faa771a1d56b79e559ae4a",
   "images": [
     {
       "image": "01_skull_to_wall.png",
-      "sha256": "ac2fa7ec86e4624280df376340bc10f7c8586ea89ede02d535975066f43e4600",
+      "sha256": "65252221cbb16e65442f9bfd59d54b7191015c21ce373bd1a48b07eaa15e4816",
       "size": [
         1800,
         1320
@@ -34,7 +34,7 @@
     },
     {
       "image": "02_lens_and_carrier.png",
-      "sha256": "d717940fc6c80ee6b0b34c9cd5a4c6faad514a15f67a23ac629e76d885fec130",
+      "sha256": "a6fa1b4b033b1234bc4dad4315e56416a9cab8e6a04c8889872ec0f66b5dbc9e",
       "size": [
         1800,
         1320
@@ -55,7 +55,7 @@
     },
     {
       "image": "03_carrier_to_wall.png",
-      "sha256": "157a5a001a93de8d40bb315ef947f4efd4008f275275e33f16b5e15a464b5298",
+      "sha256": "cd00d1a180943f006f2b33987847a42c60a1cb7a4c89f06a35d5cb9d13dda739",
       "size": [
         1800,
         1320
@@ -76,7 +76,7 @@
     },
     {
       "image": "04_battery_and_strap.png",
-      "sha256": "d1a127f534faf7ad6b11ef59ed16d80e4b705db0df2a9641494ddcf63e91008b",
+      "sha256": "bd6256459e3882589f7f8904bdc15b7e7fb0e8bbce5da28450527f3f1ca44e50",
       "size": [
         1800,
         1320
@@ -97,7 +97,7 @@
     },
     {
       "image": "05_close_guard.png",
-      "sha256": "33ce6285484fedcd7185dbf3069ea08058e78c24086b88346aa3b6b3d6b2db19",
+      "sha256": "2efbdda38bf390ab4f9ab345610e88fead20cf5c4d34df25492a843fd2b3b3cc",
       "size": [
         1800,
         1320
@@ -118,7 +118,7 @@
     },
     {
       "image": "06_rope_and_final_checks.png",
-      "sha256": "6616b32a03161c1cc9df9df7d9faae571a90d6c9112e515fa6dfc020926b52ec",
+      "sha256": "3d87dc78e31cffc8d89aee6306c2092aa138e5beec857a1e8ed5e98ac75c1d9d",
       "size": [
         1800,
         1320
@@ -140,7 +140,7 @@
   ],
   "overview": {
     "image": "overview.png",
-    "sha256": "cfa11c53f59063e60d79ac018ce101b376ca95afad25f48a83748730ed4dd35c"
+    "sha256": "3cc3e154f9d7741e840eeb7acb3d30e151c9627495f4c90de4f1ac4ec9fafec6"
   },
   "limitations": [
     "Electronics, fasteners, battery, strap and rope are illustrative, not manufacturing geometry.",

@@ -137,7 +137,7 @@ def assembly_scene(name):
              (-40, d.bucket_nut_front + shift + 0.8, 160), BLUE),
             ("Adjust vertically, then tighten", "The slots allow +/-2 mm, not the exploded spacing shown. Center the glass with clearance all around; do not pull it through a tight opening.",
              (58, d.carrier_back + shift, 115), BLUE),
-            ("Same posts and lens position", "The nuts move forward, not the PCB. Each nut bears on 13 mm of post; a 20 mm screw projects 1.9 mm past a 1.6 mm nut with a 0.5 mm washer.",
+            ("Bucket-to-carrier screw stack", "Each nut bears on 13 mm of post. With the 3 mm bucket wall and a 0.5 mm washer, a 20 mm screw projects 1.9 mm past the 1.6 mm nut.",
              (40, d.bucket_nut_front + shift, 90), TEAL),
         ]
         caution = "Power-test centering, focus and oblique viewing before fitting the guard. Remove power again before continuing assembly."
@@ -275,7 +275,7 @@ def render_step(name):
     heading_font = ImageFont.truetype(str(font_dir / "DejaVuSans-Bold.ttf"), 23)
     body_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 22)
     small_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 20)
-    draw.text((60, 30), "CYCLOPS CAULDRON / REVISION 07 / ASSEMBLY", font=small_font, fill="#526068")
+    draw.text((60, 30), "CYCLOPS CAULDRON / ASSEMBLY", font=small_font, fill="#526068")
     draw.text((60, 67), title, font=title_font, fill="#252D32")
     draw.text((60, 119), subtitle, font=body_font, fill="#526068")
     draw.line((1206, 177, 1206, 1110), fill="#BDCACD", width=2)

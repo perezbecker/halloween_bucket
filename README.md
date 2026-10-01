@@ -1,295 +1,205 @@
-# Cyclops Cauldron For CORE One+
+# Cyclops Cauldron
 
-A single-nozzle black cauldron with a **separately printed sculpted skull**, attached
-using four M2 screws. The HalloWing M0, glass lens, battery cradle, and removable
-candy guard remain serviceable. Revision 7 changes only the small carrier to
-use readily available **M2 x 20 mm bucket screws**. This is the only carrier
-design supplied, in both the individual and combined print jobs.
-The cauldron, sculpted skull, guard, test coupon and rope holes are unchanged.
-**Physical fit and hanging tests are still required.**
+A 3D-printed Halloween candy bucket with a sculpted skull, an animated
+HalloWing eye behind a glass lens, and a rope handle. The skull prints
+separately in white or glow PLA; the electronics sit behind a removable
+battery cradle and candy guard.
 
-## Print The Carrier And Guard Together
+The project includes parametric CAD, STEP and STL exports, editable print
+plates, assembly illustrations, and audited G-code for a **Prusa CORE One+**.
+All parts can be printed with a single nozzle and assembled with screws.
 
-**Use [03_04_carrier_guard_BLACK_04HF_PLA.gcode](usb/COREONE_04HF_PLA/03_04_carrier_guard_BLACK_04HF_PLA.gcode)**
-instead of separate jobs 03 and 04. It prints **one revision-7 M2 x 20 carrier
-and one complete guard together on the same plate**, layer-by-layer, using
-one spool of conventional PLA and the successful cauldron settings.
-Estimate: **109.53 g / 5 h 17 m**; have about **130 g available** for margin.
+![Assembled Cyclops Cauldron](renders/01_front_three_quarter.png)
 
-Both parts keep their validated back-down orientations, with **15 mm between
-them**. Settings: **0.20 mm layers, seven perimeters, 15% gyroid, no supports or
-brim**, 220/215 C nozzle and 60 C bed, **0.4 mm high-flow nozzle**.
-Do not also print the separate carrier/guard jobs unless you want extra copies.
-The [combined 3MF](print/03_04_carrier_guard_black.3mf),
-[audit](docs/carrier_guard_validation.json), and
-[printing instructions](docs/PRINTING.md#combined-carrier-and-guard) are included.
+**Build status:** the printed design has been reported to assemble and work
+successfully. CAD and slicing checks also pass. Each builder should still
+check their hardware fit and carrying strength; there is no certified load
+rating or impact-resistance claim.
 
-## Print The Skull In Conventional White PLA
+## Start Here
 
-**Use [02_skull_WHITE_04HF_PLA.gcode](usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode)**
-instead of the glow job. This is the same sculpted geometry, using the printer
-and conventional-PLA settings from the successfully printed cauldron:
-**0.4 mm high-flow nozzle, 220 C first layer / 215 C thereafter, 60 C bed**.
-It retains **0.10 mm detail layers, 100% rectilinear infill, seven perimeters,
-and no supports or brim**. Estimate: **64.17 g / 4 h 52 m**.
+1. **Gather the hardware.** Use a HalloWing **M0**, its lens kit, and the
+   fasteners in the [hardware list](docs/ASSEMBLY.md#hardware-list).
+2. **Check your printer setup.** The supplied G-code requires the
+   [CORE One+ configuration below](#printer-and-materials). For another setup,
+   reslice the geometry with the appropriate printer and filament profiles.
+3. **Print the small parts first.** Print the mounting test, one skull, and
+   one carrier plus guard. The carrier and guard can share a plate.
+4. **Fit-test the electronics.** Follow the
+   [illustrated assembly guide](docs/ASSEMBLY.md#illustrated-assembly-sequence)
+   and [fit-test procedure](docs/ASSEMBLY.md#fit-test-first).
+5. **Print the cauldron and finish the build.** Transfer the tested parts,
+   attach the rope, and complete the [hanging checks](docs/ASSEMBLY.md#rope-balance).
 
-Copy this file to USB, load the same conventional PLA in white, clear the sheet,
-and select the file containing **WHITE**, not GLOW. Use the same unchanged
-printer/nozzle setup as the successful cauldron print; do not bypass warnings.
-White PLA does not need an abrasive-filament nozzle check and will not glow.
-Print only one skull: the white file is an alternative, not a sixth part.
-The original glow file and all other jobs remain unchanged.
-See the [white-PLA audit](docs/white_skull_validation.json) and
-[printing guide](docs/PRINTING.md#white-pla-skull).
+The mounting test is a small section of the bucket wall. It lets you check
+the screws, lens alignment, PCB clearance and guard before the full bucket
+print. The skull, carrier, guard and electronics used in the test are reused
+in the finished bucket.
 
-## Shorter-Screw Carrier
+## What You Need
 
-**Already printed the parts? Reprint only
-[job 03, the M2 x 20 carrier](usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode).**
-Replace any old copy of job 03 on the USB drive. The four bucket nuts now sit
-at the bottom of **15.9 mm deep rear-access wells**; the 13 mm post section
-ahead of each nut gives a nominal **1.9 mm screw-tip allowance** with an M2 x 20
-screw, 0.5 mm washer, 3 mm wall and 1.6 mm nut.
+- Conventional PLA for the body, carrier, guard and mounting test; white PLA
+  or suitable glow-in-the-dark PLA for the skull.
+- Adafruit **HalloWing M0 #3900**, **40 mm glass lens #3853**, and
+  **acrylic lens-holder kit #4013**.
+- Adafruit **3.7 V, 500 mAh LiPo #1578**, a soft insulating pad and a
+  hook-and-loop battery strap.
+- **Eight M2 x 20**, **four M2 x 10**, and **four M2.5 x 20** machine screws,
+  **12 M2 nuts**, **12 M2 washers**, and **four M2.5 insulating washers**.
+  Keep the kit's four front M2.5 x 5 screws.
+- Approximately **8-10 mm nylon sail rope** for the handle.
 
-The PCB posts, 12 mm rear-component clearance, lens spacing, guard attachment
-and +/-2 mm alignment travel do not change. Keep the four **M2.5 x 20** screws
-for the PCB/lens module. You need **eight M2 x 20** total: four for the carrier
-and four for the guard, plus the existing four **M2 x 10** skull screws.
-See the [updated assembly steps](docs/ASSEMBLY.md#3-carrier-to-wall).
+See the [complete bill of materials](docs/ASSEMBLY.md#hardware-list) for
+washer dimensions, nut sizes and the purpose of each fastener. **M2 and M2.5
+are different threads:** the bucket mounts use M2; the lens kit uses M2.5.
 
-## Sculpted Faceplate
+The eye runs on the HalloWing. This repository supplies the mechanical build,
+not custom firmware; use the [electronics setup instructions](docs/ASSEMBLY.md#prepare-the-eye-electronics)
+to check the eye demo before installing the board.
 
-The forehead, brow, cheeks, jaw and teeth now have more pronounced contours,
-reaching **10.5 mm maximum thickness**. The original flat back, hole pattern,
-eye bezel and **3 mm screw seats** are unchanged. The existing four **M2 x 10**
-screws, washers and nuts still fit. The skull itself is unchanged in revision 7.
+## Printer And Materials
 
-**Still upgrading an old flat faceplate? Print
-[job 02, the sculpted skull](usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode).**
-It uses the same conditional **0.4 mm hardened high-flow / glow PLA** setup below,
-with **0.10 mm layers**, approximately **98.72 g and 5 h 40 m**. The old flat
-faceplate and the separate variant folder are retired; the standard faceplate
-STL, STEP, 3MF and USB filename now all contain this sculpted version.
+Use the supplied G-code only when your setup matches:
 
-![Sculpted faceplate close-ups and assembly](renders/faceplate_overview.png)
+| Requirement | Supplied configuration |
+| --- | --- |
+| Printer | Prusa CORE One+, single tool, without MMU or INDX |
+| Nozzle | **0.4 mm high-flow**; wear-resistant/hardened for glow PLA |
+| Filament | **1.75 mm PLA**, suitable for 220 C first layer / 215 C thereafter |
+| Sheet / bed | Clean smooth PEI suitable for PLA, **60 C** |
+| Firmware | Compatible with the official COREONE profile; jobs include notice **6.8.1+16182** |
 
-## USB Files: Check The Setup First
+Do not bypass printer or nozzle warnings. Standard-flow or different-diameter
+nozzles, other printers, and other materials require reslicing. **Glow PETG is
+not glow PLA** and must not use these files. Ordinary white PLA does not
+require the glow job's abrasive-material setting.
 
-Five actual, audited G-code jobs plus the white-PLA alternative for job 02
-and the combined alternative for jobs 03/04
-are included. **They are not universal printer
-files.** Hardware and filament details were unavailable, so these explicit
-assumptions were used:
+Read the [printing guide](docs/PRINTING.md) and
+[USB checklist](usb/COREONE_04HF_PLA/START_HERE.txt) before starting.
 
-- Stock **Prusa CORE One+**, single tool, with firmware compatible with Prusa's
-  current official COREONE profile. The files carry the **6.8.1+16182** firmware notice.
-- **0.4 mm high-flow nozzle**, wear-resistant/hardened for the glow print.
-- **1.75 mm PLA and glow PLA**, both rated for **220 C first layer, 215 C thereafter**.
-- **Clean smooth PEI sheet, 60 C bed**; official chamber control is retained.
+## Choose Your Print Jobs
 
-**Do not run these files with a 0.6 mm or standard-flow nozzle, PETG, an MMU/INDX
-profile, or incompatible filament.** Prusament PETG Ultraglow is PETG, not PLA.
-Do not bypass printer/nozzle warnings. When the setup matches, follow the
-[USB checklist](usb/COREONE_04HF_PLA/START_HERE.txt) and
-[printing instructions](docs/PRINTING.md).
+For one complete build, choose **one skull material** and **one way to print
+the carrier and guard**. Do not print both alternatives unless you want spares.
 
-| USB Job | Filament | Estimate | Time |
+| Part or plate | G-code | Filament estimate | Time estimate |
 | --- | --- | ---: | ---: |
-| [01 Mounting test](usb/COREONE_04HF_PLA/01_test_BLACK_04HF_PLA.gcode) | Black PLA | 37.27 g | 1 h 47 m |
-| [02 Sculpted skull](usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode) | Glow PLA | 98.72 g | 5 h 40 m |
-| [02 White skull alternative](usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode) | Conventional white PLA | 64.17 g | 4 h 52 m |
-| [03 HalloWing carrier](usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode) | Black PLA | 26.20 g | 1 h 32 m |
-| [04 Battery guard](usb/COREONE_04HF_PLA/04_guard_BLACK_04HF_PLA.gcode) | Black PLA | 83.38 g | 3 h 44 m |
-| [03+04 Carrier and guard together](usb/COREONE_04HF_PLA/03_04_carrier_guard_BLACK_04HF_PLA.gcode) | Conventional PLA | 109.53 g | 5 h 17 m |
-| [05 Full cauldron](usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode) | Black PLA | 622.99 g | 26 h 22 m |
+| Mounting test | [01 Test](usb/COREONE_04HF_PLA/01_test_BLACK_04HF_PLA.gcode) | 37.27 g PLA | 1 h 47 m |
+| Skull: white option | [02 White skull](usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode) | 64.17 g PLA | 4 h 52 m |
+| Skull: glow option | [02 Glow skull](usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode) | 98.72 g glow PLA | 5 h 40 m |
+| Carrier and guard together | [03+04 Combined](usb/COREONE_04HF_PLA/03_04_carrier_guard_BLACK_04HF_PLA.gcode) | 109.53 g PLA | 5 h 17 m |
+| Carrier only | [03 Carrier](usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode) | 26.20 g PLA | 1 h 32 m |
+| Guard only | [04 Guard](usb/COREONE_04HF_PLA/04_guard_BLACK_04HF_PLA.gcode) | 83.38 g PLA | 3 h 44 m |
+| Full bucket, after fit testing | [05 Cauldron](usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode) | 622.99 g PLA | 26 h 22 m |
 
-For a new build, print jobs **01-04 and perform the fit test before job 05**. Reuse the skull,
-carrier, and guard in the full cauldron. Change filament between jobs through
-the printer menu; there are no mid-print color changes and no purge tower.
+The combined plate prints both parts **layer-by-layer**, not one complete
+object at a time. It contains exactly the same carrier and guard as the
+individual jobs. All jobs use one filament on extruder 1, with no purge tower
+or mid-print colour changes.
 
-![Assembled bucket](renders/01_front_three_quarter.png)
+With the combined plate, budget approximately **769.79 g for the body,
+mounting test, carrier and guard**, plus **64.17 g white** or **98.72 g glow**
+for the skull. Separate carrier/guard jobs bring the first total to 769.84 g.
+These are slicer estimates including automatic startup purge, not measured
+print weights. Leave extra filament for loading, retries and spares.
 
-## Design
+## Assembly
 
-- Printed body envelope: **224 x 209 x 200 mm**, with a rounded belly, narrowed
-  neck, **8 mm rolled lip**, and a stable 146 mm flat base. No printed handle.
-- **3 mm nominal walls, 3.6 mm floor**, and 10 mm thick rope anchors.
-- Two **13 mm rope holes**, intended for approximately 8-10 mm nylon sail rope.
-- Both holes stay **16.66 mm forward of the geometric center**, toward the eye,
-  exactly as on the already-printed cauldron. They are not rebalanced for the new skull.
-- A **128 x 138 mm glow skull**, up to **10.5 mm thick**, printed flat-back-down.
-  **Four M2 x 10 screws, washers, and nuts** seat on unchanged 3 mm lands inside
-  recessed pockets. The black wall is not recessed.
-- **44.4 mm through-hole** for the stock 40 mm glass lens. The acrylic kit,
-  not the printed bezel, retains the glass.
-- Removable carrier, 12 mm PCB rear-component clearance, and +/-2 mm vertical
-  eye alignment. Four **M2 x 20 screws attach the carrier to the bucket** using
-  deep, rear-access sliding nut wells.
-- A removable candy guard with a **33 x 42 x 8.5 mm battery bay**, strap slots,
-  wire space, ventilation slots, and top USB access.
+![Six illustrated assembly stages](renders/assembly/overview.png)
 
-**Hardware correction:** Adafruit's #4013 lens kit uses **M2.5**, not M2.
-This design keeps its 6 mm M2.5 lens standoffs and uses separate M2 bucket
-fasteners. Four longer M2.5 screws are needed behind the PCB. Do not screw M2
-fasteners into the kit's M2.5 threads. See the [hardware list](docs/ASSEMBLY.md).
+The [assembly guide](docs/ASSEMBLY.md) covers mounting the skull, assembling
+the lens/PCB module, aligning the carrier, securing the battery, fitting the
+guard and attaching the rope.
 
-## Editable Print Files
+- The skull attaches with **four M2 x 10 screws** and outside washers.
+- The carrier attaches with **four M2 x 20 screws**. Seat its nuts at the
+  bottoms of the **15.9 mm deep rear rectangular wells**, not at the openings.
+- The PCB/lens module uses **four M2.5 x 20 screws with 1 mm insulating washers**.
+  The stock acrylic kit retains the glass; the printed bezel does not clamp it.
+- The guard attaches with the other **four M2 x 20 screws** and can be removed
+  for battery and electronics access.
 
-| File | Contents |
+Use wrapped candy or a suitable liner. Check rope knots and printed anchors
+over a padded surface before carrying a load. Protect the glass from impacts,
+keep the electronics dry, and charge the LiPo under supervision with the
+bucket empty and the guard removed. See [safe use and servicing](docs/ASSEMBLY.md#final-assembly-and-use).
+
+## Design At A Glance
+
+| Feature | Dimension |
 | --- | --- |
-| [Mounting test 3MF](print/01_mount_test_black.3mf) | Black 116 x 28 x 103 mm wall section |
-| [Skull faceplate 3MF](print/02_skull_faceplate_glow.3mf) | Sculpted glow skull, flat back down, reused after the test |
-| [Carrier 3MF](print/03_carrier_black.3mf) | Revision 7, M2 x 20 mounting; black, back-down with posts up |
-| [Battery guard 3MF](print/04_guard_black.3mf) | Black, back-down with walls pointing up |
-| [Cauldron 3MF](print/05_cauldron_black.3mf) | Black, upright on its base |
-| [Assembled STEP](cad/assembled_bucket.step) | Editable solids in assembly coordinates, without electronics |
-| [Parametric source](design/bucket.py) | Cauldron profile, skull, mass balance, mounting details, and test section |
-| [Relief source](design/sculpted_faceplate.py) | Forehead, brow, cheeks, jaw and teeth; fixed mounting clearances |
+| Printed body envelope | **224 x 209 x 200 mm** |
+| Walls / floor | **3 mm nominal / 3.6 mm** |
+| Rim / rope anchors | **8 mm rolled lip / 10 mm thick anchors** |
+| Rope holes | **13 mm**, positioned toward the electronics |
+| Sculpted skull | Approximately **128 x 138 mm**, up to **10.5 mm** thick |
+| Skull screw seats / eye opening | **3 mm / 44.4 mm** |
+| PCB rear-component clearance | **12 mm**, with **+/-2 mm** vertical eye adjustment |
+| Battery bay | **33 x 42 x 8.5 mm** |
 
-Each 3MF contains **one material, on extruder 1**, correctly positioned on a
-250 x 220 mm bed. STL and STEP parts are included too. These geometry files can
-be resliced for a different nozzle or material with the matching official
-printer preset. The sculpted faceplate STL is independently printable; do not
-combine black and glow as a multipart co-print. Old dual-head plates are retired.
+Explore the [design overview](renders/overview.png),
+[exploded assembly](renders/07_exploded_mount.png),
+[skull details](renders/faceplate_overview.png) and
+[individual print-bed previews](renders/print_beds/overview.png).
+Renders use the exported print meshes. Electronics, fasteners and optics are
+illustrative; the green skull and glow study are not brightness predictions
+or representations of white PLA.
 
-Assembly details and the screw list are in the
-[fit-test guide](docs/ASSEMBLY.md#fit-test-first).
-The new [illustrated assembly sequence](docs/ASSEMBLY.md#illustrated-assembly-sequence)
-has six numbered cards covering the skull, lens/PCB, carrier, battery, guard,
-and final rope checks. Open the [assembly overview](renders/assembly/overview.png)
-or individual full-resolution cards in the guide. Hardware and rope are
-illustrative; the printed geometry comes from the validated STL meshes.
+## Editable Files And Project Layout
 
-## Filament Budget
-
-All figures include one full bucket, one test section, one carrier, and one guard.
-
-| Material | Solid CAD upper estimate | Printing allowance | Budget | Offline sliced estimate |
-| --- | ---: | ---: | ---: | ---: |
-| Black | 780.86 g | 125 g | **905.86 g** | **769.84 g** |
-| Glow | 98.41 g | 50 g | **148.41 g** | **98.72 g** |
-
-Assumed maximum densities: **1.30 g/cm3 black, 2.00 g/cm3 glow**. The offline
-slice includes supports, brims, and the official single-nozzle startup purge.
-Estimates are not measurements of a physical print. Extra copies, failed prints,
-and manual filament-loading purges are not included. Both supplied job totals
-are below **1,000 g per spool**, with substantial remaining margin.
-
-## Balanced Rope Mounts
-
-The left/right hole centers remain **X = +/-99.33, Y = -16.66, Z = 178 mm**.
-The stronger faceplate adds about 32 g at the nominal glow density and shifts the
-assembled center of mass slightly toward the eye. The existing rope axis is
-kept fixed, with the updated center of mass about 77 mm below it.
-The nominal model includes the printed body, skull, carrier, guard, PCB,
-battery, glass, acrylic kit, screws, washers, strap, and pad. It excludes the
-test coupon, removed supports, and a symmetric rope handle.
-These balance estimates use glow PLA. The lighter conventional white skull
-changes the balance; repeat the hanging check with your actual assembly.
-
-| Centered candy load | Predicted fore-aft tilt |
-| --- | ---: |
-| Empty, electronics installed | 2.1 degrees toward the eye |
-| 500 g | 2.7 degrees away from the eye |
-| 1,000 g | 4.5 degrees away from the eye |
-
-Leaving the holes on the geometric centerline would produce about **14.1 degrees**
-of empty tilt in this model. Actual hardware masses, infill, and uneven candy
-change the result; this is not a guarantee of perfect balance at every load.
-See the [balance diagram](renders/10_rope_balance.png) and
-[hanging-test instructions](docs/ASSEMBLY.md#rope-balance).
-
-## Print Bed Previews
-
-These show **five separate jobs**, each in its actual 3MF position and print
-orientation on a dimensioned **250 x 220 mm CORE One+ bed reference**. All views
-use the same camera scale. Amber lines are brim/support extrusion paths from
-the matching USB G-code; they print in the job's filament, not a second colour.
-No electronics, screws, or assembled-part transforms are added to these views.
-The bed is a dimensional reference, not a detailed model of the printer chassis.
-
-| Job | Print Bed Render |
+| Location | Contents |
 | --- | --- |
-| 01 Black mounting test | [View](renders/print_beds/01_mount_test_black.png) |
-| 02 Sculpted glow skull, flat back down | [View](renders/print_beds/02_skull_faceplate_glow.png) |
-| 03 Black HalloWing carrier, posts up | [View](renders/print_beds/03_carrier_black.png) |
-| 04 Black battery guard, open side up | [View](renders/print_beds/04_guard_black.png) |
-| 05 Black cauldron, upright | [View](renders/print_beds/05_cauldron_black.png) |
+| [print/](print/) | STL parts and placed geometry 3MFs, including the [combined carrier/guard plate](print/03_04_carrier_guard_black.3mf) |
+| [cad/](cad/) | Individual STEP solids and the [assembled bucket](cad/assembled_bucket.step) |
+| [design/](design/) | Parametric [bucket and mounting design](design/bucket.py) and [sculpted faceplate](design/sculpted_faceplate.py) |
+| [usb/COREONE_04HF_PLA/](usb/COREONE_04HF_PLA/) | Ready-to-print jobs for the documented printer setup |
+| [profiles/](profiles/) | Slicer settings and pinned profile provenance |
+| [docs/](docs/) | Printing, assembly, mechanical sources and validation reports |
+| [renders/](renders/) | Design views, assembly cards and print-bed illustrations |
+| [tools/](tools/) and [tests/](tests/) | Export, slicing, rendering and validation tooling |
 
-![Five CORE One+ print jobs](renders/print_beds/overview.png)
-
-## Review The Design
-
-[Design overview](renders/overview.png) includes front, rear, top, cutaway,
-test mounting, a glow study, the empty printed eye opening, rope balance, and
-three sculpted-faceplate close-ups. The focused
-[faceplate overview](renders/faceplate_overview.png) shows the stronger contours.
-An additional [exploded assembly view](renders/07_exploded_mount.png) is included.
-All printed parts are rendered from the exported STL meshes. The eye animation,
-electronic components, and glass optics are illustrative reference geometry;
-they are not printable parts or a prediction of optical focus/glow brightness.
-
-![Design overview](renders/overview.png)
+The skull geometry files use the name `bucket_glow` or
+`02_skull_faceplate_glow.3mf`; **the same shape is used for white and glow PLA**.
+Material selection belongs to the slicer profile. The geometry 3MFs can be
+resliced for other supported setups; do not treat the supplied G-code as
+printer-independent.
 
 ## Rebuild
 
-Python 3.11 was used on ARM Linux. CadQuery creates the solids; VTK/PyVista
-renders offscreen. No OpenSCAD or Blender installation is needed.
+You do not need the development tools to print the supplied jobs. For CAD,
+slicer and render work, use Python 3.11 with the pinned
+[dependencies](requirements.txt), CadQuery, PyVista/VTK and **PrusaSlicer 2.9.6**.
+The rendering scripts use Linux DejaVu fonts. From the repository root on
+Linux or WSL:
 
 ```sh
 uv venv .venv --python 3.11
 uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python tools/build.py
-.venv/bin/python tools/render.py
-.venv/bin/python tools/render_assembly.py
 .venv/bin/python tools/check_slicer.py --slicer /path/to/prusa-slicer-2.9.6
 .venv/bin/python tools/check_slicer.py --white-skull --slicer /path/to/prusa-slicer-2.9.6
 .venv/bin/python tools/check_slicer.py --carrier-guard --slicer /path/to/prusa-slicer-2.9.6
+.venv/bin/python tools/render.py
+.venv/bin/python tools/render_assembly.py
 .venv/bin/python tools/render.py --print-beds
+.venv/bin/python -m unittest discover -s tests
 ```
 
-The build regenerates the replacement carrier and assembled STEP, but verifies
-and reuses the cauldron, skull, guard and coupon exports. The `check_slicer.py`
-command requires **PrusaSlicer 2.9.6** and regenerates only carrier job 03;
-the other four existing jobs are re-audited and kept byte-for-byte unchanged.
-The optional `--white-skull` command generates only the distinct white-PLA
-job and [white profile](profiles/core_one_plus_0.4HF_white_PLA.ini), preserving
-all five original jobs. Its separate audit records the source plate, cauldron
-profile and output hashes, layer settings, bounds and rejected unsafe mutations.
-The optional `--carrier-guard` command creates the combined 03/04 plate and
-G-code without changing any individual job. Its audit checks source meshes,
-object spacing, both native tool assignments, and actual extrusion on both
-objects through every shared layer; sequential-object printing is disabled.
-Object names, not PrusaSlicer's variable object-ID order, identify the parts.
-The base CAD manifest covers only the five individual meshes and plates;
-the combined plate has its own validation manifest. Run the sequence-audit
-regression tests with `.venv/bin/python -m unittest discover -s tests`.
-The sixteen unchanged CAD, mesh, plate and G-code files are protected by
-[printed-part hashes](docs/printed_parts.json).
-On this ARM Linux/WSL machine it uses the official portable Windows build via
-interop; `--slicer` accepts a native 2.9.6 executable on another platform.
-The first run downloads the pinned profile bundle if it is not cached.
-Profile sources and assumptions are recorded in [profiles/provenance.json](profiles/provenance.json).
-The build checks
-solid validity, closed/wound meshes, material and assembly collisions, matching
-coupon geometry, fastener clearances, bed bounds, and filament budgets.
-The carrier check verifies M2 x 20 nut engagement, rear nut-loading access,
-bearing lands and clearance across the full vertical adjustment.
-It also checks support-critical body slopes, material centroids, and the
-fixed printed rope axis against the actual reinforced mounting bores. The saved
-cauldron, carrier and guard STEP files are also tested for faceplate collisions.
-The G-code audit checks executable startup and shutdown commands, single-nozzle
-use, temperature limits, flow limits, and all model-phase moves. It is not a
-physical print test or confirmation of the user's unspecified machine setup.
-The `--print-beds` render command checks the 3MF and G-code hashes against that
-audit before drawing the five job previews. It does not regenerate or modify
-the print files. Use `--print-beds --jobs 2 5` to refresh selected views only.
-The assembly renderer checks the assembly dimensions, PCB mounting pattern, and
-all five source STL hashes against the CAD validation report. It produces six
-annotated cards and their overview, and records source/image hashes in
-[its manifest](renders/assembly/manifest.json). It does not modify CAD, print
-plates, or G-code.
+The build exports the carrier and assembled STEP, checks all parts, and
+preserves the supplied body, skull, guard and coupon exports against
+[pinned hashes](docs/printed_parts.json). The default slicer command
+regenerates the individual carrier job and audits all five individual jobs;
+the two flags generate the white skull and combined plate separately.
+Render commands do not modify manufacturing files.
 
-Results: [CAD/mesh validation](docs/validation.json),
-[native slicer validation](docs/slicer_validation.json), and
-[mechanical sources and assumptions](docs/SOURCES.md).
+Each generated job is checked for native import, model bounds, tool
+assignment, temperatures, flow, startup and shutdown. CAD checks cover solid
+and mesh validity, mounting passages, collisions, clearances and material
+budgets. These checks complement physical fitting; they do not certify
+carrying strength, optical performance or every filament/printer combination.
+
+See [mechanical sources and validation scope](docs/SOURCES.md) for dimensions,
+assumptions, upstream credits and the detailed
+[CAD](docs/validation.json), [individual-job](docs/slicer_validation.json),
+[white-skull](docs/white_skull_validation.json) and
+[combined-plate](docs/carrier_guard_validation.json) reports.

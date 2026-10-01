@@ -1,112 +1,109 @@
-CYCLOPS CAULDRON - CORE ONE+ - REVISION 7
-READ BEFORE PRINTING
+CYCLOPS CAULDRON - PRUSA CORE ONE+
+PRINTING CHECKLIST
 
-CARRIER AND GUARD TOGETHER
-  Use 03_04_carrier_guard_BLACK_04HF_PLA.gcode INSTEAD OF separate jobs 03 and 04.
-  Contains ONE new M2 x 20 carrier and ONE complete guard on the same plate.
-  Both print layer-by-layer from one spool of conventional PLA, not sequentially.
-  Estimate: 109.53 g / 5 h 17 m. Have about 130 g available for margin.
-  Same cauldron setup: 0.4 mm HIGH-FLOW nozzle, 220/215 C nozzle, 60 C bed.
-  0.20 mm layers, seven perimeters, 15% gyroid; no supports or brim.
-  Clear the whole sheet and watch both parts' first layer. Do not bypass warnings.
-  Black is suggested; the same tested conventional white PLA is also usable.
+This folder contains ready-to-print G-code for the bucket, skull, electronics
+carrier, battery/candy guard and a small mounting-test wall.
+The design has been printed and reported to assemble and work successfully.
+Confirm your own printer, material and hardware fit before use.
 
-CONVENTIONAL WHITE PLA SKULL
-  Use 02_skull_WHITE_04HF_PLA.gcode INSTEAD OF the GLOW job.
-  Same sculpted skull, with the printer/material settings from the successfully
-  printed cauldron: 0.4 mm HIGH-FLOW nozzle, 220/215 C nozzle, 60 C bed.
-  0.10 mm layers (0.20 first), 100% rectilinear, seven perimeters, no supports.
-  Estimated 64.17 g / 4 h 52 m. Ordinary non-abrasive PLA; it will not glow.
-  Keep the same printer/nozzle setup; clear the sheet, load white PLA and
-  select WHITE on the printer. Do not bypass warnings. Watch the first layer.
-  Print ONE skull only. This is an alternative file, not an extra part.
+1. CHECK THE PRINTER AND MATERIAL
 
-ONLY HAVE M2 SCREWS UP TO 20 MM?
-  Reprint ONLY 03_carrier_BLACK_04HF_PLA.gcode. Revision 7 moves the four bucket
-  nuts deeper into rear-access wells for M2 x 20 screws. Replace any old USB
-  copy of job 03 with this file. The cauldron, skull, guard and test coupon do
-  not change. This is the only carrier supplied, also used in combined job 03+04.
-  Keep your four M2.5 x 20 screws for the PCB/lens kit; do not substitute M2.
+  Printer: Prusa CORE One+, single tool, no MMU or INDX.
+  Nozzle: 0.4 mm HIGH-FLOW. Glow PLA also requires a wear-resistant/hardened
+          nozzle and filament rated for its 0.4 mm bore.
+  Filament: 1.75 mm PLA, rated for 220 C first layer and 215 C afterwards.
+  Sheet: clean smooth PEI suitable for PLA, at 60 C.
+  Firmware: compatible with the official COREONE profile.
+            The files include the 6.8.1+16182 firmware notice.
+  Chamber: official automatic control, nominal 20 C; keep vents unobstructed.
 
-These are actual single-nozzle G-code jobs generated with PrusaSlicer 2.9.6
-and official Prusa COREONE machine settings. They have passed a static
-G-code audit, NOT a physical print test. The cauldron has been reported to print
-successfully; the white skull reuses those settings. The nozzle model has not
-been independently identified. Run ONLY when all conditions below match.
+  Do not bypass printer/nozzle warnings. These files are NOT for a standard-flow
+  nozzle, a different nozzle diameter, another printer, or PETG/TPU/ASA.
+  Glow PETG is NOT glow PLA. Reslice the supplied 3MFs if your setup differs.
 
-REQUIRED SETUP
-  Printer: stock Prusa CORE One+, single tool, no MMU or INDX.
-  Firmware: current stable firmware compatible with the official profile.
-            The files carry the 6.8.1+16182 update notice.
-  Nozzle: 0.4 mm HIGH-FLOW. Wear-resistant/hardened is REQUIRED for glow PLA.
-          Set the printer's nozzle diameter, high-flow, and hardened flags
-          correctly. Do not bypass a nozzle/model mismatch warning.
-  Filament: 1.75 mm black PLA / conventional white PLA / glow-in-the-dark PLA.
-            All must support 220 C first layer, 215 C thereafter.
-            Glow filament must be rated for a 0.4 mm hardened nozzle.
-  Sheet: clean smooth PEI, suitable for PLA, at 60 C.
-  Chamber: official automatic control, target 20 C, vents unobstructed.
+2. CHOOSE THE JOBS
 
-NOT FOR a 0.6 mm nozzle, standard-flow nozzle, PETG, TPU, ASA, or other printer.
-Prusament PETG Ultraglow is PETG: DO NOT use the glow PLA G-code for it.
-If your setup differs, reslice the supplied 3MF with the matching official
-printer and filament profiles. Never fix a mismatch by ignoring the warning.
+  Print ONE skull: WHITE or GLOW.
+  Print ONE carrier and ONE guard: use combined 03+04 OR separate 03 and 04.
+  Do not print both alternatives unless you want extra copies.
 
-USB WORKFLOW
-1. Use a readable FAT32 USB drive; do not format a drive containing needed data.
-2. Copy the needed .gcode files onto the drive, choosing WHITE or GLOW for job 02,
-   then safely eject.
-   The printer runs .gcode, not .stl, .step, .3mf, or a zip archive.
-3. Insert the drive in the CORE One+. Clear the sheet completely and load the
-   filament stated in the filename through the printer's Filament menu.
-4. Select the job in the printer's Print menu. Check the model/nozzle notices,
-   expected material, and available filament before starting. Observe the
-   cleaning, levelling, and first layer. Stop if it lifts or extrudes poorly.
-5. Let the sheet cool and remove each finished part before starting the next job.
-   Change colors only BETWEEN jobs through the printer menu.
+  Filename                                  Filament        Estimate     Time
+  01_test_BLACK_04HF_PLA.gcode               PLA             37.27 g     1 h 47 m
+  02_skull_WHITE_04HF_PLA.gcode              white PLA       64.17 g     4 h 52 m
+  02_skull_GLOW_04HF_PLA.gcode               glow PLA        98.72 g     5 h 40 m
+  03_04_carrier_guard_BLACK_04HF_PLA.gcode   PLA            109.53 g     5 h 17 m
+  03_carrier_BLACK_04HF_PLA.gcode            PLA             26.20 g     1 h 32 m
+  04_guard_BLACK_04HF_PLA.gcode              PLA             83.38 g     3 h 44 m
+  05_cauldron_BLACK_04HF_PLA.gcode           PLA            622.99 g    26 h 22 m
 
-JOBS (times are estimates)
-  01_test_BLACK_04HF_PLA.gcode       black PLA   37.27 g    1 h 47 m
-  02_skull_GLOW_04HF_PLA.gcode       glow PLA    98.72 g    5 h 40 m
-  02_skull_WHITE_04HF_PLA.gcode      white PLA   64.17 g    4 h 52 m (alternative)
-  03_carrier_BLACK_04HF_PLA.gcode    black PLA   26.20 g    1 h 32 m
-  04_guard_BLACK_04HF_PLA.gcode      black PLA   83.38 g    3 h 44 m
-  03_04_carrier_guard_BLACK_04HF_PLA.gcode PLA 109.53 g    5 h 17 m (replaces 03+04)
-  05_cauldron_BLACK_04HF_PLA.gcode   black PLA  622.99 g   26 h 22 m
+  BLACK and WHITE describe the intended colours; conventional PLA in another
+  colour is usable when it meets the same temperature requirements.
+  The GLOW job has different flow and abrasive-filament settings.
+  All jobs use one filament and one extruder, without mid-print colour changes.
 
-For a new build, print 01-04 and fit-test BEFORE committing to 05.
-You can print 01, 03, and 04 in black before swapping to glow for 02.
-Reuse the SAME skull, carrier, and guard in the final cauldron.
-Separate-job totals with glow skull: 769.84 g black, 98.72 g glow at densities of 1.30/2.00.
-With white skull instead: 769.84 g black, 64.17 g white at density 1.30 g/cm3.
-Using combined 03+04 instead reduces the black total to 769.79 g.
-There is no purge tower, tool change, or mid-print filament change.
+  The combined job prints both parts layer-by-layer, NOT sequential objects.
+  Both parts keep their back-down orientations, with 15 mm between them.
+  Have about 130 g of PLA available for this plate, allowing margin.
 
-SCULPTED SKULL
-  Up to 10.5 mm total thickness, with the original flat back and 3 mm screw seats.
-  Forehead, brow, cheeks, jaw and teeth grow outward only. Eye clearance unchanged.
-  Print flat back down, sculpture up; 0.10 mm layers (0.20 first), 100% infill.
-  No supports or brim. Reuse the same M2 x 10 screws, washers and nuts.
+3. PRINT THE SMALL PARTS AND CHECK FIT
 
-ASSEMBLY SUMMARY
-  Skull to wall: four M2 x 10 screws, four M2 washers, four M2 nuts.
-  Carrier to wall: four M2 x 20 screws, washers and nuts (separate holes).
-  Seat those nuts at the BOTTOM of the 15.9 mm deep rear wells, not at the opening.
-  Guard to carrier: another four M2 x 20 screws, washers and nuts.
-  Total: eight M2 x 20 and four M2 x 10, plus four M2.5 x 20 for the PCB/lens.
-  Use only the specified screw lengths and seat the nuts fully.
-  Stock lens hardware remains M2.5; do not substitute M2 in M2.5 threads.
-  The lens is retained by Adafruit's acrylic kit, not by the skull plate.
-  Use the complete hardware list and fit-test steps in docs/ASSEMBLY.md
-  in the repository before assembling powered electronics.
+  Print the test wall, chosen skull, carrier and guard BEFORE the full bucket.
+  Follow docs/ASSEMBLY.md in the repository to check hardware, lens alignment,
+  battery fit and guard clearance on the test wall.
+  Hold the test assembly above the bench: the skull and guard extend below
+  the coupon's foot. Reuse all tested parts and hardware in the full bucket.
 
-The full skull and battery guard extend below the coupon's foot. Hold the
-coupon above a padded surface/bench edge during the assembled fit test.
-Never install electronics or the LiPo during printing. Never crush the pouch.
-Use wrapped candy/a liner. Check hanging balance and rope lugs over a soft
-surface before use. The rope holes stay fixed at their existing coordinates;
-the heavier sculpted plate predicts about 2.1 degrees of empty forward tilt.
-Uneven candy, actual hardware weights, and rope knots will change it.
+4. RUN A JOB FROM USB
 
-Full instructions: docs/PRINTING.md and docs/ASSEMBLY.md in the repository.
-Verification: docs/slicer_validation.json and profiles/provenance.json.
+  Copy the selected .gcode files to a readable FAT32 USB drive and safely eject.
+  Do not format a drive containing needed data. The printer runs .gcode,
+  not .stl, .step, .3mf, or a zip archive.
+  Clear the entire sheet, load PLA through the printer's filament menu,
+  insert the drive and select the job.
+  Check the notices and watch cleaning, levelling and the first layer.
+  On the combined plate, inspect the first layer of BOTH parts.
+  Stop if material lifts or extrudes poorly.
+  Let the sheet cool and remove each print before starting another job.
+  Change filament BETWEEN jobs. Never install electronics or a battery during
+  printing.
+
+5. PRINT THE CAULDRON AND ASSEMBLE
+
+  After the small assembly passes its fit checks, print job 05 and transfer
+  the skull, carrier, lens/PCB module and guard to the full bucket.
+
+  Skull to wall: four M2 x 10 screws, M2 washers and nuts.
+  Carrier to wall: four M2 x 20 screws, M2 washers and nuts.
+    Seat these nuts at the BOTTOM of the 15.9 mm deep rear rectangular wells.
+  Guard to carrier: four M2 x 20 screws, M2 washers and nuts.
+  PCB/lens module: four M2.5 x 20 screws with 1 mm insulating washers.
+    Keep the stock acrylic, four 6 mm M2.5 standoffs and front M2.5 x 5 screws.
+    M2 and M2.5 are different threads; do not substitute one for the other.
+  Full hardware quantities and installation details are in docs/ASSEMBLY.md.
+
+FILAMENT PLANNING
+
+  With combined carrier/guard: 769.79 g for bucket, test wall, carrier and guard.
+  With separate carrier/guard: 769.84 g for those parts.
+  Add ONE skull: 64.17 g white PLA OR 98.72 g glow PLA.
+  Estimates include automatic startup purge, using densities of 1.30 g/cm3
+  conventional PLA and 2.00 g/cm3 glow. Leave extra for manual loading,
+  retries and spares; these are not measured print weights.
+
+  Skull jobs: 0.10 mm layers, 0.20 mm first layer, 100% rectilinear infill.
+  Other jobs: 0.20 mm layers and nominal 15% gyroid infill.
+  All use seven perimeters. The combined carrier/guard paths fill the printed
+  sections with perimeters and solid layers; no sparse infill is emitted.
+
+BEFORE CARRYING OR SERVICING
+
+  Check rope knots, balance and anchors just above a padded surface, empty
+  first and then with the intended load. There is no certified load rating.
+  Do not swing the bucket or use the rope as a neck strap.
+  Use wrapped candy or a suitable liner. Protect the glass from impacts.
+  Keep electronics dry. Do not crush the LiPo pouch or overtighten its strap.
+  Charge under supervision in an open nonflammable location, with the bucket
+  empty and guard removed; never charge under candy or use a damaged battery.
+
+Full guides: README.md, docs/PRINTING.md and docs/ASSEMBLY.md in the repository.
+CAD, source and slicer verification: docs/SOURCES.md and the validation reports.
