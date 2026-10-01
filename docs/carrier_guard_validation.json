@@ -1,0 +1,117 @@
+{
+  "design": "Cyclops cauldron, revision 7, shorter M2 x 20 bucket-screw carrier",
+  "slicer_version": "PrusaSlicer-2.9.6 based on Slic3r (with GUI support)",
+  "source_meshes_sha256": {
+    "print/carrier_black.stl": "bac0aeb9832dc5a0c4ba0b0be811aa58a20e64325a2d133b5b7f3df90bcb4188",
+    "print/guard_black.stl": "b570c5a180f400322c22ca63ae3c6581b8d9b1911d5efa7b253ac3b229118877"
+  },
+  "plate_check": {
+    "objects": 2,
+    "build_volume_mm": [
+      250.0,
+      220.0,
+      270.0
+    ],
+    "minimum_xy_bed_allowance_mm": 5,
+    "material": "black",
+    "extruder": 1,
+    "round_trip_volume_verified": true
+  },
+  "source_3mf": "print/03_04_carrier_guard_black.3mf",
+  "source_3mf_sha256": "8cef3a6ad9742910e5bf4cde8500b80b154682ff76650bf0e4e8ec6a2da8f26a",
+  "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+  "profile_sha256": "875fa55748883fb65214954f0899f3d388dab29f95e0ecc0ae6d86ba8001df35",
+  "cauldron_reference_gcode": "usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode",
+  "cauldron_reference_sha256": "7e44dcf8f73d7d67913078041ee6508b745be8cf309c926075e85991fbae4d29",
+  "gcode_file": "usb/COREONE_04HF_PLA/03_04_carrier_guard_BLACK_04HF_PLA.gcode",
+  "gcode_sha256": "12bf11169d1ab1b5f29c256d315d363af61d3d99bea4b59d1b92708d9f5a31f2",
+  "native_info": "[03_04_carrier_guard_black.3mf]\nsize_x = 96.000000\nsize_y = 90.000000\nsize_z = 28.900000\nmin_x = -48.000000\nmin_y = -45.000000\nmin_z = -14.450000\nmax_x = 48.000000\nmax_y = 45.000000\nmax_z = 14.450000\nnumber_of_facets = 35564\nmanifold = yes\nnumber_of_parts =  1\nvolume = 20190.863281\n[03_04_carrier_guard_black.3mf]\nsize_x = 106.000000\nsize_y = 124.000000\nsize_z = 41.500000\nmin_x = -53.000000\nmin_y = -62.000000\nmin_z = -20.750000\nmax_x = 53.000000\nmax_y = 62.000000\nmax_z = 20.750000\nnumber_of_facets = 17024\nmanifold = yes\nnumber_of_parts =  1\nvolume = 64940.859375",
+  "native_volume_extruders": [
+    "1",
+    "1"
+  ],
+  "objects": [
+    {
+      "name": "M2 x 20 carrier",
+      "source": "carrier_black",
+      "translation_mm": [
+        64.5,
+        110.0,
+        0.0
+      ],
+      "bounds_mm": [
+        [
+          16.5,
+          65.0,
+          7.105427357601002e-15
+        ],
+        [
+          112.5,
+          155.0,
+          28.899999618530273
+        ]
+      ]
+    },
+    {
+      "name": "Battery guard",
+      "source": "guard_black",
+      "translation_mm": [
+        180.5,
+        123.0,
+        0.0
+      ],
+      "bounds_mm": [
+        [
+          127.5,
+          48.0,
+          0.0
+        ],
+        [
+          233.5,
+          172.0,
+          41.5
+        ]
+      ]
+    }
+  ],
+  "xy_object_gap_mm": 15.0,
+  "minimum_xy_bed_allowance_mm": 16.5,
+  "sequence": {
+    "mode": "layer-by-layer, not sequential objects",
+    "layer_count": 207,
+    "layers_printing_both_objects": 144,
+    "remaining_guard_only_layers": 63
+  },
+  "gcode_audit": {
+    "layer_count": 207,
+    "extrusion_segments": 350806,
+    "deposition_bounds_mm": [
+      [
+        16.725,
+        48.225,
+        0.2
+      ],
+      [
+        233.275,
+        171.775,
+        41.4
+      ]
+    ],
+    "all_model_moves_within_build_volume": true,
+    "single_nozzle_verified": true,
+    "startup_checks_and_shutdown_verified": true,
+    "maximum_observed_flow_mm3_s": 6.0024,
+    "filament_g": 109.53,
+    "filament_cm3": 84.25,
+    "estimated_time": "5h 16m 43s",
+    "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+    "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+  },
+  "unsafe_mutations_rejected": 4,
+  "scope": "Alternative to separate jobs 03 and 04; one M2 x 20 carrier and one complete guard, one PLA filament.",
+  "limitations": [
+    "Requires the same CORE One+ 0.4 mm high-flow nozzle and conventional PLA setup as the successful cauldron.",
+    "Mass uses the existing conservative 1.30 g/cm3 density; includes startup purge but not manual loading or failures.",
+    "Native slicing and static G-code checks are not a physical print or hardware fit test."
+  ]
+}

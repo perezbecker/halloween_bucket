@@ -77,10 +77,14 @@ curl --fail --location --create-dirs 'https://raw.githubusercontent.com/adafruit
   measured. The hole clears its full outer diameter; the purchased kit sets the
   display-to-lens spacing. Do not interpret the textured render dome as an
   optical simulation.
-- Printed M2 and M2.5 clearances are **2.4** and **2.9** respectively. M2 nut
-  recesses allow approximately **4.3 across flats / 1.8 deep**; the bucket-side
-  sliding pockets have additional vertical room. These are FDM fit allowances,
-  not ISO dimensions for the hardware itself.
+- Printed M2 and M2.5 clearances are **2.4** and **2.9** respectively. Guard M2
+  nut recesses allow approximately **4.3 across flats / 1.8 deep**. Revision 7
+  changes the four bucket-side sliding wells to **4.3 wide x 8.8 high x 15.9
+  deep**, open from the carrier rear. They place the nut bearing faces at
+  Y = **-73**, leaving **13 mm** of post toward the wall. A **20 mm M2** screw,
+  0.5 mm washer, 3 mm wall and 1.6 mm nut leave **1.9 mm** of tip beyond the
+  nut, inside the well. These are FDM fit allowances and nominal hardware
+  assumptions, not measured tolerances or a strength certification.
 - Battery space is **33 W x 42 H x 8.5 D**. The cell requires a soft pad,
   noncompressive strap, lead slack, and inspection before each use.
 - Rope anchors are modeled 10 thick around 13 bores, tied into the black wall
@@ -111,11 +115,12 @@ Nominal balancing uses black/glow densities of 1.24/1.50 g/cm3. PCB and battery
 masses come from Adafruit; the glass is **estimated at 31 g** from its approximate
 glass-cap envelope, not a measured product weight. The acrylic/kit (5 g), extra
 carrier/guard fasteners (12 g), skull fasteners (3 g), strap/pad (3 g), and
-component mass centers are estimates.
+component mass centers are estimates. The 12 g aggregate fastener allowance is
+retained for revision 7, not a measured mass of the shorter screw set.
 See [assembly and balance](ASSEMBLY.md#rope-balance) for the complete assumptions,
 centered-candy scenarios, density/lens sensitivity, and required hanging test.
 
-The computed nominal center is approximately (0, -19.53, 100.64). The two bore
+The computed nominal center is approximately (0, -19.44, 100.59). The two bore
 centers stay at (+/-99.33, -16.66, 178), giving about **2.1 degrees of empty
 forward tilt**. The approximately 21.35 cm3 of added relief contributes about 32 g
 at the nominal 1.50 g/cm3 glow density. Both lug material and removed hole
@@ -136,8 +141,14 @@ hardware are checked. The actual faceplate is reused for the black coupon test.
 The saved cauldron, carrier and guard STEP files are checked directly for
 faceplate intersections. The complete original 3 mm base layer is retained;
 all relief is added outward. [printed_parts.json](printed_parts.json) pins
-sixteen existing black CAD, STL, 3MF and G-code files to revision-4 hashes.
-The default build verifies and reuses these files rather than rewriting them.
+sixteen unchanged cauldron, skull, guard and coupon CAD, STL, 3MF and G-code
+files to the merged revision-6 baseline. Only the carrier is regenerated;
+the default build verifies and reuses the remaining parts. The only supplied
+carrier has the deep rear-access nut wells, with the same geometry in both
+the individual and combined plates. Its external envelope and interfaces to
+the preserved parts are checked.
+Tests check nominal M2 x 20 engagement, nut bearing area and insertion paths
+at the center and both ends of the +/-2 mm adjustment.
 
 Mass calculations use adaptive, spline-span CAD integration and are checked
 against fine triangle meshes for both volume and centroid agreement. The
@@ -147,8 +158,8 @@ complete wall, clear rope bores on the fixed printed axis, uninterrupted lug bea
 rings, and support-critical bowl/neck slopes above 55 degrees.
 
 [slicer_validation.json](slicer_validation.json) records native **PrusaSlicer
-2.9.6** imports, per-object bounds, extruder **1 only**, the new sculpted-faceplate
-slice and the re-audited four original black jobs. The black G-code is retained
+2.9.6** imports, per-object bounds, extruder **1 only**, the new carrier slice
+and the re-audited four unchanged jobs. All non-carrier G-code is retained
 byte-for-byte. The audit examines executable commands, not the commented
 settings footer, and checks model/nozzle/firmware notices, cleaning and levelling,
 single-nozzle use, PLA temperatures, flow limits, all model-phase moves, and

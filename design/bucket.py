@@ -35,6 +35,12 @@ class Dimensions:
     lens_standoff: float = 6.0
     rear_pcb_screw_length: float = 20.0
     rear_pcb_washer: float = 1.0
+    bucket_screw_length: float = 20.0
+    bucket_screw_washer: float = 0.5
+    bucket_post_bearing_length: float = 13.0
+    bucket_nut_thickness: float = 1.6
+    bucket_nut_width: float = 4.3
+    bucket_nut_height: float = 8.8
     m2_clearance: float = 2.4
     m25_clearance: float = 2.9
     vertical_adjustment: float = 2.0
@@ -72,6 +78,14 @@ class Dimensions:
     @property
     def carrier_back(self) -> float:
         return self.carrier_front + self.carrier_thickness
+
+    @property
+    def bucket_nut_front(self) -> float:
+        return self.inner_front + self.bucket_post_bearing_length
+
+    @property
+    def bucket_nut_well_depth(self) -> float:
+        return self.carrier_back - self.bucket_nut_front
 
     @property
     def pcb_front(self) -> float:
@@ -431,6 +445,14 @@ def bucket_black():
     return bucket_shell()
 
 
+def bucket_nut_well(horizontal, vertical):
+    depth = DIMENSIONS.bucket_nut_well_depth + 0.01
+    return block(
+        DIMENSIONS.bucket_nut_width, depth, DIMENSIONS.bucket_nut_height,
+        (horizontal, DIMENSIONS.bucket_nut_front + depth / 2, DIMENSIONS.eye_z + vertical),
+    )
+
+
 @lru_cache(maxsize=None)
 def carrier():
     plate = flat_panel(96, 90, 5, DIMENSIONS.carrier_front, DIMENSIONS.carrier_thickness, DIMENSIONS.eye_z)
@@ -452,10 +474,7 @@ def carrier():
         )
         cuts.append(vertical_slot(horizontal, DIMENSIONS.eye_z + vertical, DIMENSIONS.inner_front - 1, 36,
                                   DIMENSIONS.m2_clearance, DIMENSIONS.vertical_adjustment))
-        cuts.append(
-            block(4.3, 1.81, 8.8,
-                  (horizontal, DIMENSIONS.carrier_back - 0.9, DIMENSIONS.eye_z + vertical))
-        )
+        cuts.append(bucket_nut_well(horizontal, vertical))
     for horizontal, vertical in GUARD_FASTENERS:
         cuts.append(cylinder_y(DIMENSIONS.m2_clearance / 2, DIMENSIONS.carrier_front - 2, 22,
                                horizontal, DIMENSIONS.eye_z + vertical))
@@ -671,6 +690,54 @@ def print_parts(include_bucket=True):
     return {name: print_orientation(name, shape) for name, shape in parts.items()}
 
 
+def verify_bucket_fasteners():
+    d = DIMENSIONS
+    mount = carrier()
+    screw_start = d.front - d.bucket_screw_washer
+    screw_tip = screw_start + d.bucket_screw_length
+    nut_rear = d.bucket_nut_front + d.bucket_nut_thickness
+    projection = screw_tip - nut_rear
+    assert projection >= 1.0, "Bucket screw does not fully engage the nut with a spare thread allowance"
+    assert screw_tip < d.carrier_front - 1.0, "Bucket screw projects behind its post"
+    assert d.bucket_post_bearing_length >= 10.0, "Insufficient post length in front of the bucket nut"
+    assert d.bucket_nut_width < 4.0 / math.cos(math.pi / 6), "Nut pocket allows a nominal M2 nut to spin"
+    bearing_areas = []
+    for horizontal, vertical in BUCKET_FASTENERS:
+        for adjustment in (-d.vertical_adjustment, 0.0, d.vertical_adjustment):
+            z = d.eye_z + vertical + adjustment
+            screw = cylinder_y(1.0, screw_start, d.bucket_screw_length, horizontal, z)
+            assert solid_volume(mount.intersect(screw)) < 1e-6, "M2 x 20 screw passage obstructed"
+            nut = hex_pocket(horizontal, z, d.bucket_nut_front, d.bucket_nut_thickness, across_flats=4.0)
+            assert solid_volume(mount.intersect(nut)) < 1e-6, "Nut cannot slide through the full adjustment range"
+            insertion = hex_pocket(horizontal, z, d.bucket_nut_front + 0.01,
+                                   d.bucket_nut_well_depth + 1.0, across_flats=4.0)
+            assert solid_volume(mount.intersect(insertion)) < 1e-6, "Deep nut well is not accessible from the rear"
+            bearing = hex_pocket(horizontal, z, d.bucket_nut_front - 0.25, 0.25, across_flats=4.0)
+            bearing_section = mount.intersect(bearing)
+            assert bearing_section.isValid(), "Invalid nut bearing section"
+            # Spline quadrature stalls on the split, planar center-position lands.
+            area = bearing_section.Volume() / 0.25
+            assert area > 4.0, "Insufficient nut bearing area beside the vertical screw slot"
+            bearing_areas.append(area)
+            assert solid_volume(guard().intersect(nut.fuse(screw))) < 1e-6, "Bucket fastener interferes with guard"
+    return {
+        "screw_length_mm": d.bucket_screw_length,
+        "washer_thickness_mm": d.bucket_screw_washer,
+        "wall_thickness_mm": d.wall,
+        "post_bearing_length_mm": d.bucket_post_bearing_length,
+        "nut_front_y_mm": d.bucket_nut_front,
+        "nut_thickness_mm": d.bucket_nut_thickness,
+        "screw_tip_y_mm": screw_tip,
+        "thread_projection_past_nut_mm": projection,
+        "rear_access_well_depth_mm": d.bucket_nut_well_depth,
+        "nut_well_width_height_mm": [d.bucket_nut_width, d.bucket_nut_height],
+        "vertical_adjustment_mm": d.vertical_adjustment,
+        "minimum_nut_bearing_area_mm2": min(bearing_areas),
+        "all_four_fasteners_and_rear_insertion_paths_clear": True,
+        "physical_fit_and_strength_test_required": True,
+    }
+
+
 def verify_mount():
     mount = carrier()
     assert mount.isValid(), "Carrier CAD solid is invalid"
@@ -693,8 +760,10 @@ def verify_mount():
     assert rear_engagement >= 2.0, "Insufficient PCB screw engagement"
     assert rear_engagement + front_engagement < DIMENSIONS.lens_standoff - 0.25, "Opposing screws bottom out"
     assert solid_volume(mount.intersect(guard())) < 1e-5, "Carrier collides with guard"
+    bucket_fasteners = verify_bucket_fasteners()
     return {"valid": True, "carrier_volume_mm3": round(solid_volume(mount), 2),
-            "pcb_hole_pitch_mm": [17.78, 45.72], "pcb_supports": 4}
+            "pcb_hole_pitch_mm": [17.78, 45.72], "pcb_supports": 4,
+            "bucket_fasteners": bucket_fasteners}
 
 
 if __name__ == "__main__":

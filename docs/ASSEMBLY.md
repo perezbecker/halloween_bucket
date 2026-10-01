@@ -4,11 +4,24 @@
 native slicing have been checked; real parts, printer tolerances, and carrying
 strength have not. Use only the HalloWing **M0**, not a different board model.
 
-**Already printed the cauldron and carrier?** Print only the updated sculpted
-faceplate, job 02. Remove the old faceplate's four M2 x 10 screws and reuse
-them, their washers and nuts. Do not move the carrier or lens assembly.
-The mounting back, all holes, 3 mm screw seats and eye bezel are retained;
-the new forehead and cheeks grow only outward. No black-part reprint is needed.
+**Conventional white PLA skull:** the geometry and four M2 x 10 screws are
+identical to the glow version; follow the same assembly steps. Use the
+[WHITE job](../usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode) instead of GLOW.
+The illustrations show glow material, and the balance figures below assume it;
+repeat the hanging test for the lighter white skull.
+
+**The only supplied carrier uses M2 x 20 mm bucket screws.** Print the
+[small carrier, job 03](../print/03_carrier_black.3mf), or use the combined
+carrier/guard job for the same carrier geometry. Its four bucket nuts sit
+deeper inside rear-access wells so **M2 x 20** screws reach them. Reuse the
+cauldron, sculpted skull, guard and test coupon; no drilling or modification of
+those parts is needed. The PCB supports, lens position, guard mounts and
+vertical adjustment are unchanged. Use the specified screw lengths and seat
+the metal nuts fully; do not force screws into printed plastic.
+
+Transfer the PCB/lens module with its existing **four M2.5 x 20 screws and
+insulating washers**. Keep the stock acrylic, front screws and lens standoffs
+assembled, then check alignment again. The skull still uses four M2 x 10 screws.
 
 ## Illustrated Assembly Sequence
 
@@ -39,8 +52,9 @@ engagement before tightening; M2 hardware does not fit the kit threads.
 
 ### 3. Carrier To Wall
 
-Use **four M2 x 35 screws** from outside and four nuts in the carrier's **rear
-rectangular sliding recesses**. Start loosely, center the eye within the
+Use **four M2 x 20 screws** from outside and four nuts seated at the bottom of
+the carrier's **15.9 mm deep rear rectangular wells**. Load the nuts from behind;
+do not leave them at the rear opening. Start loosely, center the eye within the
 +/-2 mm vertical adjustment, and check glass clearance before tightening.
 Power-test the display, then remove power before continuing assembly.
 
@@ -82,7 +96,7 @@ adequate tails. Follow the [rope-balance](#rope-balance) and
 | 1 | Adafruit #1578, 3.7 V 500 mAh LiPo | 29 x 36 x 4.75 mm nominal battery |
 | 4 | **M2.5 x 20 mm** machine screws | Replace the kit's four short rear screws; pass through carrier, printed posts, and PCB into the stock standoffs |
 | 4 | **1.0 mm thick M2.5 insulating washers**, outside diameter <=6 mm | Under the long rear screw heads, against the carrier |
-| 4 | **M2 x 35 mm** machine screws | Bucket/coupon to carrier |
+| 4 | **M2 x 20 mm** machine screws | Bucket/coupon to the revision-7 carrier |
 | 4 | **M2 x 20 mm** machine screws | Candy guard to carrier |
 | 4 | **M2 x 10 mm** machine screws | Separate glow skull to the black wall |
 | 12 | M2 hex nuts, approximately 4 mm across flats and 1.6 mm thick | Eight in carrier recesses; four loose inside the wall for the faceplate |
@@ -90,6 +104,10 @@ adequate tails. Follow the [rope-balance](#rope-balance) and
 | 1 | Soft hook-and-loop strap, 8-10 mm wide and <=2 mm thick, about 120 mm long | Loosely retain battery through guard slots |
 | 1 | Thin, soft, electrically insulating pad, approximately 1 mm thick | Cushion battery against the guard's back panel |
 | As needed | Nylon sail rope, approximately 8-10 mm diameter | Handle; two stopper knots inside the pail |
+
+Total loose screw requirements are **eight M2 x 20**, **four M2 x 10**, and
+**four M2.5 x 20**, plus the four stock front M2.5 x 5 screws in the lens kit.
+The shorter M2 screws in an assortment are not needed for this assembly.
 
 Black-finished screw heads can make the four visible M2 fasteners less noticeable.
 Prefer nonconductive hardware around the PCB. If using metal screws, inspect
@@ -129,6 +147,15 @@ From outside to inside, excluding screw heads:
 6. **3 mm carrier plate**, front Y = -60.1, rear Y = -57.1.
 7. 1 mm insulating washers and M2.5 x 20 rear screw heads.
 8. Free space, then guard inner back Y = -45.5, outer back Y = -43.5.
+
+The separate **bucket-to-carrier** screw stack is now: 0.5 mm washer + 3 mm
+black wall + 13 mm printed post before the nut + 1.6 mm nut = **18.1 mm**.
+An M2 x 20 screw leaves approximately **1.9 mm of tip beyond the nut**, inside
+the post's open well. The nut's front bearing plane is Y = **-73.0**, 15.9 mm
+forward of the carrier rear. The skull's larger carrier-access holes let the
+screw heads bear on the black wall, so skull thickness is not in this stack.
+These are nominal dimensions; confirm real washer/nut sizes and engagement
+before installing electronics. The guard's separate M2 x 20 stack is unchanged.
 
 With a 2.8 mm acrylic plate, rear M2.5 screws engage about **2.4 mm** and the
 stock front screws about **2.2 mm** into each 6 mm standoff. Their tips must not
@@ -170,9 +197,16 @@ past the printed bezel, depending on the actual kit stack.
    M2.5 x 5 screws. Place the PCB on the carrier posts. From the rear, install
    the four **M2.5 x 20 screws and 1 mm insulating washers**, through the carrier,
    posts, and PCB into the kit spacers. Tighten only enough to locate the PCB.
-6. Seat four M2 nuts in the carrier's rear rectangular sliding recesses. Loosely
-   connect the carrier to the test section using **M2 x 35 screws and washers**
-   from the outside. All four screws should enter without pulling the posts sideways.
+6. Load four M2 nuts through the carrier's rear rectangular openings and seat
+   them at the **bottom of the 15.9 mm deep wells**, not at the rear surface.
+   Keep the nuts' flats against the 4.3 mm wide side walls; the 8.8 mm height
+   allows the vertical adjustment. With the wall-facing posts down, gravity,
+   tweezers or a narrow blunt tool can help seat them. It is easier to trial-fit
+   the nuts and screws before fitting the electronics in step 5. Deburr only
+   printed plastic, with electronics removed; do not hammer nuts into place.
+   Loosely connect the carrier to the test section using **four M2 x 20 screws
+   and 0.5 mm washers** from outside. Verify all four engage the metal nuts and
+   tighten without bottoming, bending the carrier or pulling the posts sideways.
 7. Slide the carrier vertically until the eye is centered and the glass is clear
    of the printed opening all around. Verify the acrylic and its screw heads do
    not touch the wall. Do not use the screws to pull glass through a tight hole.
@@ -215,13 +249,15 @@ Adafruit's 17.5 g PCB and 10.5 g battery masses, plus estimates of **31 g glass,
 5 g acrylic/lens hardware, 12 g carrier/guard fasteners, 3 g faceplate fasteners,
 and 3 g strap/pad**.
 The balance densities are nominal material estimates, distinct from the higher
-1.30/2.00 densities used for the spool budget.
+1.30/2.00 densities used for the spool budget. The 12 g aggregate fastener
+estimate is retained after shortening the four bucket screws; weigh the actual
+hardware if a more precise balance prediction is needed.
 
-Nominal empty assembled mass is **866.6 g**, with its center at approximately
-**(0, -19.53, 100.64)**. This gives essentially equal left/right loads and puts
+Nominal empty assembled mass is **864.9 g**, with its center at approximately
+**(0, -19.44, 100.59)**. This gives essentially equal left/right loads and puts
 the center about **77.4 mm below** the rope axis. The stronger sculpted skull
 adds about 32 g versus the old flat plate at the nominal density. Predicted
-empty tilt is **2.1 degrees toward the eye**, versus 14.2 degrees with
+empty tilt is **2.1 degrees toward the eye**, versus 14.1 degrees with
 uncompensated holes. A sensitivity check varying black/glow density and glass
 mass gives approximately **-4.4 to -0.6 degrees**
 of empty pitch; other uncertainties, including an asymmetric rope or packing,

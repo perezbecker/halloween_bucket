@@ -90,7 +90,7 @@ def assembly_scene(name):
              (-30, seat - 2, 165), AMBER),
             ("4 loose M2 nuts", "Nuts go inside the black wall. The skull back sits flat against the wall; do not bend it.",
              (30, d.inner_front + 3, 80), AMBER),
-            ("Carrier access, NOT skull fixing", "Blue rings mark the other four openings. Leave them clear for the M2 x 35 carrier screws in card 03.",
+            ("Carrier access, NOT skull fixing", "Blue rings mark the other four openings. Leave them clear for the M2 x 20 carrier screws in card 03.",
              (40, d.front + shift - 3.2, 160), BLUE),
         ]
         caution = "Deburr printed passages with electronics removed. Hold the coupon above the bench: the skull extends below its foot."
@@ -119,24 +119,26 @@ def assembly_scene(name):
         seat = d.front - 55
         add_solid(plot, load_part("test_black"), BLACK)
         add_solid(plot, load_part("bucket_glow"), GLOW)
-        add_solid(plot, load_part("carrier_black"), BLACK, (0, shift, 0))
+        add_solid(plot, load_part("carrier_black"), BLACK, (0, shift, 0), opacity=0.55)
         electronics(plot, (0, shift, 0))
         for horizontal, vertical in BUCKET_FASTENERS:
             z = d.eye_z + vertical
-            fastener(plot, horizontal, z, seat, 35, BLUE)
-            nut(plot, horizontal, d.carrier_back + shift - 0.9, z, BLUE)
+            fastener(plot, horizontal, z, seat, d.bucket_screw_length, BLUE)
+            nut(plot, horizontal, d.bucket_nut_front + shift + d.bucket_nut_thickness / 2, z, BLUE)
             guide_axis(plot, horizontal, z, seat, d.carrier_back + shift + 4, BLUE)
         plot.add_mesh(pv.Arrow(start=(58, d.carrier_back + shift, 115), direction=(0, 0, 1), scale=20),
                       color=BLUE, lighting=False)
         plot.add_mesh(pv.Arrow(start=(58, d.carrier_back + shift, 115), direction=(0, 0, -1), scale=20),
                       color=BLUE, lighting=False)
         notes = [
-            ("4 x M2 x 35 + washers", "Insert from outside through the skull access openings and black wall. Start all four screws loosely.",
+            ("4 x M2 x 20 + washers", "Use the supplied M2 x 20 carrier. Insert through the skull access openings and black wall. Start all four screws loosely in the metal nuts.",
              (40, seat - 2, 160), BLUE),
-            ("4 sliding M2 nuts", "Seat these in the REAR rectangular carrier recesses. They are not the front hex recesses used by the guard.",
-             (-40, d.carrier_back + shift, 160), BLUE),
+            ("4 nuts, deep inside the wells", "Load from the REAR and seat at the bottom, 15.9 mm in. Carrier is ghosted to show the nuts. Use tweezers or a blunt tool, never force.",
+             (-40, d.bucket_nut_front + shift + 0.8, 160), BLUE),
             ("Adjust vertically, then tighten", "The slots allow +/-2 mm, not the exploded spacing shown. Center the glass with clearance all around; do not pull it through a tight opening.",
              (58, d.carrier_back + shift, 115), BLUE),
+            ("Same posts and lens position", "The nuts move forward, not the PCB. Each nut bears on 13 mm of post; a 20 mm screw projects 1.9 mm past a 1.6 mm nut with a 0.5 mm washer.",
+             (40, d.bucket_nut_front + shift, 90), TEAL),
         ]
         caution = "Power-test centering, focus and oblique viewing before fitting the guard. Remove power again before continuing assembly."
     elif name == "04_battery_and_strap":
@@ -273,7 +275,7 @@ def render_step(name):
     heading_font = ImageFont.truetype(str(font_dir / "DejaVuSans-Bold.ttf"), 23)
     body_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 22)
     small_font = ImageFont.truetype(str(font_dir / "DejaVuSans.ttf"), 20)
-    draw.text((60, 30), "CYCLOPS CAULDRON / REVISION 06 / ASSEMBLY", font=small_font, fill="#526068")
+    draw.text((60, 30), "CYCLOPS CAULDRON / REVISION 07 / ASSEMBLY", font=small_font, fill="#526068")
     draw.text((60, 67), title, font=title_font, fill="#252D32")
     draw.text((60, 119), subtitle, font=body_font, fill="#526068")
     draw.line((1206, 177, 1206, 1110), fill="#BDCACD", width=2)

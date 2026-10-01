@@ -1,15 +1,38 @@
-CYCLOPS CAULDRON - CORE ONE+ - REVISION 6
+CYCLOPS CAULDRON - CORE ONE+ - REVISION 7
 READ BEFORE PRINTING
 
-ALREADY PRINTED THE CAULDRON AND CARRIER?
-  Print ONLY 02_skull_GLOW_04HF_PLA.gcode. It now contains the stronger sculpted
-  skull. Replace any older USB copy with this updated file. The flat faceplate
-  is retired. All four black jobs remain unchanged; no black-part reprint is needed.
+CARRIER AND GUARD TOGETHER
+  Use 03_04_carrier_guard_BLACK_04HF_PLA.gcode INSTEAD OF separate jobs 03 and 04.
+  Contains ONE new M2 x 20 carrier and ONE complete guard on the same plate.
+  Both print layer-by-layer from one spool of conventional PLA, not sequentially.
+  Estimate: 109.53 g / 5 h 17 m. Have about 130 g available for margin.
+  Same cauldron setup: 0.4 mm HIGH-FLOW nozzle, 220/215 C nozzle, 60 C bed.
+  0.20 mm layers, seven perimeters, 15% gyroid; no supports or brim.
+  Clear the whole sheet and watch both parts' first layer. Do not bypass warnings.
+  Black is suggested; the same tested conventional white PLA is also usable.
+
+CONVENTIONAL WHITE PLA SKULL
+  Use 02_skull_WHITE_04HF_PLA.gcode INSTEAD OF the GLOW job.
+  Same sculpted skull, with the printer/material settings from the successfully
+  printed cauldron: 0.4 mm HIGH-FLOW nozzle, 220/215 C nozzle, 60 C bed.
+  0.10 mm layers (0.20 first), 100% rectilinear, seven perimeters, no supports.
+  Estimated 64.17 g / 4 h 52 m. Ordinary non-abrasive PLA; it will not glow.
+  Keep the same printer/nozzle setup; clear the sheet, load white PLA and
+  select WHITE on the printer. Do not bypass warnings. Watch the first layer.
+  Print ONE skull only. This is an alternative file, not an extra part.
+
+ONLY HAVE M2 SCREWS UP TO 20 MM?
+  Reprint ONLY 03_carrier_BLACK_04HF_PLA.gcode. Revision 7 moves the four bucket
+  nuts deeper into rear-access wells for M2 x 20 screws. Replace any old USB
+  copy of job 03 with this file. The cauldron, skull, guard and test coupon do
+  not change. This is the only carrier supplied, also used in combined job 03+04.
+  Keep your four M2.5 x 20 screws for the PCB/lens kit; do not substitute M2.
 
 These are actual single-nozzle G-code jobs generated with PrusaSlicer 2.9.6
 and official Prusa COREONE machine settings. They have passed a static
-G-code audit, NOT a physical print test. Your hardware/materials were not
-confirmed. Run them ONLY when all conditions below match.
+G-code audit, NOT a physical print test. The cauldron has been reported to print
+successfully; the white skull reuses those settings. The nozzle model has not
+been independently identified. Run ONLY when all conditions below match.
 
 REQUIRED SETUP
   Printer: stock Prusa CORE One+, single tool, no MMU or INDX.
@@ -18,8 +41,8 @@ REQUIRED SETUP
   Nozzle: 0.4 mm HIGH-FLOW. Wear-resistant/hardened is REQUIRED for glow PLA.
           Set the printer's nozzle diameter, high-flow, and hardened flags
           correctly. Do not bypass a nozzle/model mismatch warning.
-  Filament: 1.75 mm black PLA / glow-in-the-dark PLA.
-            Both must support 220 C first layer, 215 C thereafter.
+  Filament: 1.75 mm black PLA / conventional white PLA / glow-in-the-dark PLA.
+            All must support 220 C first layer, 215 C thereafter.
             Glow filament must be rated for a 0.4 mm hardened nozzle.
   Sheet: clean smooth PEI, suitable for PLA, at 60 C.
   Chamber: official automatic control, target 20 C, vents unobstructed.
@@ -31,7 +54,8 @@ printer and filament profiles. Never fix a mismatch by ignoring the warning.
 
 USB WORKFLOW
 1. Use a readable FAT32 USB drive; do not format a drive containing needed data.
-2. Copy the five .gcode files from this folder onto the drive, then safely eject.
+2. Copy the needed .gcode files onto the drive, choosing WHITE or GLOW for job 02,
+   then safely eject.
    The printer runs .gcode, not .stl, .step, .3mf, or a zip archive.
 3. Insert the drive in the CORE One+. Clear the sheet completely and load the
    filament stated in the filename through the printer's Filament menu.
@@ -44,14 +68,18 @@ USB WORKFLOW
 JOBS (times are estimates)
   01_test_BLACK_04HF_PLA.gcode       black PLA   37.27 g    1 h 47 m
   02_skull_GLOW_04HF_PLA.gcode       glow PLA    98.72 g    5 h 40 m
-  03_carrier_BLACK_04HF_PLA.gcode    black PLA   27.85 g    1 h 37 m
+  02_skull_WHITE_04HF_PLA.gcode      white PLA   64.17 g    4 h 52 m (alternative)
+  03_carrier_BLACK_04HF_PLA.gcode    black PLA   26.20 g    1 h 32 m
   04_guard_BLACK_04HF_PLA.gcode      black PLA   83.38 g    3 h 44 m
+  03_04_carrier_guard_BLACK_04HF_PLA.gcode PLA 109.53 g    5 h 17 m (replaces 03+04)
   05_cauldron_BLACK_04HF_PLA.gcode   black PLA  622.99 g   26 h 22 m
 
 For a new build, print 01-04 and fit-test BEFORE committing to 05.
 You can print 01, 03, and 04 in black before swapping to glow for 02.
 Reuse the SAME skull, carrier, and guard in the final cauldron.
-Totals: 771.49 g black, 98.72 g glow at budget densities of 1.30/2.00 g/cm3.
+Separate-job totals with glow skull: 769.84 g black, 98.72 g glow at densities of 1.30/2.00.
+With white skull instead: 769.84 g black, 64.17 g white at density 1.30 g/cm3.
+Using combined 03+04 instead reduces the black total to 769.79 g.
 There is no purge tower, tool change, or mid-print filament change.
 
 SCULPTED SKULL
@@ -62,7 +90,11 @@ SCULPTED SKULL
 
 ASSEMBLY SUMMARY
   Skull to wall: four M2 x 10 screws, four M2 washers, four M2 nuts.
-  Carrier to wall: four M2 x 35 screws, washers and nuts (separate holes).
+  Carrier to wall: four M2 x 20 screws, washers and nuts (separate holes).
+  Seat those nuts at the BOTTOM of the 15.9 mm deep rear wells, not at the opening.
+  Guard to carrier: another four M2 x 20 screws, washers and nuts.
+  Total: eight M2 x 20 and four M2 x 10, plus four M2.5 x 20 for the PCB/lens.
+  Use only the specified screw lengths and seat the nuts fully.
   Stock lens hardware remains M2.5; do not substitute M2 in M2.5 threads.
   The lens is retained by Adafruit's acrylic kit, not by the skull plate.
   Use the complete hardware list and fit-test steps in docs/ASSEMBLY.md

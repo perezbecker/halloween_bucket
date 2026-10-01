@@ -24,6 +24,7 @@ from design.bucket import (
     balance_report,
     block,
     bucket_black,
+    bucket_nut_well,
     cauldron_body,
     cauldron_radius_profile,
     carrier,
@@ -35,6 +36,7 @@ from design.bucket import (
     print_parts,
     skull_glow,
     solid_volume,
+    verify_bucket_fasteners,
     verify_faceplate,
     verify_mount,
 )
@@ -68,7 +70,14 @@ def existing_part_compatibility():
             saved = saved.rotate((0, 0, 0), (1, 0, 0), 90).translate((0, back, DIMENSIONS.eye_z))
         overlap = solid_volume(saved.intersect(skull_glow()))
         assert overlap < 1e-5, f"Faceplate collides with saved {name}"
-        assert abs(solid_volume(shape) - solid_volume(saved)) / solid_volume(saved) < 1e-6
+        assert solid_volume(shape.cut(saved)) < 1e-5, f"{name} adds material to the saved part"
+        removed = saved.cut(shape)
+        if name == "carrier_black":
+            if removed.Solids():
+                wells = [bucket_nut_well(horizontal, vertical) for horizontal, vertical in BUCKET_FASTENERS]
+                assert solid_volume(removed.cut(*wells)) < 1e-5, "Carrier changed outside the four bucket nut wells"
+        else:
+            assert solid_volume(removed) < 1e-5, f"Existing {name} geometry changed"
         assert all(abs(getattr(shape.BoundingBox(), axis) - getattr(saved.BoundingBox(), axis)) < 1e-5
                    for axis in ("xmin", "xmax", "ymin", "ymax", "zmin", "zmax"))
         collisions[name] = overlap
@@ -104,7 +113,7 @@ def write_3mf(path, objects, meshes):
     ET.SubElement(model, "metadata", name="Designer").text = "Cyclops cauldron"
     ET.SubElement(model, "metadata", name="Description").text = (
         "Prusa CORE One+ single-nozzle geometry. One filament per job, extruder 1 only. "
-        "The sculpted glow skull prints flat-back-down and attaches with the existing four M2 screws."
+        "The carrier has four rear-access nut wells for M2 x 20 mm bucket screws; mating parts are unchanged."
     )
     resources = ET.SubElement(model, "resources")
     materials = ET.SubElement(resources, "basematerials", id="100")
@@ -246,7 +255,9 @@ def geometry_checks():
             "eye_and_fastener_passages_clear": True, "battery_clearance_verified": True,
             "separate_screw_mounted_faceplate_verified": True,
             "balanced_rope_passages_and_bearing_rings_verified": True,
-            "printed_black_files_and_interfaces_preserved": True}
+            "unchanged_noncarrier_files_and_interfaces_preserved": True,
+            "carrier_changes_confined_to_four_bucket_nut_wells": True,
+            "m2x20_bucket_fasteners_verified": True}
 
 
 def main():
@@ -263,17 +274,18 @@ def main():
     part_report = {}
     for name, shape in shapes.items():
         assert shape.isValid()
-        if name.endswith("black"):
-            assert len(shape.Solids()) == 1, f"Disconnected solid: {name}"
+        assert len(shape.Solids()) == 1, f"Disconnected solid: {name}"
+        if name != "carrier_black":
             print(f"Preserving existing {name}", flush=True)
             source = ROOT / "print" / f"{name}.stl"
             mesh = trimesh.load_mesh(source)
             assert mesh.is_watertight and mesh.is_winding_consistent
             assert abs(mesh.volume - solid_volume(shape)) / solid_volume(shape) < 0.003
+            assert np.max(np.abs(mesh.center_mass - np.asarray(mass_properties(shape)[1]))) <= 0.15
             if output.resolve() != source.parent.resolve():
                 (output / source.name).write_bytes(source.read_bytes())
         else:
-            print(f"Exporting sculpted {name}", flush=True)
+            print(f"Exporting M2 x 20 carrier: {name}", flush=True)
             mesh = mesh_from_shape(shape)
             mesh.export(output / f"{name}.stl")
             step_path = ROOT / "cad" / f"{name}.step"
@@ -295,7 +307,7 @@ def main():
     for filename, label, name in (
         ("01_mount_test_black.3mf", "Black mounting test", "test_black"),
         ("02_skull_faceplate_glow.3mf", "Sculpted glow skull - existing M2 mount", "bucket_glow"),
-        ("03_carrier_black.3mf", "HalloWing carrier", "carrier_black"),
+        ("03_carrier_black.3mf", "HalloWing carrier - M2 x 20 bucket screws", "carrier_black"),
         ("04_guard_black.3mf", "Battery cradle and candy guard", "guard_black"),
         ("05_cauldron_black.3mf", "Single-material black cauldron", "bucket_black"),
     ):
@@ -305,7 +317,7 @@ def main():
     plate_report = {}
     for filename, objects in plates.items():
         path = output / filename
-        if objects[0][1][0].endswith("black"):
+        if filename != "03_carrier_black.3mf":
             original = ROOT / "print" / filename
             if path.resolve() != original.resolve():
                 path.write_bytes(original.read_bytes())
@@ -335,11 +347,12 @@ def main():
     assembly.export(str(assembly_path))
     assembly_path.write_text("\n".join(line.rstrip(" \t") for line in assembly_path.read_text().splitlines()) + "\n")
     report = {
-        "design": "Cyclops cauldron, revision 6, prominent sculpted faceplate", "units": "mm",
+        "design": "Cyclops cauldron, revision 7, shorter M2 x 20 bucket-screw carrier", "units": "mm",
         "parameters": asdict(DIMENSIONS), "board_holes_relative_to_eye_mm": BOARD_HOLES,
         "checks": checks, "parts": part_report, "plates": plate_report,
         "material_budgets": budgets,
         "balance": balance_report(),
+        "bucket_fastener_compatibility": verify_bucket_fasteners(),
         "faceplate_compatibility": verify_faceplate(),
         "existing_step_collisions_mm3": existing_part_compatibility(),
         "printed_part_baseline": "docs/printed_parts.json",
@@ -364,8 +377,8 @@ def main():
     if stale_test_step.exists():
         stale_test_step.unlink()
     report["files_sha256"] = {
-        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
-        for path in sorted(output.iterdir()) if path.suffix in (".stl", ".3mf")
+        filename: hashlib.sha256((output / filename).read_bytes()).hexdigest()
+        for filename in sorted({f"{name}.stl" for name in meshes} | set(plates))
     }
     verify_printed_parts()
     (ROOT / "docs" / "validation.json").write_text(json.dumps(report, indent=2) + "\n")

@@ -1,6 +1,6 @@
 {
   "slicer_version": "PrusaSlicer-2.9.6 based on Slic3r (with GUI support)",
-  "design": "Cyclops cauldron, revision 6, prominent sculpted faceplate",
+  "design": "Cyclops cauldron, revision 7, shorter M2 x 20 bucket-screw carrier",
   "scope": "CORE One+ 0.4 high-flow PLA USB jobs; hardware/material assumptions require confirmation before use",
   "profile_provenance": {
     "source_url": "https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/65c5c8f1e1c3836f306119c49d717759cbc368db/PrusaResearch/2.5.10.ini",
@@ -119,12 +119,13 @@
         "supports": false,
         "brim_mm": 0
       },
-      "postprocessing": "Trailing whitespace removed; executable commands unchanged"
+      "postprocessing": "Trailing whitespace removed; executable commands unchanged",
+      "existing_job_preserved_byte_for_byte": true
     },
     "03_carrier_black.3mf": {
-      "sha256": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
+      "sha256": "ac9480dacb3886f42fac5c7029083377bd05e79000df69479d4ee82f9d0b859b",
       "material": "black",
-      "native_info": "[03_carrier_black.3mf]\nsize_x = 96.000000\nsize_y = 90.000000\nsize_z = 28.900000\nmin_x = -48.000000\nmin_y = -45.000000\nmin_z = -14.450000\nmax_x = 48.000000\nmax_y = 45.000000\nmax_z = 14.450000\nnumber_of_facets = 35564\nmanifold = yes\nnumber_of_parts =  1\nvolume = 21528.085938",
+      "native_info": "[03_carrier_black.3mf]\nsize_x = 96.000000\nsize_y = 90.000000\nsize_z = 28.900000\nmin_x = -48.000000\nmin_y = -45.000000\nmin_z = -14.450000\nmax_x = 48.000000\nmax_y = 45.000000\nmax_z = 14.450000\nnumber_of_facets = 35564\nmanifold = yes\nnumber_of_parts =  1\nvolume = 20191.109375",
       "native_volume_extruders": [
         "1"
       ],
@@ -132,7 +133,7 @@
       "offline_slice_succeeded": true,
       "gcode_audit": {
         "layer_count": 144,
-        "extrusion_segments": 234154,
+        "extrusion_segments": 197915,
         "deposition_bounds_mm": [
           [
             77.225,
@@ -148,19 +149,19 @@
         "all_model_moves_within_build_volume": true,
         "single_nozzle_verified": true,
         "startup_checks_and_shutdown_verified": true,
-        "maximum_observed_flow_mm3_s": 6.0022,
-        "filament_g": 27.85,
-        "filament_cm3": 21.42,
-        "estimated_time": "1h 36m 46s",
+        "maximum_observed_flow_mm3_s": 6.0021,
+        "filament_g": 26.2,
+        "filament_cm3": 20.16,
+        "estimated_time": "1h 31m 46s",
         "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
         "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
       },
       "gcode_file": "usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode",
-      "gcode_sha256": "57ee9060f5cfb030904f3a788d28951876dda055c654c250dcb1009e24468c5c",
+      "gcode_sha256": "027225bb65b73da11886786ba6a576afb2fe6aa435d31b5d45f0750f7b69430a",
       "supports": false,
       "brim_mm": 0,
       "profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
-      "existing_job_preserved_byte_for_byte": true
+      "postprocessing": "Trailing whitespace removed; executable commands unchanged"
     },
     "04_guard_black.3mf": {
       "sha256": "89366e9a2f437af9fa51d882789e00871c8d60374a9b33de809c3a03336d066b",
@@ -247,7 +248,7 @@
   },
   "unsafe_mutations_rejected": 4,
   "all_plates_estimated_g": {
-    "black": 771.49,
+    "black": 769.84,
     "glow": 98.72
   }
 }

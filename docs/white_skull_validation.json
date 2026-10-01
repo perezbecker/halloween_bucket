@@ -1,0 +1,79 @@
+{
+  "design": "Cyclops cauldron, revision 7, shorter M2 x 20 bucket-screw carrier",
+  "slicer_version": "PrusaSlicer-2.9.6 based on Slic3r (with GUI support)",
+  "source_3mf": "print/02_skull_faceplate_glow.3mf",
+  "source_3mf_sha256": "71619e3bc5438c6dd9603a8199c65d170a9806950e20aeeac11a81458e18b2b5",
+  "base_profile": "profiles/core_one_plus_0.4HF_black_PLA.ini",
+  "base_profile_sha256": "875fa55748883fb65214954f0899f3d388dab29f95e0ecc0ae6d86ba8001df35",
+  "cauldron_reference_gcode": "usb/COREONE_04HF_PLA/05_cauldron_BLACK_04HF_PLA.gcode",
+  "cauldron_reference_sha256": "7e44dcf8f73d7d67913078041ee6508b745be8cf309c926075e85991fbae4d29",
+  "profile": "profiles/core_one_plus_0.4HF_white_PLA.ini",
+  "profile_sha256": "3c6c8c34265b1f7bbf953f6b214dad2bd9d8ebf5f69c00029fc79755ec49b4bd",
+  "gcode_file": "usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode",
+  "gcode_sha256": "eae65d6630e68c21e90ff158d2321bc8e0cf9303af680b6659ed31e2dca1f834",
+  "profile_overrides": {
+    "filament_colour": "#FFFFFF",
+    "filament_settings_id": "Skull conventional white PLA 220-215C",
+    "print_settings_id": "Sculpted skull 0.10mm solid white PLA",
+    "layer_height": "0.10",
+    "first_layer_height": "0.20",
+    "fill_density": "100%",
+    "fill_pattern": "rectilinear",
+    "top_solid_layers": "10",
+    "bottom_solid_layers": "10",
+    "support_material": "0",
+    "brim_width": "0",
+    "notes": "WHITE PLA SKULL / CORE One+ / 0.4 mm HIGH-FLOW nozzle / same machine and PLA settings as cauldron job 05 / 220-215C nozzle / 60C bed / no glow or abrasive filament required"
+  },
+  "machine_and_material_settings_inherited_from_cauldron": true,
+  "native_info": "[02_skull_faceplate_glow.3mf]\nsize_x = 127.807312\nsize_y = 138.259125\nsize_z = 10.465464\nmin_x = -63.903656\nmin_y = -69.129562\nmin_z = -5.232732\nmax_x = 63.903656\nmax_y = 69.129562\nmax_z = 5.232732\nnumber_of_facets = 238502\nmanifold = yes\nnumber_of_parts =  1\nvolume = 49178.953125",
+  "native_volume_extruders": [
+    "1"
+  ],
+  "placed_bounds_mm": [
+    [
+      61.096343,
+      40.870439,
+      0.0
+    ],
+    [
+      188.903657,
+      179.129561,
+      10.465464
+    ]
+  ],
+  "gcode_audit": {
+    "layer_count": 104,
+    "extrusion_segments": 680878,
+    "deposition_bounds_mm": [
+      [
+        61.323,
+        41.096,
+        0.2
+      ],
+      [
+        188.674,
+        178.901,
+        10.5
+      ]
+    ],
+    "all_model_moves_within_build_volume": true,
+    "single_nozzle_verified": true,
+    "startup_checks_and_shutdown_verified": true,
+    "maximum_observed_flow_mm3_s": 6.0039,
+    "filament_g": 64.17,
+    "filament_cm3": 49.36,
+    "estimated_time": "4h 52m 26s",
+    "scope": "Static file audit, not a physical print or a guarantee about unconfirmed hardware/filament",
+    "startup_exception": "Official purge/cleaning uses Y=-2.5 outside the print bed before layer 1; retained unchanged"
+  },
+  "unsafe_mutations_rejected": 4,
+  "scope": "Alternative to glow job 02, not an additional part; all existing geometry and G-code remain unchanged.",
+  "assumptions": [
+    "User reports the cauldron printed successfully and requests the same setup and conventional PLA material.",
+    "Requires the same 0.4 mm high-flow nozzle and compatible CORE One+ firmware; do not bypass printer warnings.",
+    "White PLA uses the cauldron's 220/215 C nozzle, 60 C bed and 6 mm3/s flow limit.",
+    "Filament mass uses the existing conservative 1.30 g/cm3 density, not a measured white-filament density.",
+    "Static verification only; no physical white skull print or fit test has been performed."
+  ]
+}

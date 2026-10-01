@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from zipfile import ZipFile
 
@@ -16,6 +17,7 @@ import numpy as np
 import trimesh
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 PROFILE_VERSION = "2.5.10"
 PROFILE_COMMIT = "65c5c8f1e1c3836f306119c49d717759cbc368db"
 PROFILE_URL = f"https://raw.githubusercontent.com/prusa3d/PrusaSlicer-settings-prusa-fff/{PROFILE_COMMIT}/PrusaResearch/{PROFILE_VERSION}.ini"
@@ -257,12 +259,284 @@ def invoke(executable, arguments, environment):
     return process.stdout + process.stderr
 
 
+def slice_white_skull(slicer):
+    geometry = json.loads((ROOT / "docs/validation.json").read_text())
+    previous = json.loads((ROOT / "docs/slicer_validation.json").read_text())
+    provenance = json.loads((ROOT / "profiles/provenance.json").read_text())
+    cauldron = previous["plates"]["05_cauldron_black.3mf"]
+    source = ROOT / "print/02_skull_faceplate_glow.3mf"
+    base_profile = ROOT / cauldron["profile"]
+    cauldron_gcode = ROOT / cauldron["gcode_file"]
+    for path, expected in (
+        (source, geometry["files_sha256"][source.name]),
+        (base_profile, provenance["profiles_sha256"][base_profile.name]),
+        (cauldron_gcode, cauldron["gcode_sha256"]),
+    ):
+        if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+            raise ValueError(f"White skull input changed since validation: {path}")
+    settings = dict(line.split(" = ", 1) for line in base_profile.read_text().splitlines() if " = " in line)
+    for key, expected in (("filament_type", "PLA"), ("filament_abrasive", "0"),
+                          ("nozzle_diameter", "0.4"), ("nozzle_high_flow", "1"),
+                          ("first_layer_temperature", "220"), ("temperature", "215"),
+                          ("bed_temperature", "60"), ("filament_max_volumetric_speed", "6")):
+        if settings[key] != expected:
+            raise ValueError(f"Unexpected cauldron profile setting: {key}={settings[key]}")
+    overrides = {
+        "filament_colour": "#FFFFFF",
+        "filament_settings_id": "Skull conventional white PLA 220-215C",
+        "print_settings_id": "Sculpted skull 0.10mm solid white PLA",
+        "layer_height": "0.10", "first_layer_height": "0.20",
+        "fill_density": "100%", "fill_pattern": "rectilinear",
+        "top_solid_layers": "10", "bottom_solid_layers": "10",
+        "support_material": "0", "brim_width": "0",
+        "notes": "WHITE PLA SKULL / CORE One+ / 0.4 mm HIGH-FLOW nozzle / same machine and PLA settings as cauldron job 05 / 220-215C nozzle / 60C bed / no glow or abrasive filament required",
+    }
+    profile = ROOT / "profiles/core_one_plus_0.4HF_white_PLA.ini"
+    profile.write_text("\n".join(f"{key} = {value}" for key, value in sorted((settings | overrides).items())) + "\n")
+    environment = dict(os.environ)
+    version = invoke(slicer, ["--help"], environment).splitlines()[0]
+    if not version.startswith("PrusaSlicer-2.9.6"):
+        raise ValueError("White skull requires the pinned PrusaSlicer 2.9.6")
+    mesh = trimesh.load(source, force="scene").to_geometry()
+    assert isinstance(mesh, trimesh.Trimesh) and mesh.is_watertight and mesh.is_winding_consistent
+    assert np.all(mesh.bounds[0] >= -0.001) and np.all(mesh.bounds[1] <= [250.001, 220.001, 270.001])
+    assert abs(mesh.bounds[0, 2]) < 0.001
+    native_info = invoke(slicer, ["--info", source], environment)
+    assert re.search(r"^manifold = yes$", native_info, flags=re.MULTILINE)
+    native_size = [float(re.search(rf"^size_{axis} = (.+)$", native_info, flags=re.MULTILINE).group(1))
+                   for axis in "xyz"]
+    assert np.allclose(native_size, mesh.extents, atol=0.03), "Native skull dimensions changed"
+    cache = ROOT / ".cache/core-one-white-skull"
+    cache.mkdir(parents=True, exist_ok=True)
+    native_file = cache / "02_skull_white.3mf"
+    common = ["--config-compatibility", "disable", "--load", profile, "--dont-arrange",
+              "--threads", "4", "--no-support-material", "--brim-width", "0"]
+    invoke(slicer, [*common, "--export-3mf", "--output", native_file, source], environment)
+    with ZipFile(native_file) as archive:
+        config = ET.fromstring(archive.read("Metadata/Slic3r_PE_model.config"))
+    assignments = [item.get("value") for item in config.findall("object/volume/metadata[@key='extruder']")]
+    assert assignments == ["1"], f"Wrong native tool assignment: {assignments}"
+    cached_gcode = cache / "02_skull_WHITE_04HF_PLA.gcode"
+    print("Slicing the sculpted skull for conventional white PLA with the cauldron machine/material settings...", flush=True)
+    output = invoke(slicer, [*common, "--export-gcode", "--output", cached_gcode, source], environment)
+    (cache / "slice.log").write_text(output)
+    generated = cached_gcode.read_text()
+    contents = "\n".join(line.rstrip(" \t") for line in generated.splitlines()) + "\n"
+    assert [line.split(";", 1)[0].strip() for line in generated.splitlines()] == [
+        line.split(";", 1)[0].strip() for line in contents.splitlines()
+    ], "Formatting changed executable G-code"
+    audit = validate_gcode(contents, "white")
+    for key, expected in (
+        ("layer_height", "0.1"), ("first_layer_height", "0.2"),
+        ("perimeters", "7"), ("fill_density", "100%"), ("fill_pattern", "rectilinear"),
+        ("top_solid_layers", "10"), ("bottom_solid_layers", "10"),
+        ("filament_abrasive", "0"), ("filament_max_volumetric_speed", "6"),
+        ("filament_density", "1.3"), ("filament_colour", "#FFFFFF"),
+        ("support_material", "0"), ("brim_width", "0"),
+    ):
+        assert re.search(rf"^; {key} = {re.escape(expected)}$", contents, flags=re.MULTILINE), key
+    layers = np.array([float(value) for value in re.findall(r"^;Z:([0-9.]+)$", contents, flags=re.MULTILINE)])
+    assert len(layers) == audit["layer_count"] and len(layers) > 1
+    assert abs(layers[0] - 0.20) < 1e-6 and np.allclose(np.diff(layers), 0.10)
+    assert abs(audit["deposition_bounds_mm"][1][2] - mesh.extents[2]) <= 0.11
+    assert not re.search(r"^;TYPE:(Support|Skirt)", contents, flags=re.MULTILINE)
+    assert audit["filament_g"] < 1000
+    rejected = verify_gcode_rejections(contents, "white")
+    cached_gcode.write_text(contents)
+    destination = ROOT / "usb/COREONE_04HF_PLA" / cached_gcode.name
+    shutil.copyfile(cached_gcode, destination)
+    report = {
+        "design": geometry["design"], "slicer_version": version,
+        "source_3mf": str(source.relative_to(ROOT)), "source_3mf_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+        "base_profile": str(base_profile.relative_to(ROOT)), "base_profile_sha256": hashlib.sha256(base_profile.read_bytes()).hexdigest(),
+        "cauldron_reference_gcode": cauldron["gcode_file"], "cauldron_reference_sha256": cauldron["gcode_sha256"],
+        "profile": str(profile.relative_to(ROOT)), "profile_sha256": hashlib.sha256(profile.read_bytes()).hexdigest(),
+        "gcode_file": str(destination.relative_to(ROOT)), "gcode_sha256": hashlib.sha256(destination.read_bytes()).hexdigest(),
+        "profile_overrides": overrides, "machine_and_material_settings_inherited_from_cauldron": True,
+        "native_info": native_info.strip(), "native_volume_extruders": assignments,
+        "placed_bounds_mm": mesh.bounds.tolist(), "gcode_audit": audit, "unsafe_mutations_rejected": rejected,
+        "scope": "Alternative to glow job 02, not an additional part; all existing geometry and G-code remain unchanged.",
+        "assumptions": [
+            "User reports the cauldron printed successfully and requests the same setup and conventional PLA material.",
+            "Requires the same 0.4 mm high-flow nozzle and compatible CORE One+ firmware; do not bypass printer warnings.",
+            "White PLA uses the cauldron's 220/215 C nozzle, 60 C bed and 6 mm3/s flow limit.",
+            "Filament mass uses the existing conservative 1.30 g/cm3 density, not a measured white-filament density.",
+            "Static verification only; no physical white skull print or fit test has been performed.",
+        ],
+    }
+    (ROOT / "docs/white_skull_validation.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps({"gcode": report["gcode_file"], **audit}, indent=2), flush=True)
+
+
+def verify_carrier_guard_sequence(contents, part_layer_counts):
+    if len(part_layer_counts) != 2 or any(count <= 0 for count in part_layer_counts.values()):
+        raise ValueError("Expected positive layer counts for exactly two named parts")
+    active_object = -1
+    object_names = {}
+    layers = []
+    for line in contents.splitlines():
+        if line == ";LAYER_CHANGE":
+            if set(object_names.values()) != set(part_layer_counts):
+                raise ValueError("Combined job does not declare both expected objects")
+            layers.append(set())
+        elif line.startswith("M486 S"):
+            active_object = int(line.split(";", 1)[0][6:].strip())
+        elif line.startswith("M486 A"):
+            name = line.split(";", 1)[0][6:].strip()
+            if (layers or active_object < 0 or active_object in object_names
+                    or name not in part_layer_counts or name in object_names.values()):
+                raise ValueError("Combined job has an unexpected or duplicate object declaration")
+            object_names[active_object] = name
+        elif layers and line.startswith(("G0 ", "G1 ")):
+            executable = line.split(";", 1)[0]
+            extrusion = re.search(r"\bE([-+]?(?:\d+(?:\.\d*)?|\.\d+))", executable)
+            if extrusion and float(extrusion.group(1)) > 0 and re.search(r"\b[XY][-+\d.]", executable):
+                if active_object not in object_names:
+                    raise ValueError("Combined plate extrusion is not assigned to carrier or guard")
+                layers[-1].add(object_names[active_object])
+    if len(layers) != max(part_layer_counts.values()):
+        raise ValueError("Combined job has an unexpected layer count")
+    for index, objects in enumerate(layers):
+        expected = {name for name, count in part_layer_counts.items() if index < count}
+        if objects != expected:
+            raise ValueError(f"Objects are not printed together on layer {index + 1}: {objects} != {expected}")
+    return {"mode": "layer-by-layer, not sequential objects", "layer_count": len(layers),
+            "layers_printing_both_objects": min(part_layer_counts.values()),
+            "remaining_guard_only_layers": max(part_layer_counts.values()) - min(part_layer_counts.values())}
+
+
+def slice_carrier_guard(slicer):
+    from tools.build import check_plate, file_sha256, write_3mf
+
+    geometry = json.loads((ROOT / "docs/validation.json").read_text())
+    previous = json.loads((ROOT / "docs/slicer_validation.json").read_text())
+    provenance = json.loads((ROOT / "profiles/provenance.json").read_text())
+    assert geometry["bucket_fastener_compatibility"]["screw_length_mm"] == 20.0
+    cauldron = previous["plates"]["05_cauldron_black.3mf"]
+    profile = ROOT / cauldron["profile"]
+    if file_sha256(profile) != provenance["profiles_sha256"][profile.name]:
+        raise ValueError("Cauldron PLA profile changed since validation")
+    if file_sha256(ROOT / cauldron["gcode_file"]) != cauldron["gcode_sha256"]:
+        raise ValueError("Reference cauldron job changed since validation")
+    meshes, sources, objects, placed = {}, {}, [], []
+    for name, label, center_x in (
+        ("carrier_black", "M2 x 20 carrier", 64.5),
+        ("guard_black", "Battery guard", 180.5),
+    ):
+        path = ROOT / "print" / f"{name}.stl"
+        digest = file_sha256(path)
+        if digest != geometry["files_sha256"][path.name]:
+            raise ValueError(f"Combined plate source changed since CAD validation: {path.name}")
+        mesh = trimesh.load_mesh(path)
+        assert isinstance(mesh, trimesh.Trimesh) and mesh.is_watertight and mesh.is_winding_consistent
+        assert len(mesh.split()) == 1
+        assert abs(mesh.bounds[0, 2]) < 0.001, "Part is not in its validated back-down print orientation"
+        translation = np.array([center_x, 110, 0]) - np.r_[mesh.bounds.mean(axis=0)[:2], 0]
+        meshes[name] = mesh
+        sources[str(path.relative_to(ROOT))] = digest
+        objects.append((label, [name], translation.tolist()))
+        placed.append(mesh.bounds + translation)
+    separation = placed[1][0, 0] - placed[0][1, 0]
+    assert separation >= 14.99, "Carrier and guard require 15 mm of XY separation"
+    source = ROOT / "print/03_04_carrier_guard_black.3mf"
+    write_3mf(source, objects, meshes)
+    plate_check = check_plate(source, meshes, objects)
+    round_trip = trimesh.load(source, force="scene")
+    assert len(round_trip.geometry) == 2
+    assert np.allclose(sorted(tuple(mesh.extents) for mesh in round_trip.geometry.values()),
+                       sorted(tuple(mesh.extents) for mesh in meshes.values()), atol=1e-5)
+    environment = dict(os.environ)
+    version = invoke(slicer, ["--help"], environment).splitlines()[0]
+    if not version.startswith("PrusaSlicer-2.9.6"):
+        raise ValueError("Combined carrier/guard requires the pinned PrusaSlicer 2.9.6")
+    native_info = invoke(slicer, ["--info", source], environment)
+    native_sizes = re.findall(r"^size_x = ([^\n]+)\nsize_y = ([^\n]+)\nsize_z = ([^\n]+)", native_info, re.MULTILINE)
+    assert len(native_sizes) == 2 and len(re.findall(r"^manifold = yes$", native_info, re.MULTILINE)) == 2
+    assert np.allclose(sorted(tuple(map(float, size)) for size in native_sizes),
+                       sorted(tuple(mesh.extents) for mesh in meshes.values()), atol=0.03)
+    cache = ROOT / ".cache/core-one-carrier-guard"
+    cache.mkdir(parents=True, exist_ok=True)
+    native_file = cache / source.name
+    common = ["--config-compatibility", "disable", "--load", profile, "--dont-arrange",
+              "--threads", "4", "--no-complete-objects", "--no-support-material", "--brim-width", "0"]
+    invoke(slicer, [*common, "--export-3mf", "--output", native_file, source], environment)
+    with ZipFile(native_file) as archive:
+        config = ET.fromstring(archive.read("Metadata/Slic3r_PE_model.config"))
+    assignments = [item.get("value") for item in config.findall("object/volume/metadata[@key='extruder']")]
+    assert assignments == ["1", "1"], f"Wrong combined plate tool assignments: {assignments}"
+    cached_gcode = cache / "03_04_carrier_guard_BLACK_04HF_PLA.gcode"
+    print("Slicing the M2 x 20 carrier and guard together, layer-by-layer...", flush=True)
+    output = invoke(slicer, [*common, "--export-gcode", "--output", cached_gcode, source], environment)
+    (cache / "slice.log").write_text(output)
+    generated = cached_gcode.read_text()
+    contents = "\n".join(line.rstrip(" \t") for line in generated.splitlines()) + "\n"
+    assert [line.split(";", 1)[0].strip() for line in generated.splitlines()] == [
+        line.split(";", 1)[0].strip() for line in contents.splitlines()
+    ], "Formatting changed executable G-code"
+    audit = validate_gcode(contents, "black")
+    for key, expected in (
+        ("complete_objects", "0"), ("layer_height", "0.2"), ("first_layer_height", "0.2"),
+        ("perimeters", "7"), ("fill_density", "15%"), ("fill_pattern", "gyroid"),
+        ("filament_abrasive", "0"), ("filament_max_volumetric_speed", "6"),
+        ("support_material", "0"), ("brim_width", "0"),
+    ):
+        assert re.search(rf"^; {key} = {re.escape(expected)}$", contents, re.MULTILINE), key
+    assert not re.search(r"^;TYPE:(Support|Skirt)", contents, re.MULTILINE)
+    part_layers = {
+        label: previous["plates"][filename]["gcode_audit"]["layer_count"]
+        for (label, _, _), filename in zip(objects, ("03_carrier_black.3mf", "04_guard_black.3mf"), strict=True)
+    }
+    sequence = verify_carrier_guard_sequence(contents, part_layers)
+    layers = np.array([float(value) for value in re.findall(r"^;Z:([0-9.]+)$", contents, re.MULTILINE)])
+    assert len(layers) == audit["layer_count"] and np.allclose(layers, np.arange(1, len(layers) + 1) * 0.20)
+    assert abs(audit["deposition_bounds_mm"][1][2] - max(mesh.extents[2] for mesh in meshes.values())) <= 0.11
+    assert audit["filament_g"] < 1000
+    rejected = verify_gcode_rejections(contents, "black")
+    cached_gcode.write_text(contents)
+    destination = ROOT / "usb/COREONE_04HF_PLA" / cached_gcode.name
+    shutil.copyfile(cached_gcode, destination)
+    report = {
+        "design": geometry["design"], "slicer_version": version,
+        "source_meshes_sha256": sources, "plate_check": plate_check,
+        "source_3mf": str(source.relative_to(ROOT)), "source_3mf_sha256": file_sha256(source),
+        "profile": str(profile.relative_to(ROOT)), "profile_sha256": file_sha256(profile),
+        "cauldron_reference_gcode": cauldron["gcode_file"], "cauldron_reference_sha256": cauldron["gcode_sha256"],
+        "gcode_file": str(destination.relative_to(ROOT)), "gcode_sha256": file_sha256(destination),
+        "native_info": native_info.strip(), "native_volume_extruders": assignments,
+        "objects": [{"name": label, "source": names[0], "translation_mm": shift, "bounds_mm": bounds.tolist()}
+                    for (label, names, shift), bounds in zip(objects, placed, strict=True)],
+        "xy_object_gap_mm": separation,
+        "minimum_xy_bed_allowance_mm": min(min(bounds[0, :2].min(), (np.array([250, 220]) - bounds[1, :2]).min())
+                                         for bounds in placed),
+        "sequence": sequence, "gcode_audit": audit, "unsafe_mutations_rejected": rejected,
+        "scope": "Alternative to separate jobs 03 and 04; one M2 x 20 carrier and one complete guard, one PLA filament.",
+        "limitations": [
+            "Requires the same CORE One+ 0.4 mm high-flow nozzle and conventional PLA setup as the successful cauldron.",
+            "Mass uses the existing conservative 1.30 g/cm3 density; includes startup purge but not manual loading or failures.",
+            "Native slicing and static G-code checks are not a physical print or hardware fit test.",
+        ],
+    }
+    (ROOT / "docs/carrier_guard_validation.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps({"gcode": report["gcode_file"], "sequence": sequence, **audit}, indent=2), flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--slicer", type=Path,
                         default=ROOT / ".cache/prusaslicer-2.9.6/PrusaSlicer-2.9.6/prusa-slicer-console.exe")
-    parser.add_argument("--imports-only", action="store_true")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--imports-only", action="store_true")
+    selection.add_argument("--white-skull", action="store_true",
+                           help="Generate only an alternative white-PLA skull job using the cauldron settings")
+    selection.add_argument("--carrier-guard", action="store_true",
+                           help="Generate one layer-by-layer job for the M2 x 20 carrier and complete guard")
     arguments = parser.parse_args()
+    if arguments.white_skull:
+        slice_white_skull(arguments.slicer)
+        return
+    if arguments.carrier_guard:
+        slice_carrier_guard(arguments.slicer)
+        return
     printed_baseline = json.loads((ROOT / "docs/printed_parts.json").read_text())
     for filename, digest in printed_baseline["files_sha256"].items():
         if hashlib.sha256((ROOT / filename).read_bytes()).hexdigest() != digest:
@@ -333,17 +607,16 @@ def main():
         result = {"sha256": digest, "material": material,
                   "native_info": output.strip(), "native_volume_extruders": assignments,
                   "dimensions_and_material_alignment_verified": True}
-        if not arguments.imports_only and material == "black":
+        if not arguments.imports_only and filename != "03_carrier_black.3mf":
             previous = previous_report["plates"][filename]
             existing = ROOT / previous["gcode_file"]
             assert digest == previous["sha256"]
             assert hashlib.sha256(existing.read_bytes()).hexdigest() == previous["gcode_sha256"]
             audit = validate_gcode(existing.read_text(), material)
             assert audit == previous["gcode_audit"]
-            result.update({key: previous[key] for key in ("offline_slice_succeeded", "gcode_audit", "gcode_file",
-                                                         "gcode_sha256", "supports", "brim_mm", "profile")})
+            result = previous | result
             result["existing_job_preserved_byte_for_byte"] = True
-            print(f"  Preserved existing black job: {audit['filament_g']:.2f} g; audit passed", flush=True)
+            print(f"  Preserved existing {material} job: {audit['filament_g']:.2f} g; audit passed", flush=True)
         elif not arguments.imports_only:
             gcode = cache / gcode_name
             output = invoke(arguments.slicer, [*common, "--export-gcode", "--output", gcode, path], environment)
@@ -355,8 +628,13 @@ def main():
             ], "Formatting changed executable G-code"
             gcode.write_text(contents)
             audit = validate_gcode(contents, material)
-            assert audit["layer_count"] >= 60
-            assert abs(audit["deposition_bounds_mm"][1][2] - geometry["parts"]["bucket_glow"]["bounds_mm"][1][2]) <= 0.11
+            height = geometry["parts"]["carrier_black"]["bounds_mm"][1][2]
+            assert abs(audit["layer_count"] * 0.20 - height) <= 0.11
+            assert abs(audit["deposition_bounds_mm"][1][2] - height) <= 0.11
+            for setting, value in (("layer_height", "0.2"), ("perimeters", "7"),
+                                   ("fill_density", "15%"), ("fill_pattern", "gyroid"),
+                                   ("support_material", "0")):
+                assert re.search(rf"^; {setting} = {re.escape(value)}$", contents, flags=re.MULTILINE), setting
             assert not re.search(r"^;TYPE:Support", contents, flags=re.MULTILINE)
             report["unsafe_mutations_rejected"] = verify_gcode_rejections(contents, material)
             result.update({"offline_slice_succeeded": True, "gcode_audit": audit,
@@ -364,9 +642,6 @@ def main():
                            "gcode_sha256": hashlib.sha256(gcode.read_bytes()).hexdigest(),
                            "supports": supports, "brim_mm": brim,
                            "profile": str(profiles[material].relative_to(ROOT)),
-                           "overrides": {"layer_height_mm": 0.10, "first_layer_mm": 0.20,
-                                         "infill_percent": 100, "fill_pattern": "rectilinear",
-                                         "top_bottom_layers": 10, "supports": False, "brim_mm": 0},
                            "postprocessing": "Trailing whitespace removed; executable commands unchanged"})
             print(f"  {audit['filament_g']:.2f} g {material}, {audit['estimated_time']}; G-code audit passed", flush=True)
         report["plates"][path.name] = result
@@ -377,8 +652,8 @@ def main():
         report["all_plates_estimated_g"] = totals
         target = ROOT / "usb/COREONE_04HF_PLA"
         target.mkdir(parents=True, exist_ok=True)
-        for _, gcode_name, material, _, _ in jobs:
-            if material == "glow":
+        for filename, gcode_name, _, _, _ in jobs:
+            if filename == "03_carrier_black.3mf":
                 shutil.copyfile(cache / gcode_name, target / gcode_name)
     for filename, digest in printed_baseline["files_sha256"].items():
         assert hashlib.sha256((ROOT / filename).read_bytes()).hexdigest() == digest, filename

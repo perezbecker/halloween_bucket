@@ -92,9 +92,9 @@
   {
     "image": "03_carrier_black.png",
     "source_3mf": "print/03_carrier_black.3mf",
-    "source_3mf_sha256": "7b34f972bdccdfe73b890720fa339241d1ba065aa383c05e8dbcc9c5877ce53b",
+    "source_3mf_sha256": "ac9480dacb3886f42fac5c7029083377bd05e79000df69479d4ee82f9d0b859b",
     "gcode": "usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode",
-    "gcode_sha256": "57ee9060f5cfb030904f3a788d28951876dda055c654c250dcb1009e24468c5c",
+    "gcode_sha256": "027225bb65b73da11886786ba6a576afb2fe6aa435d31b5d45f0750f7b69430a",
     "placed_model_bounds_mm": [
       [
         77.0,

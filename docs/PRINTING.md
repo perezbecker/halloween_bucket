@@ -9,7 +9,8 @@ profile from PrusaResearch bundle **2.5.10**. Its COREONE firmware profile is
 used for the single-tool CORE One+. Machine startup, cleaning, probing, chamber
 control, and shutdown scripts are retained, not replaced with generic G-code.
 
-**Your actual machine/nozzle/filament were not confirmed.** Use these pre-sliced
+**The cauldron has since been reported to print successfully; the white skull
+reuses that setup. The nozzle model has not been independently identified.** Use these pre-sliced
 files only on a stock single-tool CORE One+ with a **0.4 mm high-flow nozzle**,
 current stable compatible firmware, **1.75 mm PLA**, and a **smooth PEI sheet**.
 The emitted firmware notice is **6.8.1+16182**. Set the printer's actual nozzle
@@ -27,16 +28,90 @@ they need not bond together. The supplied G-code remains PLA-only. A printer,
 nozzle, sheet, material, or firmware mismatch is not resolved by ignoring its
 warning. No MMU, INDX, second nozzle, or mid-print filament swap is needed.
 
+## White PLA Skull
+
+For conventional white PLA, select
+[02_skull_WHITE_04HF_PLA.gcode](../usb/COREONE_04HF_PLA/02_skull_WHITE_04HF_PLA.gcode),
+not the file containing GLOW. The user requested the same printer and PLA
+settings as the successful cauldron print. The new job therefore inherits the
+cauldron's **0.4 HF nozzle**, official startup/shutdown, **220/215 C nozzle,
+60 C bed, 6 mm3/s flow limit**, and conventional non-abrasive PLA setting.
+The sculpted skull retains **0.10 mm layers (0.20 mm first), 100% rectilinear
+infill, seven perimeters, ten top/bottom layers, and no supports or brim**.
+
+Estimate: **64.17 g and 4 h 52 m 26 s**, using the existing conservative
+1.30 g/cm3 PLA density. It is the same flat-back-down sculpted geometry and
+uses the same four M2 x 10 faceplate screws. No other part needs reprinting.
+Choose either white or glow, not both; the white version will not glow.
+
+Clear the sheet, load the same conventional PLA in white, and run the WHITE
+file from USB. Confirm the printer/nozzle/material notices and watch the first
+layer. Do not bypass warnings or use the job after changing to a standard-flow
+or different-diameter nozzle. The existing smooth-PEI/PLA sheet assumptions
+still apply. [The audit](white_skull_validation.json) verifies native import,
+104 layers, bed bounds, temperatures, flow, one nozzle, non-abrasive checks,
+shutdown and four rejected unsafe mutations; it is not a physical print test.
+
+The [white profile](../profiles/core_one_plus_0.4HF_white_PLA.ini) and G-code are
+reproducible with `tools/check_slicer.py --white-skull`. The original geometry
+filename still contains `glow`, but its shape is material-independent. Existing
+glow renders and balance figures are not predictions for the lighter white PLA.
+
+## Combined Carrier And Guard
+
+Use [03_04_carrier_guard_BLACK_04HF_PLA.gcode](../usb/COREONE_04HF_PLA/03_04_carrier_guard_BLACK_04HF_PLA.gcode)
+to print **one revision-7 M2 x 20 carrier and one complete battery/candy guard**
+on a single plate, instead of separate jobs 03 and 04.
+It uses the same conventional PLA profile as the successfully printed
+cauldron: **0.4 mm high-flow nozzle, 220 C first layer / 215 C afterwards,
+60 C bed, 6 mm3/s flow limit**. Both parts print from one spool in one colour;
+black is suggested, but the same tested conventional PLA in white is also
+usable. This is not a glow-PLA or PETG job.
+
+**Estimated usage: 109.53 g / 84.25 cm3; time: 5 h 16 m 43 s.**
+Mass uses the existing conservative 1.30 g/cm3 density and includes the
+automatic startup purge. Have approximately **130 g available** to allow
+margin; manual loading purges and failed prints are not included.
+
+The carrier stays back-down with its posts up; the guard stays outer-back-down
+with its walls up. They have **15 mm XY separation** and at least **16.5 mm
+bed-edge clearance**. Both use **0.20 mm layers, seven perimeters and 15%
+gyroid infill, without supports or brim**. The machine alternates between the
+parts on each layer: **144 layers print both**, followed by **63 guard-only
+layers**, for 207 total. It does not complete one object before starting the
+other. Do not enable sequential-object printing when reslicing.
+
+The 15% value is a nominal profile setting, not the solid fraction of either
+part. In this combined job, the perimeters and solid layers fill the printed
+sections: the G-code contains no sparse internal-infill paths. Designed holes,
+nut wells and the open guard cavity remain empty.
+
+Clear the whole sheet, load PLA, select the combined file from USB, and
+inspect the first layer of both parts. Keep the same successful printer/nozzle
+setup and do not bypass compatibility warnings. Do not also run jobs 03 and 04
+unless additional copies are wanted. The original jobs and white skull job
+remain unchanged.
+
+The [combined geometry 3MF](../print/03_04_carrier_guard_black.3mf) and
+[validation report](carrier_guard_validation.json) record the exact two source
+meshes, placements, native imports, one-extruder assignments, layer-by-layer
+extrusions, machine limits and output hashes. Rebuild with
+`tools/check_slicer.py --carrier-guard`; this is a static audit, not a physical
+print or fit test.
+
 ## Print From USB
 
-For the already-printed cauldron and carrier, use only the updated
-[02_skull_GLOW_04HF_PLA.gcode](../usb/COREONE_04HF_PLA/02_skull_GLOW_04HF_PLA.gcode).
-The flat faceplate is retired. Job 02 now prints the stronger sculpted design;
-do not use an older copy of that filename left on your USB drive.
+To print the **M2 x 20 carrier** by itself, use
+[03_carrier_BLACK_04HF_PLA.gcode](../usb/COREONE_04HF_PLA/03_carrier_BLACK_04HF_PLA.gcode).
+Its four nuts sit in deep rear-access wells. This is the only supplied carrier
+design; the combined 03/04 job contains exactly the same geometry. Copy the
+current file from this project to USB rather than using a previously saved
+copy. Reuse the cauldron, skull, guard and coupon if already printed.
 
 1. Check the prerequisites above and read the
   [USB checklist](../usb/COREONE_04HF_PLA/START_HERE.txt).
-2. Put the five supplied `.gcode` files onto a FAT32 USB drive and safely eject
+2. Put the required `.gcode` files onto a FAT32 USB drive, choosing WHITE or
+  GLOW for job 02, and safely eject
   it. Do not format a drive containing needed data. The printer runs the G-code,
   not STL/STEP/3MF source files or a zip archive.
 3. Clear the build sheet, load the correct filament through the printer's
@@ -68,7 +143,7 @@ glass, battery, or rope are installed in the printer during any job.
 | Supports, carrier/guard | Normally off in the supplied flat-back-down orientations |
 | Supports, skull | Off; flat back on the bed, face up |
 | Temperature | 220 C first layer / 215 C other layers / 60 C bed |
-| Maximum volumetric flow | 6 mm3/s black, 3 mm3/s glow |
+| Maximum volumetric flow | 6 mm3/s black or conventional white, 3 mm3/s glow |
 | Chamber | Official automatic control, nominal 20 C; keep vents unobstructed |
 | Wipe tower / mid-print color changes | None |
 
@@ -94,8 +169,9 @@ change without matching its 0.4 HF assumptions or reslicing.
 2. [02_skull_faceplate_glow.3mf](../print/02_skull_faceplate_glow.3mf): the complete
   128 x 138 mm sculpted skull, up to 10.5 mm thick, with a flat back and unchanged
   3 mm screw seats. Print back-down, sculpture-up. Use it for the test and final bucket.
-3. [03_carrier_black.3mf](../print/03_carrier_black.3mf): the HalloWing carrier,
-  flat back down, support posts upward.
+3. [03_carrier_black.3mf](../print/03_carrier_black.3mf): the revision-7 HalloWing
+  carrier for M2 x 20 bucket screws, flat back down, support posts upward.
+  The 15.9 mm deep rear nut wells open onto the bed; do not rotate or fill them.
 4. [04_guard_black.3mf](../print/04_guard_black.3mf): the battery cradle and candy
   guard, outer back down, walls upward.
 5. [05_cauldron_black.3mf](../print/05_cauldron_black.3mf): the black cauldron,
@@ -128,8 +204,11 @@ Before printing, inspect the sliced layers around:
 - The eye roof and ring: no unhandled bridging or support welded into the bore.
 - All four M2 holes and the M2.5 carrier passages: they must remain open.
 - The rope anchors and rim: continuous black perimeters, not disconnected shells.
-- The carrier's small nut-pocket roofs and guard strap slots: short bridges
-  should be achievable with the calibrated material; test first.
+- The carrier's four deep nut wells and guard strap slots: short bridges
+  should be achievable with the calibrated material; test first. The new
+  rectangular wells are 4.3 x 8.8 mm and 15.9 mm deep. Check their transitions
+  to the narrower screw slots, clear any strings, and trial-fit nuts to the
+  bottom before installing electronics. Do not fill these wells with support.
 
 The black wall is now continuous and full thickness behind the skull, except
 for the eye opening and screw holes. There is **no inlay cutout or material
@@ -139,15 +218,16 @@ because their seats have not thickened. Do not substitute longer screws.
 
 ## The 1 kg Limits
 
-[CAD validation](validation.json) budgets **907.59 g black** and **148.41 g glow**:
+[CAD validation](validation.json) budgets **905.86 g black** and **148.41 g glow**:
 all parts including the coupon, solid-volume density bounds, plus 125 g black
 and 50 g glow allowances. The separate
-[native slicing audit](slicer_validation.json) estimates **771.49 g black** and
+[native slicing audit](slicer_validation.json) estimates **769.84 g black** and
 **98.72 g glow** for all five supplied jobs, including supports, brims, and startup purge.
 
-The new faceplate-only job takes approximately **5 h 40 m**. All four black
-G-code files are retained byte-for-byte from the printed design and re-audited,
-not resliced. Their pinned hashes are in [printed_parts.json](printed_parts.json).
+Only the new carrier job is resliced for this revision: approximately
+**26.20 g and 1 h 32 m**. The other four G-code
+files, including the **5 h 40 m** sculpted skull, are retained byte-for-byte and
+re-audited. Their pinned hashes are in [printed_parts.json](printed_parts.json).
 
 The black allowance is intentionally the controlling limit. Add the per-tool
 usage from **all five plates**, including supports, priming, and any
